@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Crunch!">
+  <ClassDiagramComponents>
+    <Class name="Cliente" package="" visibility="public" xPosition="221.0" yPosition="228.0">
+      <Fields>
+        <Field name="mail" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="domicilio" type="String" visibility="private"/>
+        <Field name="telefono" type="String" visibility="private"/>
+        <Field name="puntos" type="Integer" visibility="private"/>
+        <Field name="cuponPromo" type="List&lt;Cupon&gt;" visibility="private"/>
+        <Field name="cuponCanje" type="List&lt;CuponDeCanje&gt;" visibility="private"/>
+        <Field name="raspaditas" type="List&lt;Raspadita&gt;" visibility="private"/>
+        <Field name="valoraciones" type="List&lt;Valoracion&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="crear" returnType="void" visibility="public"/>
+        <Method name="modificar" returnType="void" visibility="public"/>
+        <Method name="borrar" returnType="void" visibility="public"/>
+        <Method name="untitledMethod" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Comercio" package="" visibility="public" xPosition="1032.0" yPosition="185.0">
+      <Fields>
+        <Field name="mail" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="nombreComercio" type="String" visibility="private"/>
+        <Field name="nombreDuenio" type="String" visibility="private"/>
+        <Field name="apellidoDuenio" type="String" visibility="private"/>
+        <Field name="telefono" type="String" visibility="private"/>
+        <Field name="direccion" type="String" visibility="private"/>
+        <Field name="rubros" type="List&lt;Rubro&gt;" visibility="private"/>
+        <Field name="cuponesPromo" type="List&lt;Cupon&gt;" visibility="private"/>
+        <Field name="cuponesCanje" type="List&lt;CuponDeCanje&gt;" visibility="private"/>
+        <Field name="raspaditas" type="List&lt;Raspadita&gt;" visibility="private"/>
+        <Field name="reputacion" type="Float" visibility="private"/>
+        <Field name="valoraciones" type="List&lt;Valoracion&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="crear" returnType="void" visibility="public"/>
+        <Method name="modificar" returnType="void" visibility="public"/>
+        <Method name="borrar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Cupon" package="" visibility="public" xPosition="663.0" yPosition="20.0">
+      <Fields>
+        <Field name="identificador" type="String" visibility="private"/>
+        <Field name="descripcion" type="String" visibility="private"/>
+        <Field name="vencimiento" type="Calendar" visibility="private"/>
+        <Field name="titulo" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="crear" returnType="void" visibility="public"/>
+        <Method name="usar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="CuponDeCanje" package="" visibility="public" xPosition="663.0" yPosition="273.0">
+      <Fields>
+        <Field name="costo" type="Integer" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="crear" returnType="void" visibility="public"/>
+        <Method name="usar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Raspadita" package="" visibility="public" xPosition="663.0" yPosition="646.0">
+      <Fields>
+        <Field name="identificador" type="String" visibility="private"/>
+        <Field name="tipoRaspadita" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="canje" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="TipoRaspadita" package="" visibility="public" xPosition="920.0" yPosition="656.0">
+      <Fields>
+        <Field name="puntos" type="Integer" visibility="private"/>
+        <Field name="identificador" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Enum name="Rubro" package="" visibility="public" xPosition="1413.0" yPosition="143.0">
+      <Literals>
+        <Literal name="ALMACEN"/>
+        <Literal name="VERDULERIA"/>
+        <Literal name="CARNICERIA"/>
+        <Literal name="GOMERIA"/>
+        <Literal name="LUBRICENTRO"/>
+        <Literal name="ELECTRONICA"/>
+        <Literal name="COMPUTACION"/>
+        <Literal name="MECANICA"/>
+        <Literal name="FERRETERIA"/>
+        <Literal name="TINTURERIA"/>
+        <Literal name="ROTISERIA"/>
+        <Literal name="PELUQUERIA"/>
+        <Literal name="LIBRERIA"/>
+        <Literal name="DIETETICA"/>
+        <Literal name="LIMPIEZA"/>
+        <Literal name="PERFUMERIA"/>
+        <Literal name="FARMACIA"/>
+        <Literal name="PETSHOP"/>
+        <Literal name="VETERINARIA"/>
+        <Literal name="PANADERIA"/>
+        <Literal name="POLLERIA"/>
+      </Literals>
+    </Enum>
+    <Class name="Valoracion" package="" visibility="public" xPosition="663.0" yPosition="440.0">
+      <Fields>
+        <Field name="identificador" type="String" visibility="private"/>
+        <Field name="puntuacion" type="Integer" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="tiene" source="Raspadita" target="TipoRaspadita" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="es un " source="Comercio" target="Rubro" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Comercio" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="CuponDeCanje" target="Cupon"/>
+    <HasRelation name="tiene" source="Comercio" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="crea" source="Cliente" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Comercio" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Comercio" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
