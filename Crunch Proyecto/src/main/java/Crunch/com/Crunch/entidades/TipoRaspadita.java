@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Crunch.com.Crunch.entidades;
+package Crunch.com.Crunch.Entidades;
 
 /**
  *
@@ -12,3 +12,4 @@ package Crunch.com.Crunch.entidades;
 public class TipoRaspadita {
     
 }
+    

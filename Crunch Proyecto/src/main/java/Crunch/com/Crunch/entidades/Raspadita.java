@@ -1,4 +1,4 @@
-package Crunch.com.Crunch.entidades;
+package Crunch.com.Crunch.Entidades;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -1,5 +1,5 @@
 
-package Crunch.com.Crunch.entidades;
+package Crunch.com.Crunch.Entidades;
 
 
 public class Valoracion {
