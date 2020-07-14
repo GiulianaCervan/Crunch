@@ -1,11 +1,12 @@
 
-package Crunch.com.Crunch.entidades;
+package Crunch.com.Crunch.Entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -17,6 +18,7 @@ public class Cupon implements Serializable {
     protected String id;
     protected String titulo;
     protected String descripcion;
+    @Temporal(javax.persistence.TemporalType.DATE)
     protected Calendar vencimiento;
 
     public Cupon() {
