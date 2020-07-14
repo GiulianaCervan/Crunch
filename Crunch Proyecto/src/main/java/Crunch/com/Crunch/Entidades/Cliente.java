@@ -8,6 +8,7 @@ package Crunch.com.Crunch.Entidades;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
@@ -20,9 +21,13 @@ public class Cliente {
     private String domicilio;
     private String telefono;
     private Integer puntos;
+    @OneToMany
     private List<Cupon> cuponPromo;
+    @OneToMany
     private List<CuponDeCanje> cuponCanje;
+    @OneToMany
     private List<Raspadita> raspaditas;
+    @OneToMany
     private List<Valoracion> valoraciones;
 
     public Cliente() {
