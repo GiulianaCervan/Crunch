@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Crunch.com.Crunch.entidades;
+
+package Crunch.entidades;
 
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import Crunch.com.Crunch.Utilidades.Rubro;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author duili
- */
 @Entity
 public class Comercio {
     
@@ -160,9 +151,5 @@ public class Comercio {
     public void setValoraciones(List<Valoracion> valoraciones) {
         this.valoraciones = valoraciones;
     }
-    
-    
-    
-    
     
 }

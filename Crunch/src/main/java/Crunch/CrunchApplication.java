@@ -1,4 +1,4 @@
-package Crunch.com.Crunch;
+package Crunch;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

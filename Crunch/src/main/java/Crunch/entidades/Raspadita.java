@@ -1,16 +1,24 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Crunch.entidades;
 
-package Crunch.com.Crunch.Entidades;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-
-public class Valoracion {
+@Entity
+public class Raspadita {
+    
+    @Id
     private String identificador;
     private Integer puntuacion;
 
-    public Valoracion() {
+    public Raspadita() {
     }
-    
 
-    public Valoracion(String identificador, Integer puntuacion) {
+    public Raspadita(String identificador, Integer puntuacion) {
         this.identificador = identificador;
         this.puntuacion = puntuacion;
     }
@@ -30,6 +38,8 @@ public class Valoracion {
     public void setPuntuacion(Integer puntuacion) {
         this.puntuacion = puntuacion;
     }
-    
 
+    public void canje() {
+
+    }
 }

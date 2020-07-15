@@ -1,13 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Crunch.entidades;
 
-package Crunch.com.Crunch.Entidades;
-
-import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Entity;
 
 @Entity
-public class CuponDeCanje extends Cupon implements Serializable{
-    
+public class CuponDeCanje extends Cupon{
+        
     private Integer costo;
 
     public CuponDeCanje() {

@@ -1,7 +1,6 @@
 
-package Crunch.com.Crunch.Entidades;
+package Crunch.entidades;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,8 @@ import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Cupon implements Serializable {
-    
+public class Cupon {
+       
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -62,6 +61,5 @@ public class Cupon implements Serializable {
     public void setVencimiento(Calendar vencimiento) {
         this.vencimiento = vencimiento;
     }
-    
     
 }
