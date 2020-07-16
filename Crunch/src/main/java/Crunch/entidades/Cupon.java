@@ -19,16 +19,22 @@ public class Cupon {
     protected String descripcion;
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Calendar vencimiento;
+    protected boolean disponible;
+    protected String mailComercio;
 
     public Cupon() {
     }
 
-    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento) {
+    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vencimiento = vencimiento;
+        this.disponible = disponible;
+        this.mailComercio = mailComercio;
     }
+
+    
 
     public String getId() {
         return id;
@@ -61,5 +67,23 @@ public class Cupon {
     public void setVencimiento(Calendar vencimiento) {
         this.vencimiento = vencimiento;
     }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public String getMailComercio() {
+        return mailComercio;
+    }
+
+    public void setMailComercio(String mailComercio) {
+        this.mailComercio = mailComercio;
+    }
+    
+    
     
 }
