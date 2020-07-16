@@ -11,9 +11,11 @@ import Crunch.entidades.CuponDeCanje;
 import Crunch.entidades.Raspadita;
 import Crunch.entidades.Valoracion;
 import Crunch.excepciones.ExcepcionServicio;
+import Crunch.repositorios.ClienteRepositorio;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServicioCliente implements UserDetailsService {
 
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
     /**
      * Este método es el que usaríamos para crear usuarios y guardarlos en
      * nuestra base de datos.
@@ -65,7 +69,7 @@ public class ServicioCliente implements UserDetailsService {
         cliente.setRaspaditas(raspaditas);
         cliente.setValoraciones(valoraciones);
 
-//        repositorioCliente.save(cliente);
+        clienteRepositorio.save(cliente);
     }
 
     /**
@@ -83,22 +87,22 @@ public class ServicioCliente implements UserDetailsService {
 
         validar(mail, clave, nombre, apellido, domicilio, telefono);
 
-//        Optional<Cliente> respuesta = usuarioRepositorio.findById(mail);
-//        if (respuesta.isPresent()) {
-//
-//            Cliente cliente = respuesta.get();
-//            
-//            String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
-//            cliente.setClave(claveEncriptada);
-//
-//            cliente.setNombre(nombre);
-//            cliente.setApellido(apellido);
-//            cliente.setDomicilio(domicilio);
-//            cliente.setTelefono(telefono);
-//            
-//        }else{
-//            throw new ExcepcionServicio("No se ha encontrado el cliente solicitado.");
-//        }
+        Optional<Cliente> respuesta = clienteRepositorio.findById(mail);
+        if (respuesta.isPresent()) {
+
+            Cliente cliente = respuesta.get();
+            
+            String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+            cliente.setClave(claveEncriptada);
+
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setDomicilio(domicilio);
+            cliente.setTelefono(telefono);
+            
+        }else{
+            throw new ExcepcionServicio("No se ha encontrado el cliente solicitado.");
+        }
     }
 
     /**
