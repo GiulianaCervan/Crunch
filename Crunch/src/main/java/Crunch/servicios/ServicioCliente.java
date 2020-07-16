@@ -37,38 +37,27 @@ public class ServicioCliente implements UserDetailsService {
      *
      * @param mail
      * @param clave
+     * @param clave2
      * @param nombre
      * @param apellido
      * @param domicilio
      * @param telefono
      * @param puntos
-     * @param cuponpromo
+     * @param cuponPromo
      * @param cuponCanje
      * @param raspaditas
      * @param valoraciones
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(String mail, String clave, String nombre, String apellido, String domicilio, String telefono, Integer puntos, List<Cupon> cuponpromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones) throws ExcepcionServicio {
+    public void crear(String mail, String clave,String clave2, String nombre, String apellido, String domicilio, String telefono, Integer puntos, List<Cupon> cuponPromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones) throws ExcepcionServicio {
 
-        validar(mail, clave, nombre, apellido, domicilio, telefono);
-
-        Cliente cliente = new Cliente();
-        cliente.setMail(mail);
+        validar(mail, clave,clave2, nombre, apellido, domicilio, telefono);
 
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
-        cliente.setClave(claveEncriptada);
-
-        cliente.setNombre(nombre);
-        cliente.setApellido(apellido);
-        cliente.setDomicilio(domicilio);
-        cliente.setTelefono(telefono);
-        cliente.setPuntos(puntos);
-        cliente.setCuponPromo(cuponpromo);
-        cliente.setCuponCanje(cuponCanje);
-        cliente.setRaspaditas(raspaditas);
-        cliente.setValoraciones(valoraciones);
-
+        
+        Cliente cliente = new Cliente(mail, claveEncriptada, nombre, apellido, domicilio, telefono, puntos, cuponPromo, cuponCanje, raspaditas, valoraciones);
+       
         clienteRepositorio.save(cliente);
     }
 
@@ -76,6 +65,7 @@ public class ServicioCliente implements UserDetailsService {
      * Este método encuentra y modifica un objeto Cliente 
      * @param mail
      * @param clave
+     * @param clave2
      * @param nombre
      * @param apellido
      * @param domicilio
@@ -83,9 +73,9 @@ public class ServicioCliente implements UserDetailsService {
      * @throws ExcepcionServicio 
      */
     @Transactional
-    public void modificar(String mail, String clave, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
+    public void modificar(String mail, String clave,String clave2, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
 
-        validar(mail, clave, nombre, apellido, domicilio, telefono);
+        validar(mail, clave,clave2, nombre, apellido, domicilio, telefono);
 
         Optional<Cliente> respuesta = clienteRepositorio.findById(mail);
         if (respuesta.isPresent()) {
@@ -113,13 +103,14 @@ public class ServicioCliente implements UserDetailsService {
      *
      * @param mail
      * @param clave
+     * @param clave2
      * @param nombre
      * @param apellido
      * @param domicilio
      * @param telefono
      * @throws ExcepcionServicio
      */
-    private void validar(String mail, String clave, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
+    private void validar(String mail, String clave,String clave2 ,String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
@@ -129,9 +120,10 @@ public class ServicioCliente implements UserDetailsService {
             throw new ExcepcionServicio("La clave no puede ser nula o estar vacia y tiene que ser mayor a 6 caracteres.");
         }
 
-//        if(!clave.equals(clave2)){
-//            throw new ExcepcionServicio("Las claves deben ser iguales");
-//        }
+        if(!clave.equals(clave2)){
+            throw new ExcepcionServicio("Las claves deben ser iguales");
+        }
+        
         if (nombre == null || nombre.isEmpty()) {
             throw new ExcepcionServicio("El nombre no puede ser nulo o estar vacío.");
         }
