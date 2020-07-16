@@ -1,6 +1,7 @@
 
 package Crunch.entidades;
 
+import Crunch.utilidades.Rubro;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;

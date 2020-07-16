@@ -29,6 +29,22 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(String mail, String clave, String nombre, String apellido, String domicilio, String telefono, Integer puntos, List<Cupon> cuponPromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones) {
+        this.mail = mail;
+        this.clave = clave;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.domicilio = domicilio;
+        this.telefono = telefono;
+        this.puntos = puntos;
+        this.cuponPromo = cuponPromo;
+        this.cuponCanje = cuponCanje;
+        this.raspaditas = raspaditas;
+        this.valoraciones = valoraciones;
+    }
+    
+    
+
     public String getMail() {
         return mail;
     }
