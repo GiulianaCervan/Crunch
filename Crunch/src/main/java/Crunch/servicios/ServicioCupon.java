@@ -124,7 +124,7 @@ public class ServicioCupon {
         } else {
             throw new ExcepcionServicio("No se encontro el cupon");
         }
-        Cliente cliente = repositorioCliente.getOne(idCupon);
+        Cliente cliente = repositorioCliente.getOne(mailCliente);
 
         cupon.setDisponible(false);
         cupon.setCliente(cliente);
@@ -144,8 +144,8 @@ public class ServicioCupon {
                if (cupon.getId().equals(idCupon)) {
                    
                    Cliente cliente = cupon.getCliente();
-                   cliente.getCuponPromo().remove(cupon);
                    
+                   cliente.getCuponPromo().remove(cupon);
                    comercio.getCuponesPromo().remove(cupon);
                    
                    repositorioCupon.delete(cupon);
