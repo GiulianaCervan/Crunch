@@ -5,6 +5,7 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,19 +22,23 @@ public class Cupon {
     protected Calendar vencimiento;
     protected boolean disponible;
     protected String mailComercio;
+    @ManyToOne
+    protected Cliente cliente;
+    @ManyToOne
+    protected Comercio comercio;
 
-    public Cupon() {
-    }
+    public Cupon() {}
 
-    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio) {
+    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio, Cliente cliente, Comercio comercio) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vencimiento = vencimiento;
         this.disponible = disponible;
         this.mailComercio = mailComercio;
+        this.cliente = cliente;
+        this.comercio = comercio;
     }
-
     
 
     public String getId() {
@@ -82,8 +87,23 @@ public class Cupon {
 
     public void setMailComercio(String mailComercio) {
         this.mailComercio = mailComercio;
+    }    
+
+    public Cliente getCliente() {
+        return cliente;
     }
-    
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Comercio getComercio() {
+        return comercio;
+    }
+
+    public void setComercio(Comercio comercio) {
+        this.comercio = comercio;
+    }
     
     
 }

@@ -5,7 +5,7 @@
  */
 package Crunch;
 
-import Crunch.servicios.ServicioCliente;
+import Crunch.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,15 +22,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SeguridadClienteConfiguracion extends WebSecurityConfigurerAdapter {
+public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private ServicioCliente servicioCliente;
+    private ServicioUsuario servicioUsuario;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(servicioCliente)
+                .userDetailsService(servicioUsuario)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
     
