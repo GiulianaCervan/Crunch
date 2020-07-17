@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cliente {
@@ -132,5 +133,7 @@ public class Cliente {
     public void setValoraciones(List<Valoracion> valoraciones) {
         this.valoraciones = valoraciones;
     }
+
+    
 
 }

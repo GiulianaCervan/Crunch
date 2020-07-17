@@ -1,11 +1,15 @@
 
 package Crunch.entidades;
 
+
 import Crunch.utilidades.Rubro;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Comercio {
@@ -29,6 +33,7 @@ public class Comercio {
     private Float reputacion;
     @OneToMany
     private List<Valoracion> valoraciones;
+    private MultipartFile archivo;
 
     public Comercio() {
     }
@@ -152,5 +157,15 @@ public class Comercio {
     public void setValoraciones(List<Valoracion> valoraciones) {
         this.valoraciones = valoraciones;
     }
+    @OneToOne
+private Foto foto;
+public  Foto getFoto(){
+    return foto;
+}
+public void setFoto(Foto foto){
+    this.foto = foto ;
+}
+    
     
 }
+
