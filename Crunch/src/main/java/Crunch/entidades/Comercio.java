@@ -5,22 +5,16 @@ package Crunch.entidades;
 import Crunch.utilidades.Rubro;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class Comercio {
+public class Comercio extends Usuario{
     
-    @Id
-    private String mail;
-    private String clave;
+  
     private String nombreComercio;
-    private String nombreDuenio;
-    private String apellidoDuenio;
-    private String telefono;
     private String direccion;
     @OneToMany
     private List<Rubro> rubros;
@@ -36,15 +30,12 @@ public class Comercio {
     private MultipartFile archivo;
 
     public Comercio() {
+        super();
     }
 
-    public Comercio(String mail, String clave, String nombreComercio, String nombreDuenio, String apellidoDuenio, String telefono, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones) {
-        this.mail = mail;
-        this.clave = clave;
+    public Comercio(String nombreComercio, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+        super(mail, clave, nombre, apellido, telefono);
         this.nombreComercio = nombreComercio;
-        this.nombreDuenio = nombreDuenio;
-        this.apellidoDuenio = apellidoDuenio;
-        this.telefono = telefono;
         this.direccion = direccion;
         this.rubros = rubros;
         this.cuponesPromo = cuponesPromo;
@@ -54,52 +45,12 @@ public class Comercio {
         this.valoraciones = valoraciones;
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
     public String getNombreComercio() {
         return nombreComercio;
     }
 
     public void setNombreComercio(String nombreComercio) {
         this.nombreComercio = nombreComercio;
-    }
-
-    public String getNombreDuenio() {
-        return nombreDuenio;
-    }
-
-    public void setNombreDuenio(String nombreDuenio) {
-        this.nombreDuenio = nombreDuenio;
-    }
-
-    public String getApellidoDuenio() {
-        return apellidoDuenio;
-    }
-
-    public void setApellidoDuenio(String apellidoDuenio) {
-        this.apellidoDuenio = apellidoDuenio;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public String getDireccion() {
@@ -157,14 +108,67 @@ public class Comercio {
     public void setValoraciones(List<Valoracion> valoraciones) {
         this.valoraciones = valoraciones;
     }
+
     @OneToOne
 private Foto foto;
-public  Foto getFoto(){
+public  Foto getFoto
     return foto;
 }
 public void setFoto(Foto foto){
     this.foto = foto ;
 }
+
+
+    @Override
+    public String getMail() {
+        return mail;
+    }
+
+    @Override
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    @Override
+    public String getClave() {
+        return clave;
+    }
+
+    @Override
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String getApellido() {
+        return apellido;
+    }
+
+    @Override
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    @Override
+    public String getTelefono() {
+        return telefono;
+    }
+
+    @Override
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
     
     
 }

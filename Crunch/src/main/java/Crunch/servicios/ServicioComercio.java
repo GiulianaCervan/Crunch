@@ -18,7 +18,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,21 +27,15 @@ import org.springframework.stereotype.Service;
  * @author lauta
  */
 @Service
-public class ServicioComercio implements UserDetailsService {
+public class ServicioComercio{
 
     @Autowired
     private ComercioRepositorio comercioRepositorio;
 
     /**
      * Este método crea y guarda en la base de datos un objeto Cliente.
-     *
-     * @param mail
-     * @param clave
-     * @param clave2
+     * 
      * @param nombreComercio
-     * @param nombreDuenio
-     * @param apellidoDuenio
-     * @param telefono
      * @param direccion
      * @param rubros
      * @param cuponesPromo
@@ -50,35 +43,41 @@ public class ServicioComercio implements UserDetailsService {
      * @param raspaditas
      * @param reputacion
      * @param valoraciones
-     * @throws ExcepcionServicio
+     * @param mail
+     * @param clave
+     * @param nombre
+     * @param apellido
+     * @param telefono
+     * @param clave2
+     * @throws ExcepcionServicio 
      */
     @Transactional
-    public void crear(String mail, String clave,String clave2, String nombreComercio, String nombreDuenio, String apellidoDuenio, String telefono, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones) throws ExcepcionServicio {
+    public void crear(String nombreComercio, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono,String clave2) throws ExcepcionServicio {
 
-        validar(mail, clave,clave2, nombreComercio, nombreDuenio, apellidoDuenio, telefono, direccion, rubros);
+        validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
-        Comercio comercio = new Comercio(mail, clave, nombreComercio, nombreDuenio, apellidoDuenio, telefono, direccion, rubros, cuponesPromo, cuponesCanje, raspaditas, reputacion, valoraciones);
-
+        Comercio comercio = new Comercio(nombreComercio, direccion, rubros, cuponesPromo, cuponesCanje, raspaditas, reputacion, valoraciones, mail, clave, nombre, apellido, telefono);
+       
         comercioRepositorio.save(comercio);
     }
 
     /**
      * Este método encuentra y modifica un objeto Comercio
-     *
+     * 
      * @param mail
      * @param clave
      * @param clave2
      * @param nombreComercio
-     * @param nombreDuenio
-     * @param apellidoDuenio
+     * @param nombre
+     * @param apellido
      * @param telefono
      * @param direccion
      * @param rubros
-     * @throws ExcepcionServicio
+     * @throws ExcepcionServicio 
      */
     @Transactional
-    public void modificar(String mail, String clave,String clave2, String nombreComercio, String nombreDuenio, String apellidoDuenio, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
-        validar(mail, clave,clave2, nombreComercio, nombreDuenio, apellidoDuenio, telefono, direccion, rubros);
+    public void modificar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
+        validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
         if (respuesta.isPresent()) {
@@ -88,8 +87,8 @@ public class ServicioComercio implements UserDetailsService {
             String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
             comercio.setClave(claveEncriptada);
             comercio.setNombreComercio(nombreComercio);
-            comercio.setNombreDuenio(nombreDuenio);
-            comercio.setApellidoDuenio(apellidoDuenio);
+            comercio.setNombre(nombre);
+            comercio.setApellido(apellido);
             comercio.setTelefono(telefono);
             comercio.setDireccion(direccion);
             comercio.setRubros(rubros);
@@ -105,19 +104,18 @@ public class ServicioComercio implements UserDetailsService {
      * registrar. Todavía está incompleto, quizá podemos agregarle más adelante
      * una segunda clave a los métodos cuando se llene el formulario de front y
      * confirmar que la clave se repitió
-     *
      * @param mail
      * @param clave
      * @param clave2
      * @param nombreComercio
-     * @param nombreDuenio
-     * @param apellidoDuenio
+     * @param nombre
+     * @param apellido
      * @param telefono
      * @param direccion
      * @param rubros
-     * @throws ExcepcionServicio
+     * @throws ExcepcionServicio 
      */
-    private void validar(String mail, String clave,String clave2, String nombreComercio, String nombreDuenio, String apellidoDuenio, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
+    private void validar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
@@ -134,10 +132,10 @@ public class ServicioComercio implements UserDetailsService {
         if (nombreComercio == null || nombreComercio.isEmpty()) {
             throw new ExcepcionServicio("El nombre del comercio no puede ser nulo o estar vacío.");
         }
-        if (nombreDuenio == null || nombreDuenio.isEmpty()) {
+        if (nombre == null || nombre.isEmpty()) {
             throw new ExcepcionServicio("El nombre del dueño no puede ser nulo o estar vacío.");
         }
-        if (apellidoDuenio == null || apellidoDuenio.isEmpty()) {
+        if (apellido == null || apellido.isEmpty()) {
             throw new ExcepcionServicio("El apellido del dueño no puede ser nulo o estar vacío.");
         }
 
@@ -153,11 +151,6 @@ public class ServicioComercio implements UserDetailsService {
             throw new ExcepcionServicio("El/los rubro/s no puede/n ser nulo/s");
         }
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

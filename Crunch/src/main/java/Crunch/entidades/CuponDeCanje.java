@@ -9,16 +9,16 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 
 @Entity
-public class CuponDeCanje extends Cupon{
-        
+public class CuponDeCanje extends Cupon {
+
     private Integer costo;
 
     public CuponDeCanje() {
         super();
     }
 
-    public CuponDeCanje(Integer costo, String id, String titulo, String descripcion, Calendar vencimiento) {
-        super(id, titulo, descripcion, vencimiento);
+    public CuponDeCanje(Integer costo, String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, boolean vencido, Comercio comercio, Cliente cliente) {
+        super(id, titulo, descripcion, vencimiento, disponible, vencido, comercio, cliente);
         this.costo = costo;
     }
 
@@ -69,6 +69,5 @@ public class CuponDeCanje extends Cupon{
     public void setVencimiento(Calendar vencimiento) {
         this.vencimiento = vencimiento;
     }
-    
-    
+
 }

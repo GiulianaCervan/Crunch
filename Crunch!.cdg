@@ -2,14 +2,9 @@
 
 <ClassDiagram name="Crunch!">
   <ClassDiagramComponents>
-    <Class name="Cliente" package="" visibility="public" xPosition="255.0" yPosition="72.0">
+    <Class name="Cliente" package="" visibility="public" xPosition="147.0" yPosition="263.0">
       <Fields>
-        <Field name="mail" type="String" visibility="private"/>
-        <Field name="clave" type="String" visibility="private"/>
-        <Field name="nombre" type="String" visibility="private"/>
-        <Field name="apellido" type="String" visibility="private"/>
         <Field name="domicilio" type="String" visibility="private"/>
-        <Field name="telefono" type="String" visibility="private"/>
         <Field name="puntos" type="Integer" visibility="private"/>
         <Field name="cuponPromo" type="List&lt;Cupon&gt;" visibility="private"/>
         <Field name="cuponCanje" type="List&lt;CuponDeCanje&gt;" visibility="private"/>
@@ -24,14 +19,9 @@
         <Method name="untitledMethod" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Comercio" package="" visibility="public" xPosition="925.0" yPosition="103.0">
+    <Class name="Comercio" package="" visibility="public" xPosition="915.0" yPosition="253.0">
       <Fields>
-        <Field name="mail" type="String" visibility="private"/>
-        <Field name="clave" type="String" visibility="private"/>
         <Field name="nombreComercio" type="String" visibility="private"/>
-        <Field name="nombreDuenio" type="String" visibility="private"/>
-        <Field name="apellidoDuenio" type="String" visibility="private"/>
-        <Field name="telefono" type="String" visibility="private"/>
         <Field name="direccion" type="String" visibility="private"/>
         <Field name="rubros" type="List&lt;Rubro&gt;" visibility="private"/>
         <Field name="cuponesPromo" type="List&lt;Cupon&gt;" visibility="private"/>
@@ -47,7 +37,7 @@
         <Method name="borrar" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Cupon" package="" visibility="public" xPosition="591.0" yPosition="8.0">
+    <Class name="Cupon" package="" visibility="public" xPosition="561.0" yPosition="263.0">
       <Fields>
         <Field name="identificador" type="String" visibility="private"/>
         <Field name="descripcion" type="String" visibility="private"/>
@@ -60,7 +50,7 @@
         <Method name="usar" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="CuponDeCanje" package="" visibility="public" xPosition="591.0" yPosition="249.0">
+    <Class name="CuponDeCanje" package="" visibility="public" xPosition="561.0" yPosition="482.0">
       <Fields>
         <Field name="costo" type="Integer" visibility="private"/>
       </Fields>
@@ -70,7 +60,7 @@
         <Method name="usar" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Raspadita" package="" visibility="public" xPosition="567.0" yPosition="561.0">
+    <Class name="Raspadita" package="" visibility="public" xPosition="572.0" yPosition="935.0">
       <Fields>
         <Field name="identificador" type="String" visibility="private"/>
         <Field name="tipoRaspadita" type="String" visibility="private"/>
@@ -80,7 +70,7 @@
         <Method name="canje" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="TipoRaspadita" package="" visibility="public" xPosition="965.0" yPosition="519.0">
+    <Class name="TipoRaspadita" package="" visibility="public" xPosition="955.0" yPosition="945.0">
       <Fields>
         <Field name="puntos" type="Integer" visibility="private"/>
         <Field name="identificador" type="String" visibility="private"/>
@@ -88,7 +78,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Class name="Valoracion" package="" visibility="public" xPosition="621.0" yPosition="398.0">
+    <Class name="Valoracion" package="" visibility="public" xPosition="561.0" yPosition="670.0">
       <Fields>
         <Field name="identificador" type="String" visibility="private"/>
         <Field name="puntuacion" type="Integer" visibility="private"/>
@@ -96,7 +86,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Enum name="Rubro" package="" visibility="public" xPosition="1209.0" yPosition="103.0">
+    <Enum name="Rubro" package="" visibility="public" xPosition="1458.0" yPosition="223.0">
       <Literals>
         <Literal name="ALMACEN"/>
         <Literal name="VERDULERIA"/>
@@ -121,18 +111,32 @@
         <Literal name="POLLERIA"/>
       </Literals>
     </Enum>
+    <Class name="Usuario" package="" visibility="public" isAbstract="true" xPosition="561.0" yPosition="47.0">
+      <Fields>
+        <Field name="mail" type="String" visibility="private"/>
+        <Field name="clave" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="telefono" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="es un " source="Comercio" target="Rubro" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="crea" source="Cliente" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Cliente" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Cliente" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Comercio" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="tiene" source="Comercio" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <IsRelation name="is" source="CuponDeCanje" target="Cupon"/>
-    <HasRelation name="tiene" source="Comercio" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Cliente" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="tiene" source="Raspadita" target="TipoRaspadita" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="tiene" source="Cliente" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Comercio" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="CuponDeCanje" target="Cupon"/>
+    <HasRelation name="es un " source="Comercio" target="Rubro" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="Cliente" target="Usuario"/>
+    <HasRelation name="tiene" source="Comercio" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="tiene" source="Comercio" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="crea" source="Cliente" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="" source="CuponDeCanje" target="Comercio" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="Comercio" target="Usuario"/>
   </ClassDiagramRelations>
 </ClassDiagram>
