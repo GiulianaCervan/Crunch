@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Crunch</title>
+        <title>Crunch - Registro Comercio</title>
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -61,9 +61,18 @@
                                 <input type="text" class="form-control" name="titular"th:value="${titular}"/>
                                 <label>Apellido del titular del comercio</label>
                                 <input type="text" class="form-control" name="apellidoTitular"th:value="${apellidoTitular}"/>
-                                <label>Telefono</label>
-                                <input type="number" placeholder="261" class="form-control cod-area" name="area"th:value="${area}"/> 
-                                <input type="number" class="form-control" placeholder="" name="telefono"th:value="${telefono}"/> 
+                                
+                            <div class="container">
+                                <div class="row">
+                                      <label for="">Telefono</label>
+                                      <div class="input-group">
+                                        <input type="tel" placeholder="(Cod. de área)" required class="form-control" name="area"th:value="${area}" style="width: 126px;" /> 
+                                        
+                                        <input type="tel" required class="form-control" placeholder="(Numero de telefono)" name="telefono"th:value="${telefono}" required pattern="[0-9]{9}" title="El numero de telefono debe tener 9 digitos" style="width: 309px;"/> 
+                                      </div>
+                                  </div>
+                              </div>
+                           
                                 <label>Dirección del Comercio</label>
                                 <input type="text" class="form-control" name="direccionComercio" th:value="${direccionComercio}"/>
                                 <label>E-Mail</label>
