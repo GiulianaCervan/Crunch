@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,25 +23,31 @@ public class Cupon {
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Calendar vencimiento;
     protected boolean disponible;
-    protected String mailComercio;
-    @ManyToOne
-    protected Cliente cliente;
+
+    protected boolean vencido;
+    
     @ManyToOne
     protected Comercio comercio;
+    @ManyToOne
+    protected Cliente cliente;
+    
+    public Cupon() {
+    }
 
-    public Cupon() {}
+    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, boolean vencido, Comercio comercio, Cliente cliente) {
 
-    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio, Cliente cliente, Comercio comercio) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vencimiento = vencimiento;
         this.disponible = disponible;
-        this.mailComercio = mailComercio;
-        this.cliente = cliente;
+        this.vencido = vencido;
         this.comercio = comercio;
+        this.cliente = cliente;
     }
-    
+
+  
+
 
     public String getId() {
         return id;
@@ -81,20 +89,13 @@ public class Cupon {
         this.disponible = disponible;
     }
 
-    public String getMailComercio() {
-        return mailComercio;
+
+    public boolean isVencido() {
+        return vencido;
     }
 
-    public void setMailComercio(String mailComercio) {
-        this.mailComercio = mailComercio;
-    }    
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setVencido(boolean vencido) {
+        this.vencido = vencido;
     }
 
     public Comercio getComercio() {
@@ -104,6 +105,18 @@ public class Cupon {
     public void setComercio(Comercio comercio) {
         this.comercio = comercio;
     }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+
+    }
+    
+    
+    
     
     
 }

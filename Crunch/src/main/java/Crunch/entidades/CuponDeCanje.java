@@ -17,8 +17,8 @@ public class CuponDeCanje extends Cupon {
         super();
     }
 
-    public CuponDeCanje(Integer costo, String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio) {
-        super(id, titulo, descripcion, vencimiento, disponible, mailComercio);
+    public CuponDeCanje(Integer costo, String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, boolean vencido, Comercio comercio, Cliente cliente) {
+        super(id, titulo, descripcion, vencimiento, disponible, vencido, comercio, cliente);
         this.costo = costo;
     }
 
