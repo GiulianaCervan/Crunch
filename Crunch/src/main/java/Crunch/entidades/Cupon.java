@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,6 +23,7 @@ public class Cupon {
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Calendar vencimiento;
     protected boolean disponible;
+
     protected boolean vencido;
     
     @ManyToOne
@@ -33,6 +35,7 @@ public class Cupon {
     }
 
     public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, boolean vencido, Comercio comercio, Cliente cliente) {
+
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -44,6 +47,7 @@ public class Cupon {
     }
 
   
+
 
     public String getId() {
         return id;
@@ -108,8 +112,8 @@ public class Cupon {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+
     }
-    
     
     
     

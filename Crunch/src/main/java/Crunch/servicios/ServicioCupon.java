@@ -153,7 +153,7 @@ public class ServicioCupon {
                    repositorioComercio.save(comercio);
                }
         }
-        
+
     }
     
     public void verificarVencidos(String mailCliente){
@@ -168,6 +168,7 @@ public class ServicioCupon {
                 repositorioCupon.save(cupon);
             }
         }
+
     }
 
     //Borrado de cupones vencidos al hacer login
