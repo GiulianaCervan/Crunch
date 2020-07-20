@@ -3,19 +3,16 @@ package Crunch.entidades;
 
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ *
+ * @author lauta
+ */
 @Entity
-public class Cliente {
+public class Cliente extends Usuario{
     
-    @Id
-    private String mail;
-    private String clave;
-    private String nombre;
-    private String apellido;
     private String domicilio;
-    private String telefono;
     private Integer puntos;
     @OneToMany
     private List<Cupon> cuponPromo;
@@ -27,54 +24,17 @@ public class Cliente {
     private List<Valoracion> valoraciones;
 
     public Cliente() {
+        super();
     }
 
-    public Cliente(String mail, String clave, String nombre, String apellido, String domicilio, String telefono, Integer puntos, List<Cupon> cuponPromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones) {
-        this.mail = mail;
-        this.clave = clave;
-        this.nombre = nombre;
-        this.apellido = apellido;
+    public Cliente(String domicilio, Integer puntos, List<Cupon> cuponPromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+        super(mail, clave, nombre, apellido, telefono);
         this.domicilio = domicilio;
-        this.telefono = telefono;
         this.puntos = puntos;
         this.cuponPromo = cuponPromo;
         this.cuponCanje = cuponCanje;
         this.raspaditas = raspaditas;
         this.valoraciones = valoraciones;
-    }
-    
-    
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    public String getClave() {
-        return clave;
-    }
-
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getDomicilio() {
@@ -83,14 +43,6 @@ public class Cliente {
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public Integer getPuntos() {
@@ -132,5 +84,57 @@ public class Cliente {
     public void setValoraciones(List<Valoracion> valoraciones) {
         this.valoraciones = valoraciones;
     }
+
+    @Override
+    public String getMail() {
+        return mail;
+    }
+
+    @Override
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    @Override
+    public String getClave() {
+        return clave;
+    }
+
+    @Override
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    @Override
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String getApellido() {
+        return apellido;
+    }
+
+    @Override
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    @Override
+    public String getTelefono() {
+        return telefono;
+    }
+
+    @Override
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+   
 
 }

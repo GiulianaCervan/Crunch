@@ -5,6 +5,7 @@ import java.util.Calendar;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -19,16 +20,26 @@ public class Cupon {
     protected String descripcion;
     @Temporal(javax.persistence.TemporalType.DATE)
     protected Calendar vencimiento;
+    protected boolean disponible;
+    protected String mailComercio;
+    @ManyToOne
+    protected Cliente cliente;
+    @ManyToOne
+    protected Comercio comercio;
 
-    public Cupon() {
-    }
+    public Cupon() {}
 
-    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento) {
+    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, String mailComercio, Cliente cliente, Comercio comercio) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vencimiento = vencimiento;
+        this.disponible = disponible;
+        this.mailComercio = mailComercio;
+        this.cliente = cliente;
+        this.comercio = comercio;
     }
+    
 
     public String getId() {
         return id;
@@ -61,5 +72,38 @@ public class Cupon {
     public void setVencimiento(Calendar vencimiento) {
         this.vencimiento = vencimiento;
     }
+
+    public boolean isDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public String getMailComercio() {
+        return mailComercio;
+    }
+
+    public void setMailComercio(String mailComercio) {
+        this.mailComercio = mailComercio;
+    }    
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Comercio getComercio() {
+        return comercio;
+    }
+
+    public void setComercio(Comercio comercio) {
+        this.comercio = comercio;
+    }
+    
     
 }

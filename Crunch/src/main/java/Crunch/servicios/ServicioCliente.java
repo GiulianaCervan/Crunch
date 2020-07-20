@@ -17,7 +17,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ import org.springframework.stereotype.Service;
  * @author lauta
  */
 @Service
-public class ServicioCliente implements UserDetailsService {
+public class ServicioCliente{
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
@@ -56,8 +55,7 @@ public class ServicioCliente implements UserDetailsService {
 
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         
-        Cliente cliente = new Cliente(mail, claveEncriptada, nombre, apellido, domicilio, telefono, puntos, cuponPromo, cuponCanje, raspaditas, valoraciones);
-       
+        Cliente cliente = new Cliente(domicilio, puntos, cuponPromo, cuponCanje, raspaditas, valoraciones, mail, claveEncriptada, nombre, apellido, telefono);
         clienteRepositorio.save(cliente);
     }
 
@@ -140,11 +138,6 @@ public class ServicioCliente implements UserDetailsService {
             throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
         }
 
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
