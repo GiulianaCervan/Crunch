@@ -24,7 +24,7 @@
         <Method name="untitledMethod" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Comercio" package="" visibility="public" xPosition="668.0" yPosition="294.0">
+    <Class name="Comercio" package="" visibility="public" xPosition="550.0" yPosition="266.0">
       <Fields>
         <Field name="mail" type="String" visibility="private"/>
         <Field name="clave" type="String" visibility="private"/>
@@ -70,7 +70,7 @@
         <Method name="usar" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="Raspadita" package="" visibility="public" xPosition="399.0" yPosition="472.0">
+    <Class name="Raspadita" package="" visibility="public" xPosition="348.0" yPosition="389.0">
       <Fields>
         <Field name="identificador" type="String" visibility="private"/>
         <Field name="tipoRaspadita" type="String" visibility="private"/>
@@ -96,7 +96,7 @@
       <Constructors/>
       <Methods/>
     </Class>
-    <Enum name="Rubro" package="" visibility="public" xPosition="961.0" yPosition="39.0">
+    <Enum name="Rubro" package="" visibility="public" xPosition="857.0" yPosition="-16.0">
       <Literals>
         <Literal name="ALMACEN"/>
         <Literal name="VERDULERIA"/>
@@ -123,16 +123,16 @@
     </Enum>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <HasRelation name="tiene" source="Comercio" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Cliente" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="crea" source="Cliente" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Comercio" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Comercio" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <IsRelation name="is" source="CuponDeCanje" target="Cupon"/>
     <HasRelation name="tiene" source="Comercio" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="es un " source="Comercio" target="Rubro" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
-    <HasRelation name="tiene" source="Raspadita" target="TipoRaspadita" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
     <HasRelation name="tiene" source="Cliente" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <IsRelation name="is" source="CuponDeCanje" target="Cupon"/>
+    <HasRelation name="tiene" source="Comercio" target="Raspadita" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="es un " source="Comercio" target="Rubro" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Cliente" target="CuponDeCanje" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
     <HasRelation name="tiene" source="Cliente" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Comercio" target="Cupon" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="tiene" source="Raspadita" target="TipoRaspadita" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="tiene" source="Comercio" target="Valoracion" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
   </ClassDiagramRelations>
 </ClassDiagram>
