@@ -1,12 +1,14 @@
 
 package Crunch.entidades;
 
+import Crunch.utilidades.TipoCupon;
 import java.util.Calendar;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,19 +19,25 @@ public class Cupon {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    protected String id;
-    protected String titulo;
-    protected String descripcion;
+    private String id;
+    
+    private String titulo;
+    private String descripcion;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
-    protected Calendar vencimiento;
-    protected boolean disponible;
+    private Calendar vencimiento;
+    private boolean disponible;
 
-    protected boolean vencido;
+    private boolean vencido;
+    
+    @Enumerated(EnumType.STRING)
+    private TipoCupon tipo;
     
     @ManyToOne
-    protected Comercio comercio;
+    private Comercio comercio;
+    
     @ManyToOne
-    protected Cliente cliente;
+    private Cliente cliente;
     
     public Cupon() {
     }
@@ -46,8 +54,13 @@ public class Cupon {
         this.cliente = cliente;
     }
 
-  
+    public TipoCupon getTipo() {
+        return tipo;
+    }
 
+    public void setTipo(TipoCupon tipo) {
+        this.tipo = tipo;
+    }
 
     public String getId() {
         return id;
