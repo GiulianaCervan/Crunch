@@ -1,6 +1,4 @@
-
 package Crunch.entidades;
-
 
 import Crunch.utilidades.Rubro;
 import java.util.List;
@@ -11,35 +9,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class Comercio extends Usuario{
-    
-  
+public class Comercio extends Usuario {
+
     private String nombreComercio;
     private String direccion;
+
     @OneToMany
-    private List<Rubro> rubros;
+    private List<RubroAsignado> rubros;
+
     @OneToMany
     private List<Cupon> cuponesPromo;
-    @OneToMany
-    private List<CuponDeCanje> cuponesCanje;
+
     @OneToMany
     private List<Raspadita> raspaditas;
+
     private Float reputacion;
+
     @OneToMany
     private List<Valoracion> valoraciones;
-    private MultipartFile archivo;
+
+    @OneToOne
+    private Foto foto;
 
     public Comercio() {
         super();
     }
 
-    public Comercio(String nombreComercio, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+    public Comercio(String nombreComercio, String direccion, List<RubroAsignado> rubros, List<Cupon> cuponesPromo, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
         super(mail, clave, nombre, apellido, telefono);
         this.nombreComercio = nombreComercio;
         this.direccion = direccion;
         this.rubros = rubros;
         this.cuponesPromo = cuponesPromo;
-        this.cuponesCanje = cuponesCanje;
         this.raspaditas = raspaditas;
         this.reputacion = reputacion;
         this.valoraciones = valoraciones;
@@ -61,11 +62,11 @@ public class Comercio extends Usuario{
         this.direccion = direccion;
     }
 
-    public List<Rubro> getRubros() {
+    public List<RubroAsignado> getRubros() {
         return rubros;
     }
 
-    public void setRubros(List<Rubro> rubros) {
+    public void setRubros(List<RubroAsignado> rubros) {
         this.rubros = rubros;
     }
 
@@ -75,14 +76,6 @@ public class Comercio extends Usuario{
 
     public void setCuponesPromo(List<Cupon> cuponesPromo) {
         this.cuponesPromo = cuponesPromo;
-    }
-
-    public List<CuponDeCanje> getCuponesCanje() {
-        return cuponesCanje;
-    }
-
-    public void setCuponesCanje(List<CuponDeCanje> cuponesCanje) {
-        this.cuponesCanje = cuponesCanje;
     }
 
     public List<Raspadita> getRaspaditas() {
@@ -109,15 +102,14 @@ public class Comercio extends Usuario{
         this.valoraciones = valoraciones;
     }
 
-    @OneToOne
-private Foto foto;
-public  Foto getFoto
-    return foto;
-}
-public void setFoto(Foto foto){
-    this.foto = foto ;
-}
+    public Foto getFoto() {
 
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 
     @Override
     public String getMail() {
@@ -169,7 +161,4 @@ public void setFoto(Foto foto){
         this.telefono = telefono;
     }
 
-    
-    
 }
-

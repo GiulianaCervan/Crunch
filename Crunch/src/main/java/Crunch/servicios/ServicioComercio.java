@@ -7,18 +7,15 @@ package Crunch.servicios;
 
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Cupon;
-import Crunch.entidades.CuponDeCanje;
 import Crunch.entidades.Raspadita;
+import Crunch.entidades.RubroAsignado;
 import Crunch.entidades.Valoracion;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ComercioRepositorio;
-import Crunch.utilidades.Rubro;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,11 +49,11 @@ public class ServicioComercio{
      * @throws ExcepcionServicio 
      */
     @Transactional
-    public void crear(String nombreComercio, String direccion, List<Rubro> rubros, List<Cupon> cuponesPromo, List<CuponDeCanje> cuponesCanje, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono,String clave2) throws ExcepcionServicio {
+    public void crear(String nombreComercio, String direccion, List<RubroAsignado> rubros, List<Cupon> cuponesPromo, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono,String clave2) throws ExcepcionServicio {
 
         validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
-        Comercio comercio = new Comercio(nombreComercio, direccion, rubros, cuponesPromo, cuponesCanje, raspaditas, reputacion, valoraciones, mail, clave, nombre, apellido, telefono);
+        Comercio comercio = new Comercio(nombreComercio, direccion, rubros, cuponesPromo, raspaditas, reputacion, valoraciones, mail, clave, nombre, apellido, telefono);
        
         comercioRepositorio.save(comercio);
     }
@@ -76,7 +73,7 @@ public class ServicioComercio{
      * @throws ExcepcionServicio 
      */
     @Transactional
-    public void modificar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
+    public void modificar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
         validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
@@ -115,7 +112,7 @@ public class ServicioComercio{
      * @param rubros
      * @throws ExcepcionServicio 
      */
-    private void validar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<Rubro> rubros) throws ExcepcionServicio {
+    private void validar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
