@@ -1,6 +1,4 @@
-
 package Crunch.entidades;
-
 
 import Crunch.utilidades.Rubro;
 import java.util.List;
@@ -11,25 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-public class Comercio extends Usuario{
-    
+public class Comercio extends Usuario {
+
     private String nombreComercio;
     private String direccion;
-    
+
     @OneToMany
     private List<RubroAsignado> rubros;
-    
+
     @OneToMany
     private List<Cupon> cuponesPromo;
-    
+
     @OneToMany
     private List<Raspadita> raspaditas;
-    
+
     private Float reputacion;
-    
+
     @OneToMany
     private List<Valoracion> valoraciones;
-    private MultipartFile archivo;
+
+    @OneToOne
+    private Foto foto;
 
     public Comercio() {
         super();
@@ -45,8 +45,6 @@ public class Comercio extends Usuario{
         this.reputacion = reputacion;
         this.valoraciones = valoraciones;
     }
-
-
 
     public String getNombreComercio() {
         return nombreComercio;
@@ -80,7 +78,6 @@ public class Comercio extends Usuario{
         this.cuponesPromo = cuponesPromo;
     }
 
-
     public List<Raspadita> getRaspaditas() {
         return raspaditas;
     }
@@ -105,15 +102,14 @@ public class Comercio extends Usuario{
         this.valoraciones = valoraciones;
     }
 
-    @OneToOne
-private Foto foto;
-public  Foto getFoto
-    return foto;
-}
-public void setFoto(Foto foto){
-    this.foto = foto ;
-}
+    public Foto getFoto() {
 
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 
     @Override
     public String getMail() {
@@ -165,7 +161,4 @@ public void setFoto(Foto foto){
         this.telefono = telefono;
     }
 
-    
-    
 }
-
