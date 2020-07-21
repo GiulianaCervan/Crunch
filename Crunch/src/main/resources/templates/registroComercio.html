@@ -54,7 +54,7 @@
                         <div class="p-5">
                             <h2 class="masthead-heading mb-0">Registrate</h2>
                             <form action="/registrar" method="POST">
-                                <p th:if"${error !=}" th:text="${error} style="color:red"></p>
+                                <p th:if="${error != null}" th:text="${error} style="color:red"></p>
                                 <label>Nombre del comercio</label>
                                 <input type="text" class="form-control" name="nombreComercio" th:value="${nombreComercio}"/>
                                 <label>Nombre del titular del comercio</label>

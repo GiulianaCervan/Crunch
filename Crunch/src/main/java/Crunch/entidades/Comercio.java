@@ -103,62 +103,11 @@ public class Comercio extends Usuario {
     }
 
     public Foto getFoto() {
-
         return foto;
     }
 
     public void setFoto(Foto foto) {
         this.foto = foto;
-    }
-
-    @Override
-    public String getMail() {
-        return mail;
-    }
-
-    @Override
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    @Override
-    public String getClave() {
-        return clave;
-    }
-
-    @Override
-    public void setClave(String clave) {
-        this.clave = clave;
-    }
-
-    @Override
-    public String getNombre() {
-        return nombre;
-    }
-
-    @Override
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public String getApellido() {
-        return apellido;
-    }
-
-    @Override
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    @Override
-    public String getTelefono() {
-        return telefono;
-    }
-
-    @Override
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
 }
