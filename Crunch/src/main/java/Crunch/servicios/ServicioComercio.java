@@ -1,5 +1,6 @@
 package Crunch.servicios;
 
+import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Cupon;
 import Crunch.entidades.Raspadita;
@@ -20,6 +21,31 @@ public class ServicioComercio {
     @Autowired
     private ComercioRepositorio comercioRepositorio;
 
+    /**
+     * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
+     * 
+     * @param mail
+     * @return
+     * @throws ExcepcionServicio 
+     */
+    public Comercio buscarPorId(String mail) throws ExcepcionServicio{
+        
+        if (mail == null || mail.isEmpty()) {
+            throw new ExcepcionServicio("El campo mail no puede estar vacio o ser nulo");
+        }
+        
+        Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
+        Comercio comercio = null;
+        if (respuesta.isPresent()) {
+            comercio = respuesta.get();
+            
+        }else{
+            throw new ExcepcionServicio("El comercio no fue encontrado con el mail otorgado");
+        }
+        return comercio;
+        
+        
+    }
     /**
      * Este método crea y guarda en la base de datos un objeto Cliente.
      *

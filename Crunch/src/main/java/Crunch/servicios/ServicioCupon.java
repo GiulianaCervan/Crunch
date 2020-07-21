@@ -20,6 +20,7 @@ import Crunch.utilidades.Rubro;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -49,6 +50,7 @@ public class ServicioCupon {
      * @param cantidad
      * @throws ExcepcionServicio
      */
+    @Transactional
     public void crear(String titulo, String descripcion, Integer dias, String mailComercio, Integer cantidad) throws ExcepcionServicio {
 
         validar(titulo, descripcion);
@@ -98,6 +100,7 @@ public class ServicioCupon {
      * @param mailComercio
      * @throws ExcepcionServicio
      */
+    @Transactional
     public void borrar(String titulo, String mailComercio) throws ExcepcionServicio {
 
         validar(titulo, mailComercio);
@@ -121,6 +124,7 @@ public class ServicioCupon {
      * @param idCupon
      * @throws ExcepcionServicio
      */
+    @Transactional
     public void otorgar(String mailCliente, String idCupon) throws ExcepcionServicio {
 
         validar(mailCliente, idCupon);
@@ -151,6 +155,7 @@ public class ServicioCupon {
      * @param mailComercio
      * @param idCupon
      */
+    @Transactional
     public void validarCupon(String mailComercio, String idCupon) throws ExcepcionServicio {
 
         Comercio comercio = repositorioComercio.getOne(idCupon);
@@ -183,6 +188,7 @@ public class ServicioCupon {
      *
      * @param mailCliente
      */
+    @Transactional
     public void verificarVencidos(String mailCliente) {
 
         Cliente cliente = repositorioCliente.getOne(mailCliente);

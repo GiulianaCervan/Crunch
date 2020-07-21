@@ -2,6 +2,9 @@ package Crunch.servicios;
 
 import Crunch.entidades.Foto;
 import Crunch.repositorios.FotoRepositorio;
+
+
+
 import java.io.IOException;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -15,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public class ServicioFoto {
+
 
     @Autowired
     private FotoRepositorio fotoRepositorio;
@@ -36,6 +40,7 @@ public class ServicioFoto {
         }
         return null;
     }
+
 
     @Transactional
     public Foto actualizar(String idFoto, MultipartFile archivo){
