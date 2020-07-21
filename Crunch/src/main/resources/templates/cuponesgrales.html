@@ -1,11 +1,11 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Crunch - Registro Comercio</title>
+        <title>Crunch - Registro usuario </title>
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -13,6 +13,35 @@
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        body {
+          font-family: Arial;
+        }
+        
+        .coupon {
+          border: 5px dotted #bbb;
+          width: 80%;
+          border-radius: 15px;
+          margin: 0 auto;
+          max-width: 600px;
+        }
+        
+        .container {
+          padding: 2px 16px;
+          background-color: #f1f1f1;
+        }
+        
+        .promo {
+          background: #ccc;
+          padding: 3px;
+        }
+        
+        .expire {
+          color: red;
+        }
+        </style>
+        
     </head>
     <body id="page-top">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
@@ -20,7 +49,7 @@
                 <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/index">VOLVER</a>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Volver</a>
                         </li>
                         
                     </ul>
@@ -28,67 +57,26 @@
             </div>
         </nav>
         <header class="masthead bg-primary text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image--><img src="assets/img/CRUNCH IMG.jpeg" alt="" class="rounded-circle" style:="height: 400px";/>
-                <!-- Masthead Heading-->
-                <h2 class="masthead-heading mb-0">Registrá tu comercio</h2>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
+            <div class="row">
+                <div class="col md-4" th:each="cupon : ${cupones}">
+                    <form method="POST" action="">
+                        <div class="coupon">
+                            <div class="container" style="background-color:orangered">
+                            <img class="shape" src="assets/img/logo.jpg" alt="" >
+                            
+                              <h2>TITULO</h2> 
+                              <p>Lorem ipsum dolor sit amet, et nam pertinax gloriatur. Sea te minim soleat senserit, ex quo luptatum tacimates voluptatum, salutandi delicatissimi eam ea. In sed nullam laboramus appellantur, mei ei omnis dolorem mnesarchum.</p>
+                            
+                              <p>Use Promo Code: <span class="promo">CODIGO</span></p>
+                              <p class="expire">FECHA: Jan 03, 2021</p>
+                              <button class="btn btn-primary" type="submit" >Adquirir cupón!</button>
+                            </div>
+                          </div>
+                    </form>
                 </div>
-                <!-- Masthead Subheading-->
-                <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu zona </p>
             </div>
+            
         </header>
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
-                <!-- Portfolio Section Heading-->
-               
-                <!-- Icon Divider-->
-               
-                <div class="container">
-               
-                    <div class="col-lg-6 order-lg-1">
-                        <div class="p-5">
-                            <h2 class="masthead-heading mb-0">Registrate</h2>
-                            <form action="/registrar" method="POST">
-                                <p th:if="${error != null}" th:text="${error} style="color:red"></p>
-                                <label>Nombre del comercio</label>
-                                <input type="text" class="form-control" name="nombreComercio" th:value="${nombreComercio}"/>
-                                <label>Nombre del titular del comercio</label>
-                                <input type="text" class="form-control" name="titular"th:value="${titular}"/>
-                                <label>Apellido del titular del comercio</label>
-                                <input type="text" class="form-control" name="apellidoTitular"th:value="${apellidoTitular}"/>
-                                
-                            <div class="container">
-                                <div class="row">
-                                      <label for="">Telefono</label>
-                                      <div class="input-group">
-                                        <input type="tel" placeholder="(Cod. de área)" required class="form-control" name="area"th:value="${area}" style="width: 126px;" /> 
-                                        
-                                        <input type="tel" required class="form-control" placeholder="(Numero de telefono)" name="telefono"th:value="${telefono}" required pattern="[0-9]{9}" title="El numero de telefono debe tener 9 digitos" style="width: 309px;"/> 
-                                      </div>
-                                  </div>
-                              </div>
-                           
-                                <label>Dirección del Comercio</label>
-                                <input type="text" class="form-control" name="direccionComercio" th:value="${direccionComercio}"/>
-                                <label>E-Mail</label>
-                                <input type="mail" class="form-control" name="mail"th:value="${mail}"/>
-                                <label>Clave</label>
-                                <input type="password" class="form-control" name="clave1"th:value="${clave1}"/>
-                                <label>Repetir Clave</label>
-                                <input type="password" class="form-control" name="clave2"th:value="${clave2}"/>
-                                <br/><button type="submit" class="btn btn-primary">Registrarme</button>
-                            </form>
-                        </div>
-                    </div>
-                   
-        </section>
-        <!-- Portfolio Modal-->
-        <hr class="divider my-4" />
         <section class="page-section" id="contact">
             <div class="container">
                 <!-- Contact Section Heading-->

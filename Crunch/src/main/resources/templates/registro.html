@@ -50,7 +50,7 @@
                     <div class="p-5">
                         <h2 class="masthead-heading mb-0">Registrarme</h2>
                         <form action="/registrar" method="POST">
-                            <p th:if"${error !=}" th:text="${error} style="color:red"></p>
+                            <p th:if="${error != null}" th:text="${error} style="color:red"></p>
                             <label>Nombre</label>
                             <input type="text" class="form-control" name="nombre" th:value="${nombre}"/>
                             

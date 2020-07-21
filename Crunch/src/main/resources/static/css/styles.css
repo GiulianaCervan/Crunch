@@ -7775,3 +7775,9 @@ textarea:invalid
     color: red;
     background-color: white;
 }
+.shape {
+    width:200px;
+    float: right;
+    shape-outside: circle(50%);
+    border-radius: 50%;
+}

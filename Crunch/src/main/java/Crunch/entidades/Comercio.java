@@ -111,7 +111,8 @@ public class Comercio extends Usuario{
 
     @OneToOne
 private Foto foto;
-public  Foto getFoto
+
+    public  Foto getFoto(){
     return foto;
 }
 public void setFoto(Foto foto){
