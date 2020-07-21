@@ -3,6 +3,7 @@ package Crunch.entidades;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Cliente extends Usuario{
@@ -72,6 +73,9 @@ public class Cliente extends Usuario{
         this.valoraciones = valoraciones;
     }
 
+
+    
+
     @Override
     public String getMail() {
         return mail;
@@ -123,5 +127,6 @@ public class Cliente extends Usuario{
     }
 
    
+
 
 }
