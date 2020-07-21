@@ -35,15 +35,15 @@ public class ControladorPortal {
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
+        System.out.println("Llegue al controladorrrrrrrrrrrrrrrrrrrrrrrr");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-        }
+        UserDetails userDetails = (UserDetails) principal;
+        
         String userMail = userDetails.getUsername();
         
         String rol = userDetails.getAuthorities().toString();
-        
+        System.out.println(userDetails);
+        System.out.println(rol);
         switch(rol){
             
             case "ROLE_CLIENTE":
@@ -112,9 +112,11 @@ public class ControladorPortal {
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String domicilio, @RequestParam String telefono) {
+    public String registrar(ModelMap modelo, @RequestParam(required = false) String mail, @RequestParam(required = false) String clave1, @RequestParam(required = false) String clave2, @RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido, @RequestParam(required = false) String domicilio, @RequestParam(required = false) String telefono, @RequestParam(required = false) String area) {
         try {
-            servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, telefono);
+            area.concat(telefono);
+            
+            servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, area);
         } catch (ExcepcionServicio e) {
 
             modelo.put("error", e.getMessage());
@@ -124,7 +126,7 @@ public class ControladorPortal {
             modelo.put("telefono", telefono);
             modelo.put("mail", mail);
             /**
-             * *************************FALTA PONER domicilio EN EL REGISTRO
+             * *************************FALTA PONER domicilio EN EL REGISTRO en el front!
              */
 //            modelo.put("domicilio",domicilio);
             return "registro.html";
