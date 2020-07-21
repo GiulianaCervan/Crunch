@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Crunch.servicios;
 
 import Crunch.entidades.Comercio;
@@ -19,48 +14,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author lauta
- */
 @Service
-public class ServicioComercio{
+public class ServicioComercio {
 
     @Autowired
     private ComercioRepositorio comercioRepositorio;
 
     /**
      * Este método crea y guarda en la base de datos un objeto Cliente.
-     * 
+     *
      * @param nombreComercio
      * @param direccion
      * @param rubros
-     * @param cuponesPromo
-     * @param cuponesCanje
-     * @param raspaditas
-     * @param reputacion
-     * @param valoraciones
      * @param mail
      * @param clave
      * @param nombre
      * @param apellido
      * @param telefono
      * @param clave2
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(String nombreComercio, String direccion, List<RubroAsignado> rubros, List<Cupon> cuponesPromo, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono,String clave2) throws ExcepcionServicio {
+    public void crear(String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, List<RubroAsignado> rubros) throws ExcepcionServicio {
 
-        validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
+        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
-        Comercio comercio = new Comercio(nombreComercio, direccion, rubros, cuponesPromo, raspaditas, reputacion, valoraciones, mail, clave, nombre, apellido, telefono);
-       
+        String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+
+        Comercio comercio = new Comercio();
+        /**
+         * Saqué del método crear los atributos de:
+         * cuponesPromo,cuponesCanje,raspaditas,reputacion,valoracion
+         *                          ATTE Lauta
+         */
+        comercio.setMail(mail);
+        comercio.setClave(claveEncriptada);
+        comercio.setNombre(nombre);
+        comercio.setApellido(apellido);
+        comercio.setTelefono(telefono);
+        comercio.setDireccion(direccion);
+        comercio.setNombreComercio(nombreComercio);
+        comercio.setRubros(rubros);
+
         comercioRepositorio.save(comercio);
     }
 
     /**
      * Este método encuentra y modifica un objeto Comercio
-     * 
+     *
      * @param mail
      * @param clave
      * @param clave2
@@ -70,11 +71,11 @@ public class ServicioComercio{
      * @param telefono
      * @param direccion
      * @param rubros
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
     @Transactional
-    public void modificar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
-        validar(mail, clave,clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
+    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
+        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
         if (respuesta.isPresent()) {
@@ -101,6 +102,7 @@ public class ServicioComercio{
      * registrar. Todavía está incompleto, quizá podemos agregarle más adelante
      * una segunda clave a los métodos cuando se llene el formulario de front y
      * confirmar que la clave se repitió
+     *
      * @param mail
      * @param clave
      * @param clave2
@@ -110,9 +112,9 @@ public class ServicioComercio{
      * @param telefono
      * @param direccion
      * @param rubros
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
-    private void validar(String mail, String clave,String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
+    private void validar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
@@ -122,10 +124,10 @@ public class ServicioComercio{
             throw new ExcepcionServicio("La clave no puede ser nula o estar vacia y tiene que ser mayor a 6 caracteres.");
         }
 
-        if(!clave.equals(clave2)){
+        if (!clave.equals(clave2)) {
             throw new ExcepcionServicio("Las claves deben ser iguales");
         }
-        
+
         if (nombreComercio == null || nombreComercio.isEmpty()) {
             throw new ExcepcionServicio("El nombre del comercio no puede ser nulo o estar vacío.");
         }
