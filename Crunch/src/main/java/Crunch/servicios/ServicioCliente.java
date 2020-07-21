@@ -1,29 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Crunch.servicios;
 
 import Crunch.entidades.Cliente;
-import Crunch.entidades.Cupon;
-
-import Crunch.entidades.Raspadita;
-import Crunch.entidades.Valoracion;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
-import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author lauta
- */
 @Service
 public class ServicioCliente{
 
@@ -40,21 +25,28 @@ public class ServicioCliente{
      * @param apellido
      * @param domicilio
      * @param telefono
-     * @param puntos
-     * @param cuponPromo
-     * @param cuponCanje
-     * @param raspaditas
-     * @param valoraciones
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(String mail, String clave,String clave2, String nombre, String apellido, String domicilio, String telefono, Integer puntos, List<Cupon> cuponPromo,List<Raspadita> raspaditas, List<Valoracion> valoraciones) throws ExcepcionServicio {
+    public void crear(String mail, String clave,String clave2, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
 
         validar(mail, clave,clave2, nombre, apellido, domicilio, telefono);
 
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+        /**
+         * Saqué del método crear los atributos de:
+         * puntos, cuponPromo,raspaditas,valoraciones.
+         *                          ATTE Lauta
+         */
+        Cliente cliente = new Cliente();
+        cliente.setMail(mail);
+        cliente.setClave(claveEncriptada);
+        cliente.setNombre(nombre);
+        cliente.setApellido(apellido);
+        cliente.setTelefono(telefono);
+        cliente.setDomicilio(domicilio);
         
-        Cliente cliente = new Cliente(domicilio, puntos, cuponPromo, raspaditas, valoraciones, mail, clave, nombre, apellido, telefono);
+        
         clienteRepositorio.save(cliente);
     }
 
