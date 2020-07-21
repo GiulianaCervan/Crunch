@@ -50,14 +50,52 @@
             }
             
             </style>
+            <style>
+                nav#menu li>a{
+    background-color: grey;
+    color: white;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+    min-width: 100px;
+  }
+  #menu li>a:hover{
+    color: #000;
+    background-color: #eaeaea;
+  }
+  #menu>li{
+    float: left;
+    text-align:center
+  }
+  #menu>li>ul{
+    display: none;
+  }
+  #menu>li:hover>ul {
+    display:block;
+  }
+  *{
+  margin: 0;
+  padding: 0;
+}
+
+ul{
+  list-style: none;
+}
+            </style>
     </head>
     <body id="page-top">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
             <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">CRUNCH!</a>
                 <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/Login">LOG IN</a>
+                    <ul class="navbar-nav ml-auto" id="menu">
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">REGISTRATE</a>
+                            <ul>
+                                <li><a href="registroComercio.html">COMERCIO</a></li>
+                                <li><a href="registro.html">USUARIO</a></li>
+                              </ul>  
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">LOG IN</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">COMERCIOS</a>
                         </li>
