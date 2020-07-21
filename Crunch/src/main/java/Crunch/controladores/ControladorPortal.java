@@ -35,6 +35,7 @@ public class ControladorPortal {
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
+        System.out.println("Llegue al controladorrrrrrrrrrrrrrrrrrrrrrrr");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         
@@ -111,9 +112,11 @@ public class ControladorPortal {
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String domicilio, @RequestParam String telefono) {
+    public String registrar(ModelMap modelo, @RequestParam(required = false) String mail, @RequestParam(required = false) String clave1, @RequestParam(required = false) String clave2, @RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido, @RequestParam(required = false) String domicilio, @RequestParam(required = false) String telefono, @RequestParam(required = false) String area) {
         try {
-            servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, telefono);
+            area.concat(telefono);
+            
+            servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, area);
         } catch (ExcepcionServicio e) {
 
             modelo.put("error", e.getMessage());
