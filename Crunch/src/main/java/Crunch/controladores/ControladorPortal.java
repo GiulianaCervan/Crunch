@@ -1,8 +1,15 @@
 package Crunch.controladores;
 
+import Crunch.entidades.Cliente;
+import Crunch.entidades.Comercio;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
+import Crunch.servicios.ServicioComercio;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,44 +23,112 @@ public class ControladorPortal {
 
     @Autowired
     private ServicioCliente servicioCliente;
+    @Autowired
+    private ServicioComercio servicioComercio;
 
     @GetMapping("/")
     public String index() {
         return "index.html";
     }
 
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false)String error,@RequestParam(required = false)String logout, ModelMap modelo){
-        if(error != null){
-            modelo.put("error","Usuario o clave incorrectos.");
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE','ROLE_COMERCIO')")
+    @GetMapping("/inicio")
+    public String inicio(ModelMap modelo, HttpSession session) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = null;
+        if (principal instanceof UserDetails) {
+            userDetails = (UserDetails) principal;
         }
-        if(logout != null){
+        String userMail = userDetails.getUsername();
+        
+        String rol = userDetails.getAuthorities().toString();
+        
+        switch(rol){
+            
+            case "ROLE_CLIENTE":
+                Cliente cliente = null;
+                try {
+                    cliente = servicioCliente.buscarPorId(userMail);
+                } catch (ExcepcionServicio e) {
+                    modelo.put("error", e.getMessage());
+                }
+                
+                session.setAttribute("usuariosession", cliente);
+                return "inicioCliente.html";
+                
+            case "ROLE_COMERCIO":
+                Comercio comercio = null;
+                try {
+                    comercio = servicioComercio.buscarPorId(userMail);                    
+                } catch (ExcepcionServicio e) {
+                    modelo.put("error", e.getMessage());
+                }
+                session.setAttribute("usuariosession", comercio);
+                    return "inicioComercio.html";
+            default:
+                modelo.put("error", "Algo a pasado...");
+                return "index.html";
+        }
+        
+        
+        
+
+    }
+//    public String registrar(ModelMap modelo, HttpSession session, MultipartFile archivo, @RequestParam String documento, @RequestParam String nombre,@RequestParam String apellido, @RequestParam String domicilio,@RequestParam String telefono, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String idZona){
+//        Cliente cliente = null;
+//        
+//        try {
+//            cliente = clienteRepositorio.buscarClientePorId(documento);
+//            clienteServicio.modificar(documento, nombre, apellido, domicilio, telefono, clave1, clave2, idZona);
+//            session.setAttribute("usuariosession", cliente);
+//            return "redirect:/perfil";
+//            
+//        } catch (ErrorServicio e) {
+//      
+//            List<Zona> zonas = zonaRepositorio.findAll();
+//            modelo.put("zonas", zonas);
+//            modelo.put("error", e.getMessage());           
+//            modelo.put("perfil", cliente);
+//           
+//            return "error.html";
+//        }
+//    }
+
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo) {
+        if (error != null) {
+            modelo.put("error", "Usuario o clave incorrectos.");
+        }
+        if (logout != null) {
             modelo.put("logout", "Ha salido correctamente de la plataforma");
         }
-        return"loginComercio.html";
+        return "login.html";
     }
-    
+
     @GetMapping("/registro")
     public String registro(ModelMap modelo) {
         return "registro.html";
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo,@RequestParam String mail,@RequestParam String clave1,@RequestParam String clave2,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String domicilio,@RequestParam String telefono){
+    public String registrar(ModelMap modelo, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String domicilio, @RequestParam String telefono) {
         try {
             servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, telefono);
         } catch (ExcepcionServicio e) {
-            
-            modelo.put("error",e.getMessage());
-            
+
+            modelo.put("error", e.getMessage());
+
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
-            modelo.put("telefono",telefono);
-            modelo.put("mail",mail);
-            /***************************FALTA PONER domicilio EN EL REGISTRO*/
+            modelo.put("telefono", telefono);
+            modelo.put("mail", mail);
+            /**
+             * *************************FALTA PONER domicilio EN EL REGISTRO
+             */
 //            modelo.put("domicilio",domicilio);
-            return"registro.html";
+            return "registro.html";
         }
-        return"exito.html";
+        return "exito.html";
     }
 }

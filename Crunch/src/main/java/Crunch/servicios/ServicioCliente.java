@@ -14,6 +14,32 @@ public class ServicioCliente{
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+    
+    /**
+     * Se le ingresa el mail de cliente registrado y devuelve el Objeto Cliente
+     * 
+     * @param mail
+     * @return
+     * @throws ExcepcionServicio 
+     */
+    public Cliente buscarPorId(String mail) throws ExcepcionServicio{
+        
+        if (mail == null || mail.isEmpty()) {
+            throw new ExcepcionServicio("El campo mail no puede estar vacio o ser nulo");
+        }
+        
+        Optional<Cliente> respuesta = clienteRepositorio.findById(mail);
+        Cliente cliente = null;
+        if (respuesta.isPresent()) {
+            cliente = respuesta.get();
+            
+        }else{
+            throw new ExcepcionServicio("El cliente no fue encontrado con el mail otorgado");
+        }
+        return cliente;
+        
+        
+    }
     /**
      * Este método es el que usaríamos para crear usuarios y guardarlos en
      * nuestra base de datos.
