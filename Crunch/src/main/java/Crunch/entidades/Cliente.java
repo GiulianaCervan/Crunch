@@ -1,14 +1,9 @@
-
 package Crunch.entidades;
 
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-/**
- *
- * @author lauta
- */
 @Entity
 public class Cliente extends Usuario{
     
@@ -16,8 +11,6 @@ public class Cliente extends Usuario{
     private Integer puntos;
     @OneToMany
     private List<Cupon> cuponPromo;
-    @OneToMany
-    private List<CuponDeCanje> cuponCanje;
     @OneToMany
     private List<Raspadita> raspaditas;
     @OneToMany
@@ -27,15 +20,16 @@ public class Cliente extends Usuario{
         super();
     }
 
-    public Cliente(String domicilio, Integer puntos, List<Cupon> cuponPromo, List<CuponDeCanje> cuponCanje, List<Raspadita> raspaditas, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+    public Cliente(String domicilio, Integer puntos, List<Cupon> cuponPromo, List<Raspadita> raspaditas, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
         super(mail, clave, nombre, apellido, telefono);
         this.domicilio = domicilio;
         this.puntos = puntos;
         this.cuponPromo = cuponPromo;
-        this.cuponCanje = cuponCanje;
         this.raspaditas = raspaditas;
         this.valoraciones = valoraciones;
     }
+
+   
 
     public String getDomicilio() {
         return domicilio;
@@ -61,13 +55,6 @@ public class Cliente extends Usuario{
         this.cuponPromo = cuponPromo;
     }
 
-    public List<CuponDeCanje> getCuponCanje() {
-        return cuponCanje;
-    }
-
-    public void setCuponCanje(List<CuponDeCanje> cuponCanje) {
-        this.cuponCanje = cuponCanje;
-    }
 
     public List<Raspadita> getRaspaditas() {
         return raspaditas;

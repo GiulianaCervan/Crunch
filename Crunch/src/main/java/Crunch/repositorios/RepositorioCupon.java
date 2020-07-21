@@ -20,8 +20,11 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface RepositorioCupon extends JpaRepository<Cupon, String>  {
     
-    @Query("SELECT c FROM Cupon c WHERE c.titulo = :titulo AND c.mailComercio = :mailComercio")
-    public List<Cupon> buscarPorTituloyComercio(@Param("titulo")String titulo,@Param("mailComercio")String mailComercio);
+    @Query("SELECT c FROM Cupon c WHERE c.titulo = :titulo AND c.comercio.mail = :mail")
+    public List<Cupon> buscarPorTituloyComercio(@Param("titulo")String titulo,@Param("mail")String mailComercio);
+    
+  //  @Query("SELECT c FROM Cupon c, IN() WHERE c.comercio.rubro = :rubro")
+   // public List<Cupon> buscarPorRubro (@Param("rubro") String rubro);
 
     
 }

@@ -8,6 +8,7 @@ package Crunch.servicios;
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Cupon;
+import Crunch.entidades.RubroAsignado;
 import Crunch.repositorios.RepositorioCupon;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
+import Crunch.utilidades.Rubro;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -32,17 +34,20 @@ public class ServicioCupon {
     private ClienteRepositorio repositorioCliente;
     @Autowired
     private ComercioRepositorio repositorioComercio;
+
     /**
-     * Pide la informacion del cliente que esta logueado, busco al cliente, itera en base a la cantidad de cupones que se quieren
-     * crear, asignandoles a sus campos los mismos valores, los agrega a la lista de cuponesPromo del cliente y persiste en BD a los 
-     * cupones y al cliente con las actualizaciones
-     * 
+     * Pide la informacion del cliente que esta logueado, busco al cliente,
+     * itera en base a la cantidad de cupones que se quieren crear, asignandoles
+     * a sus campos los mismos valores, los agrega a la lista de cuponesPromo
+     * del cliente y persiste en BD a los cupones y al cliente con las
+     * actualizaciones
+     *
      * @param titulo
      * @param descripcion
      * @param dias
      * @param mailComercio
      * @param cantidad
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
     public void crear(String titulo, String descripcion, Integer dias, String mailComercio, Integer cantidad) throws ExcepcionServicio {
 
@@ -83,13 +88,15 @@ public class ServicioCupon {
             throw new ExcepcionServicio("La cantidad de cupones a crear no puede ser menor a 1");
         }
     }
+
     /**
-     * Busco al comercio logueado, bsuco en su lista de cuponesPromo a los que coincidan con el titulo, verifico que no haya sido 
-     * otorgados y borro si cumplen ambas condiciones
-     * 
+     * Busco al comercio logueado, bsuco en su lista de cuponesPromo a los que
+     * coincidan con el titulo, verifico que no haya sido otorgados y borro si
+     * cumplen ambas condiciones
+     *
      * @param titulo
      * @param mailComercio
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
     public void borrar(String titulo, String mailComercio) throws ExcepcionServicio {
 
@@ -105,13 +112,14 @@ public class ServicioCupon {
         }
         repositorioComercio.save(comercio);
     }
+
     /**
-     * Busca el cupon en la BD, lo setea como no disponible, se lo agrega a lista de CuponesPromo del cliente logueado,
-     * y persisite los cambios.
-     * 
+     * Busca el cupon en la BD, lo setea como no disponible, se lo agrega a
+     * lista de CuponesPromo del cliente logueado, y persisite los cambios.
+     *
      * @param mailCliente
      * @param idCupon
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
     public void otorgar(String mailCliente, String idCupon) throws ExcepcionServicio {
 
@@ -135,41 +143,96 @@ public class ServicioCupon {
 
     }
 
-    public void validarCupon(String mailComercio, String idCupon) {
+    /**
+     * Busca el cupon por id, busca en los cupones del comercio, luego lo busca
+     * en el cliente y lo borra de ambos.. validando el cupon y guardando los
+     * cambios en la BD
+     *
+     * @param mailComercio
+     * @param idCupon
+     */
+    public void validarCupon(String mailComercio, String idCupon) throws ExcepcionServicio {
 
-           Comercio comercio = repositorioComercio.getOne(idCupon);
-           
-           for (Cupon cupon : comercio.getCuponesPromo()) {
-            
-               if (cupon.getId().equals(idCupon)) {
-                   
-                   Cliente cliente = cupon.getCliente();
-                   
-                   cliente.getCuponPromo().remove(cupon);
-                   comercio.getCuponesPromo().remove(cupon);
-                   
-                   repositorioCupon.delete(cupon);
-                   repositorioCliente.save(cliente);
-                   repositorioComercio.save(comercio);
-               }
-        }
+        Comercio comercio = repositorioComercio.getOne(idCupon);
 
-    }
-    
-    public void verificarVencidos(String mailCliente){
-        
-        Cliente cliente = repositorioCliente.getOne(mailCliente);
-        
-        Calendar hoy = Calendar.getInstance();
-        for (Cupon cupon : cliente.getCuponPromo()) {
-            
-            if (hoy.after(cupon.getVencimiento())) {
-                cupon.setVencido(true);
-                repositorioCupon.save(cupon);
+        for (Cupon cupon : comercio.getCuponesPromo()) {
+
+            if (cupon.getId().equals(idCupon)) {
+                if (!cupon.isVencido()) {
+                    Cliente cliente = cupon.getCliente();
+
+                    cliente.getCuponPromo().remove(cupon);
+                    comercio.getCuponesPromo().remove(cupon);
+
+                    repositorioCupon.delete(cupon);
+                    repositorioCliente.save(cliente);
+                    repositorioComercio.save(comercio);
+                } else {
+                    throw new ExcepcionServicio("El cupon no se puede canjear, esta vencido");
+                }
+
             }
         }
 
     }
+
+    /**
+     * Metodo que debemos usar cada vez que un usuario se loguea... busca en su
+     * lista de cupones si tiene cupones vencidos o los pone como tal, si el
+     * cupon lleva mas de 7 dias vencidos, los borra
+     *
+     * @param mailCliente
+     */
+    public void verificarVencidos(String mailCliente) {
+
+        Cliente cliente = repositorioCliente.getOne(mailCliente);
+
+        Calendar hoy = Calendar.getInstance();
+        Calendar semana = hoy;
+        hoy.add(Calendar.DAY_OF_WEEK, 7);
+        for (Cupon cupon : cliente.getCuponPromo()) {
+
+            if (hoy.after(cupon.getVencimiento())) {
+                cupon.setVencido(true);
+                repositorioCupon.save(cupon);
+            }
+            if (semana.after(cupon.getVencimiento())) {
+                Comercio comercio = cupon.getComercio();
+
+                cliente.getCuponPromo().remove(cupon);
+                comercio.getCuponesPromo().remove(cupon);
+
+                repositorioCupon.delete(cupon);
+                repositorioCliente.save(cliente);
+                repositorioComercio.save(comercio);
+
+            }
+        }
+
+    }
+    
+   public List<Cupon> mostrarPorRubros(String rubro){
+       
+       List<Cupon> todos = repositorioCupon.findAll();
+       List<Cupon> porRubro = null;
+       for (Cupon cupon : todos) {
+           
+           for (RubroAsignado rubroComercio : cupon.getComercio().getRubros()) {
+               
+               
+               //********REVISAR ASIGNACION DE ENUM
+               if (rubroComercio.getRubro().equals(rubro)) {
+                   
+                   porRubro.add(cupon);
+               }
+           }
+       }
+       if (rubro == null || rubro.isEmpty()) {
+           return todos;
+       }
+       return porRubro;
+   }
+   
 
     //Borrado de cupones vencidos al hacer login
 //Validador generico
