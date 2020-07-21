@@ -15,10 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-/**
- *
- * @author lauta
- */
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -45,7 +42,7 @@ public class SeguridadConfiguracion extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/logincheck")
                 .usernameParameter("email")
                 .passwordParameter("clave")
-                .defaultSuccessUrl("/inicio")
+                .defaultSuccessUrl("/")
                 .and().logout()
                 .logoutUrl("/logout")
                 .permitAll()
