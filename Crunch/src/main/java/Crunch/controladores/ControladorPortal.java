@@ -36,14 +36,13 @@ public class ControladorPortal {
     public String inicio(ModelMap modelo, HttpSession session) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = null;
-        if (principal instanceof UserDetails) {
-            userDetails = (UserDetails) principal;
-        }
+        UserDetails userDetails = (UserDetails) principal;
+        
         String userMail = userDetails.getUsername();
         
         String rol = userDetails.getAuthorities().toString();
-        
+        System.out.println(userDetails);
+        System.out.println(rol);
         switch(rol){
             
             case "ROLE_CLIENTE":
@@ -124,7 +123,7 @@ public class ControladorPortal {
             modelo.put("telefono", telefono);
             modelo.put("mail", mail);
             /**
-             * *************************FALTA PONER domicilio EN EL REGISTRO
+             * *************************FALTA PONER domicilio EN EL REGISTRO en el front!
              */
 //            modelo.put("domicilio",domicilio);
             return "registro.html";
