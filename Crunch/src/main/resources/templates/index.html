@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="https://www.thymeleaf.org/">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,73 +15,73 @@
         <link rel="stylesheet" href="css/body.css">
         <style>
             .button {
-              border: none;
-              color: white;
-              padding: 16px 32px;
-              text-align: center;
-              text-decoration: none;
-              display: inline-block;
-              font-size: 16px;
-              margin: 4px 2px;
-              transition-duration: 0.4s;
-              cursor: pointer;
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
             }
-            
-            .button1 {
-              background-color: white; 
-              color: black; 
-              border: 2px solid #c07825;
-            }
-            
-            .button1:hover {
-              background-color: #c07825;
-              color: white;
-            }
-            
-            .button2 {
-              background-color: white; 
-              color: black; 
-              border: 2px solid #c07825;
-            }
-            
-            .button2:hover {
-              background-color: #008CBA;
-              color: white;
-            }
-            
-            </style>
-            <style>
-                nav#menu li>a{
-    background-color: grey;
-    color: white;
-    padding: 10px;
-    display: block;
-    text-decoration: none;
-    min-width: 100px;
-  }
-  #menu li>a:hover{
-    color: #000;
-    background-color: #eaeaea;
-  }
-  #menu>li{
-    float: left;
-    text-align:center
-  }
-  #menu>li>ul{
-    display: none;
-  }
-  #menu>li:hover>ul {
-    display:block;
-  }
-  *{
-  margin: 0;
-  padding: 0;
-}
 
-ul{
-  list-style: none;
-}
-            </style>
+            .button1 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #c07825;
+            }
+
+            .button1:hover {
+                background-color: #c07825;
+                color: white;
+            }
+
+            .button2 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #c07825;
+            }
+
+            .button2:hover {
+                background-color: #008CBA;
+                color: white;
+            }
+
+        </style>
+        <style>
+            nav#menu li>a{
+                background-color: grey;
+                color: white;
+                padding: 10px;
+                display: block;
+                text-decoration: none;
+                min-width: 100px;
+            }
+            #menu li>a:hover{
+                color: #000;
+                background-color: #eaeaea;
+            }
+            #menu>li{
+                float: left;
+                text-align:center
+            }
+            #menu>li>ul{
+                display: none;
+            }
+            #menu>li:hover>ul {
+                display:block;
+            }
+            *{
+                margin: 0;
+                padding: 0;
+            }
+
+            ul{
+                list-style: none;
+            }
+        </style>
     </head>
     <body id="page-top">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
@@ -94,7 +94,7 @@ ul{
                             <ul>
                                 <li><a href="">COMERCIO</a></li>
                                 <li><a href="/registro">USUARIO</a></li>
-                              </ul>  
+                            </ul>  
                         </li>
 
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">LOG IN</a>
@@ -184,7 +184,7 @@ ul{
                 <div class="row justify-content-center">
                     <button class="button button1">Ver todos</button>
                 </div>
-                
+
             </div>
         </section>
         <!-- Portfolio Modal-->
@@ -207,13 +207,13 @@ ul{
                                     <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5" src="assets/img/portfolio/animal.jpg" alt="Animal" style="width: m200px; height: 200px;"/>
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
-                                        <tr>
-                                      
-                                          <td><button class="button button1">Pet-Shop's</button></td>
-                                      
-                                          <td><button class="button button1">Veterinarias</button></td>
-                                      
-                                        </tr>
+                                    <tr>
+
+                                        <td><button class="button button1">Pet-Shop's</button></td>
+
+                                        <td><button class="button button1">Veterinarias</button></td>
+
+                                    </tr>
                                     <p></p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
@@ -243,25 +243,25 @@ ul{
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
                                     <tr>
-                                  
-                                      <td><button class="button button1">Panaderias</button></td>
-                                  
-                                      <td><button class="button button1">Verdulerias</button></td>
-                                      
-                                      <td><button class="button button1">Almacenes</button></td>
-                                  
-                                      <td><button class="button button1">Carnicerias</button></td>
-                                  
+
+                                        <td><button class="button button1">Panaderias</button></td>
+
+                                        <td><button class="button button1">Verdulerias</button></td>
+
+                                        <td><button class="button button1">Almacenes</button></td>
+
+                                        <td><button class="button button1">Carnicerias</button></td>
+
                                     </tr>
                                     <tr>
                                         <td><button class="button button1">Roticerias</button></td>
-                                  
+
                                         <td><button class="button button1">Pollerias</button></td>
 
                                         <td><button class="button button1">Dieteticas</button></td>
-                                  
+
                                     </tr>
-                                <p></p> <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
+                                    <p></p> <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
                         </div>
@@ -289,15 +289,15 @@ ul{
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
                                     <tr>
-                                  
-                                      <td><button class="button button1">Gomerias</button></td>
-                                  
-                                      <td><button class="button button1">Lubricentros</button></td>
 
-                                      <td><button class="button button1">Mecanica y electricidad</button></td>
-                                  
+                                        <td><button class="button button1">Gomerias</button></td>
+
+                                        <td><button class="button button1">Lubricentros</button></td>
+
+                                        <td><button class="button button1">Mecanica y electricidad</button></td>
+
                                     </tr>
-                                <p></p>
+                                    <p></p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
@@ -326,13 +326,13 @@ ul{
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
                                     <tr>
-                                  
-                                      <td><button class="button button1">Peluquerias</button></td>
-                                  
-                                      <td><button class="button button1">Farmacias</button></td>
+
+                                        <td><button class="button button1">Peluquerias</button></td>
+
+                                        <td><button class="button button1">Farmacias</button></td>
 
                                     </tr>
-                                <p></p>
+                                    <p></p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
@@ -361,25 +361,25 @@ ul{
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
                                     <form method="POST" action="">
-                                    <tr>
-                                        
-                                      <td> <button class="button button1" type="submit" th:value="ferreteria">Ferreterias</button></td>
-                                  
+                                        <tr>
 
-                                      <td><button class="button button1">Pinturerias</button></td>
+                                            <td> <button class="button button1" type="submit" th:value="ferreteria">Ferreterias</button></td>
 
-                                      <td><button class="button button1">Librerias</button></td>
-                                  
-                                    </tr>
-                                    <tr>
-                                  
-                                        <td><button class="button button1">Tinturerias</button></td>
-                                    
-                                        <td><button class="button button1">Art. Limpieza</button></td>
-  
-                                      </tr>
+
+                                            <td><button class="button button1">Pinturerias</button></td>
+
+                                            <td><button class="button button1">Librerias</button></td>
+
+                                        </tr>
+                                        <tr>
+
+                                            <td><button class="button button1">Tinturerias</button></td>
+
+                                            <td><button class="button button1">Art. Limpieza</button></td>
+
+                                        </tr>
                                     </form>
-                                <p></p>
+                                    <p></p>
                                     <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
@@ -408,14 +408,14 @@ ul{
                                     <!-- Portfolio Modal - Text-->
                                     <p></p>
                                     <tr>
-                                  
-                                      <td><button class="button button1">Computacion</button></td>
-                                  
-                                      <td><button class="button button1">Electronica</button></td>
 
-                                      </tr>
-                                <p></p>
-                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
+                                        <td><button class="button button1">Computacion</button></td>
+
+                                        <td><button class="button button1">Electronica</button></td>
+
+                                    </tr>
+                                    <p></p>
+                                    <button class="btn btn-primary" href="#" data-dismiss="modal"><i class="fas fa-times fa-fw"></i>Close Window</button>
                                 </div>
                             </div>
                         </div>

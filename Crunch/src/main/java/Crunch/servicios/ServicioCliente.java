@@ -147,9 +147,9 @@ public class ServicioCliente{
             throw new ExcepcionServicio("El apellido no puede ser nulo o estar vacío.");
         }
 
-        if (domicilio == null || domicilio.isEmpty()) {
-            throw new ExcepcionServicio("El domicilio no puede ser nulo o estar vacío.");
-        }
+//        if (domicilio == null || domicilio.isEmpty()) {
+//            throw new ExcepcionServicio("El domicilio no puede ser nulo o estar vacío.");
+//        }
 
         if (telefono == null || telefono.isEmpty()) {
             throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
