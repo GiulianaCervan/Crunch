@@ -107,7 +107,7 @@ public class ControladorPortal {
     }
 
     @GetMapping("/registro")
-    public String registro(ModelMap modelo) {
+    public String registro() {
         return "registro.html";
     }
 
@@ -116,7 +116,7 @@ public class ControladorPortal {
         try {
             area.concat(telefono);
             
-            servicioCliente.crear(mail, clave2, clave2, nombre, apellido, domicilio, area);
+            servicioCliente.crear(mail, clave1, clave2, nombre, apellido, domicilio, area);
         } catch (ExcepcionServicio e) {
 
             modelo.put("error", e.getMessage());

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
-
+<html lang="es" xmlns:th="https://www.thymeleaf.org/">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -60,6 +58,8 @@
         <br />
             <div class="row justify-content-center">
                 <form method="POST" action="/logincheck">
+                    <p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
+
                     <div class="form-group">
                         <label for="email" class="text-danger">Mail</label>
                         <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
