@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Crunch.entidades;
 
 import javax.persistence.Entity;
@@ -16,6 +12,7 @@ public class Raspadita {
     private Integer puntuacion;
 
     public Raspadita() {
+        
     }
 
     public Raspadita(String identificador, Integer puntuacion) {
