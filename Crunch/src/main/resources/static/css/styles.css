@@ -7781,4 +7781,41 @@ textarea:invalid
     shape-outside: circle(50%);
     border-radius: 50%;
 }
+hr.dashed {
+    border-top: 3px dashed #bbb;
+    border-color: coral;
+    width: 50%;
+  }
+  .button {
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #c07825;
+}
 
+.button1:hover {
+    background-color: #c07825;
+    color: white;
+}
+
+.button2 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #c07825;
+}
+
+.button2:hover {
+    background-color: #008CBA;
+    color: white;
+}
