@@ -35,7 +35,7 @@ public class ControladorPortal {
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
-        System.out.println("Llegue al controladorrrrrrrrrrrrrrrrrrrrrrrr");
+        
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         
@@ -46,7 +46,7 @@ public class ControladorPortal {
         System.out.println(rol);
         switch(rol){
             
-            case "ROLE_CLIENTE":
+            case "[ROLE_CLIENTE]":
                 Cliente cliente = null;
                 try {
                     cliente = servicioCliente.buscarPorId(userMail);
@@ -57,7 +57,8 @@ public class ControladorPortal {
                 session.setAttribute("usuariosession", cliente);
                 return "inicioCliente.html";
                 
-            case "ROLE_COMERCIO":
+                
+            case "[ROLE_COMERCIO]":
                 Comercio comercio = null;
                 try {
                     comercio = servicioComercio.buscarPorId(userMail);                    
@@ -66,6 +67,7 @@ public class ControladorPortal {
                 }
                 session.setAttribute("usuariosession", comercio);
                     return "inicioComercio.html";
+                    
             default:
                 modelo.put("error", "Algo a pasado...");
                 return "index.html";
