@@ -5,6 +5,7 @@ import Crunch.entidades.Comercio;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioComercio;
+import Crunch.servicios.ServicioCupon;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +26,8 @@ public class ControladorPortal {
     private ServicioCliente servicioCliente;
     @Autowired
     private ServicioComercio servicioComercio;
+    @Autowired
+    private ServicioCupon servicioCupon;
 
     @GetMapping("/")
     public String index() {
@@ -42,7 +45,7 @@ public class ControladorPortal {
         String userMail = userDetails.getUsername();
         
         String rol = userDetails.getAuthorities().toString();
-        System.out.println(userDetails);
+        
         
         switch(rol){
             
@@ -50,22 +53,26 @@ public class ControladorPortal {
                 Cliente cliente = null;
                 try {
                     cliente = servicioCliente.buscarPorId(userMail);
+                    servicioCupon.verificarVencidos(userMail);
+                    session.setAttribute("usuariosession", cliente);
                 } catch (ExcepcionServicio e) {
                     modelo.put("error", e.getMessage());
                 }
                 
-                session.setAttribute("usuariosession", cliente);
+                
                 return "inicioCliente.html";
                 
                 
             case "[ROLE_COMERCIO]":
                 Comercio comercio = null;
                 try {
-                    comercio = servicioComercio.buscarPorId(userMail);                    
+                    comercio = servicioComercio.buscarPorId(userMail);  
+                    servicioCupon.verificarVencidos(userMail);
+                    session.setAttribute("usuariosession", comercio);
                 } catch (ExcepcionServicio e) {
                     modelo.put("error", e.getMessage());
                 }
-                session.setAttribute("usuariosession", comercio);
+                
                     return "inicioComercio.html";
                     
             default:
@@ -114,7 +121,7 @@ public class ControladorPortal {
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam(required = false) String mail, @RequestParam(required = false) String clave1, @RequestParam(required = false) String clave2, @RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido, @RequestParam(required = false) String domicilio, @RequestParam(required = false) String telefono, @RequestParam(required = false) String area) {
+    public String registrarCliente(ModelMap modelo, @RequestParam(required = false) String mail, @RequestParam(required = false) String clave1, @RequestParam(required = false) String clave2, @RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido, @RequestParam(required = false) String domicilio, @RequestParam(required = false) String telefono, @RequestParam(required = false) String area) {
         try {
             area.concat(telefono);
             
@@ -135,5 +142,7 @@ public class ControladorPortal {
         }
         return "exito.html";
     }
+    
+    
    
 }

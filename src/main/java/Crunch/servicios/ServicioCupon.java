@@ -11,12 +11,10 @@ import Crunch.entidades.Cupon;
 import Crunch.entidades.RubroAsignado;
 import Crunch.repositorios.RepositorioCupon;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
-import Crunch.utilidades.Rubro;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -45,13 +43,13 @@ public class ServicioCupon {
      *
      * @param titulo
      * @param descripcion
-     * @param dias
+     * @param vencimiento
      * @param mailComercio
      * @param cantidad
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(String titulo, String descripcion, Integer dias, String mailComercio, Integer cantidad) throws ExcepcionServicio {
+    public void crear(String titulo, String descripcion, String vencimiento, String mailComercio, Integer cantidad) throws ExcepcionServicio {
 
         validar(titulo, descripcion);
 
@@ -70,16 +68,17 @@ public class ServicioCupon {
                 cupon.setTitulo(titulo);
                 cupon.setDescripcion(descripcion);
                 cupon.setComercio(comercio);
-
-                if (dias >= 7) {
-
-                    Calendar fecha = Calendar.getInstance();
-                    fecha.add(Calendar.DAY_OF_WEEK, dias);
-                    cupon.setVencimiento(fecha);
-
-                } else {
-                    throw new ExcepcionServicio("La cantidad minima de dias para un cupon es de 7");
+                
+                Calendar hoy = Calendar.getInstance();
+                Calendar minimo = hoy;
+                minimo.add(Calendar.DAY_OF_MONTH, 7);
+                
+                
+                if (true) {
+                    
                 }
+                
+
 
                 comercio.getCuponesPromo().add(cupon);
                 repositorioCupon.save(cupon);
@@ -189,56 +188,85 @@ public class ServicioCupon {
      * @param mailCliente
      */
     @Transactional
-    public void verificarVencidos(String mailCliente) {
+    public void verificarVencidos(String mail) {
 
-        Cliente cliente = repositorioCliente.getOne(mailCliente);
+        Optional<Cliente> respuestaCliente = repositorioCliente.findById(mail);
+        Optional<Comercio> respuestaComercio = repositorioComercio.findById(mail);
 
+       
         Calendar hoy = Calendar.getInstance();
         Calendar semana = hoy;
-        hoy.add(Calendar.DAY_OF_WEEK, 7);
-        for (Cupon cupon : cliente.getCuponPromo()) {
+        semana.add(Calendar.DAY_OF_WEEK, 7);
+        
+        if (respuestaCliente.isPresent()) {
 
-            if (hoy.after(cupon.getVencimiento())) {
-                cupon.setVencido(true);
-                repositorioCupon.save(cupon);
+            Cliente cliente = respuestaCliente.get();
+            for (Cupon cupon : cliente.getCuponPromo()) {
+
+                if (hoy.after(cupon.getVencimiento())) {
+                    cupon.setVencido(true);
+                    repositorioCupon.save(cupon);
+                }
+                if (semana.after(cupon.getVencimiento())) {
+                    Comercio comercio = cupon.getComercio();
+
+                    cliente.getCuponPromo().remove(cupon);
+                    comercio.getCuponesPromo().remove(cupon);
+
+                    repositorioCupon.delete(cupon);
+                    repositorioCliente.save(cliente);
+                    repositorioComercio.save(comercio);
+
+                }
             }
-            if (semana.after(cupon.getVencimiento())) {
-                Comercio comercio = cupon.getComercio();
+        } else if (respuestaComercio.isPresent()) {
 
-                cliente.getCuponPromo().remove(cupon);
-                comercio.getCuponesPromo().remove(cupon);
+            Comercio comercio = respuestaComercio.get();
+            
+            for (Cupon cupon : comercio.getCuponesPromo()) {
+                
+                if (hoy.after(cupon.getVencimiento())) {
+                    cupon.setVencido(true);
+                    repositorioCupon.save(cupon);
+                }
+                if (semana.after(cupon.getVencimiento())) {
+                    Cliente cliente = cupon.getCliente();
 
-                repositorioCupon.delete(cupon);
-                repositorioCliente.save(cliente);
-                repositorioComercio.save(comercio);
+                    cliente.getCuponPromo().remove(cupon);
+                    comercio.getCuponesPromo().remove(cupon);
 
+                    repositorioCupon.delete(cupon);
+                    repositorioCliente.save(cliente);
+                    repositorioComercio.save(comercio);
+
+                }
+                
             }
+
         }
 
     }
-    
-   public List<Cupon> mostrarPorRubros(String rubro){
-       
-       List<Cupon> todos = repositorioCupon.findAll();
-       List<Cupon> porRubro = null;
-       for (Cupon cupon : todos) {
-           
-           for (RubroAsignado rubroComercio : cupon.getComercio().getRubros()) {
-               
-               
-               //********REVISAR ASIGNACION DE ENUM
-               if (rubroComercio.getRubro().equals(rubro)) {
-                   
-                   porRubro.add(cupon);
-               }
-           }
-       }
-       if (rubro == null || rubro.isEmpty()) {
-           return todos;
-       }
-       return porRubro;
-   }
-   
+
+    public List<Cupon> mostrarPorRubros(String rubro) {
+
+        List<Cupon> todos = repositorioCupon.findAll();
+        List<Cupon> porRubro = null;
+        for (Cupon cupon : todos) {
+
+            for (RubroAsignado rubroComercio : cupon.getComercio().getRubros()) {
+
+                //********REVISAR ASIGNACION DE ENUM
+                if (rubroComercio.getRubro().equals(rubro)) {
+
+                    porRubro.add(cupon);
+                }
+            }
+        }
+        if (rubro == null || rubro.isEmpty()) {
+            return todos;
+        }
+        return porRubro;
+    }
 
     //Borrado de cupones vencidos al hacer login
 //Validador generico

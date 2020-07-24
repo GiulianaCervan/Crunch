@@ -1,11 +1,7 @@
 package Crunch.servicios;
 
-import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
-import Crunch.entidades.Cupon;
-import Crunch.entidades.Raspadita;
 import Crunch.entidades.RubroAsignado;
-import Crunch.entidades.Valoracion;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ComercioRepositorio;
 import java.util.List;
