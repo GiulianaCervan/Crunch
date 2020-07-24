@@ -1,6 +1,7 @@
 package Crunch.servicios;
 
 import Crunch.entidades.Foto;
+import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.FotoRepositorio;
 
 
@@ -24,14 +25,14 @@ public class ServicioFoto {
     private FotoRepositorio fotoRepositorio;
 
     @Transactional
-    public Foto guardar(MultipartFile archivo) throws IOException {
+    public Foto guardar(MultipartFile archivo) throws  ExcepcionServicio{
         if (archivo != null) {
 
             try {
                 Foto foto = new Foto();
                 foto.setMime(archivo.getContentType());
                 foto.setNombre(archivo.getName());
-                foto.setContedido(archivo.getBytes());
+                foto.setContenido(archivo.getBytes());
 
                 return fotoRepositorio.save(foto);
             } catch (IOException e) {
@@ -58,7 +59,7 @@ public class ServicioFoto {
                 }
                 foto.setMime(archivo.getContentType());
                 foto.setNombre(archivo.getName());
-                foto.setContedido(archivo.getBytes());
+                foto.setContenido(archivo.getBytes());
                 return fotoRepositorio.save(foto);
                 
             } catch (IOException e) {
@@ -67,4 +68,6 @@ public class ServicioFoto {
         }
         return null;
     }
+    
+  
 }

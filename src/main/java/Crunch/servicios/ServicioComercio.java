@@ -3,6 +3,7 @@ package Crunch.servicios;
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Cupon;
+import Crunch.entidades.Foto;
 import Crunch.entidades.Raspadita;
 import Crunch.entidades.RubroAsignado;
 import Crunch.entidades.Valoracion;
@@ -14,12 +15,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ServicioComercio {
 
     @Autowired
     private ComercioRepositorio comercioRepositorio;
+    @Autowired
+    private ServicioFoto servicioFoto;
 
     /**
      * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
@@ -61,10 +65,11 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, List<RubroAsignado> rubros) throws ExcepcionServicio {
+    public void crear(MultipartFile archivo,String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
+        
+        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
 
-        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
-
+        
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
 
         Comercio comercio = new Comercio();
@@ -80,8 +85,11 @@ public class ServicioComercio {
         comercio.setTelefono(telefono);
         comercio.setDireccion(direccion);
         comercio.setNombreComercio(nombreComercio);
-        comercio.setRubros(rubros);
+//        comercio.setRubros();
 
+        Foto foto = servicioFoto.guardar(archivo);
+        comercio.setFoto(foto);
+        
         comercioRepositorio.save(comercio);
     }
 
@@ -100,7 +108,7 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
+    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
         validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
@@ -115,7 +123,7 @@ public class ServicioComercio {
             comercio.setApellido(apellido);
             comercio.setTelefono(telefono);
             comercio.setDireccion(direccion);
-            comercio.setRubros(rubros);
+//            comercio.setRubros(rubros);
 
             comercioRepositorio.save(comercio);
         } else {
@@ -140,7 +148,7 @@ public class ServicioComercio {
      * @param rubros
      * @throws ExcepcionServicio
      */
-    private void validar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, List<RubroAsignado> rubros) throws ExcepcionServicio {
+    private void validar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
@@ -172,9 +180,9 @@ public class ServicioComercio {
             throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
         }
 
-        if (rubros == null || rubros.isEmpty()) {
-            throw new ExcepcionServicio("El/los rubro/s no puede/n ser nulo/s");
-        }
+//        if (rubros == null || rubros.isEmpty()) {
+//            throw new ExcepcionServicio("El/los rubro/s no puede/n ser nulo/s");
+//        }
 
     }
 
