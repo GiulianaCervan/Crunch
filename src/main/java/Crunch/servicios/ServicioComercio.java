@@ -1,16 +1,9 @@
 package Crunch.servicios;
 
 import Crunch.entidades.Comercio;
-<<<<<<< HEAD
-=======
-import Crunch.entidades.Cupon;
 import Crunch.entidades.Foto;
-import Crunch.entidades.Raspadita;
->>>>>>> 21ad7cb1448e4be580b1dd044d281380fdc3fc92
-import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ComercioRepositorio;
-import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
