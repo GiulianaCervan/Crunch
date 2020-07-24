@@ -12,7 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/css/styles.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
@@ -37,50 +37,48 @@
         </nav>
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
-                <h1 class="masthead-heading mb-0">Registrate</h1>
-                <div class="divider-custom divider-light">
+                <h1 class="text-uppercase text-white font-weight-bold" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h1>
+                       <div class="divider-custom divider-light">
                     <div class="divider-custom-line"></div>
                     <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu zona </p>
             </div>
         </header>
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
-                        <h2 class="masthead-heading mb-0">Registrarme</h2>
-                        <form action="/registrar" method="POST" >
-                            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" required/>
-
-                            <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" required/>
-
-                            <div class="container">
-                                <div class="row">
-                                    <label>Telefono</label>
-                                    <div class="input-group">
-                                        <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
-                                               name="telefono" th:value="${telefono}" style="width: 309px;" required pattern="[0-9]{10}" title="Debe tener 10 digitos (Código de area)+(Numero sin el 15)" />
-                                    </div>
-                                </div>
-                            </div>
-                            <label>Dirección</label>
-                            <input type="text" class="form-control" name="domicilio"
-                                th:value="${domicilio}" required/>
-                            <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
-                            <label>Clave</label>
-                            <input type="password" class="form-control" name="clave1" th:value="${clave1}" required/>
-                            <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" required/>
-
-                            <br> <button type="submit" class="btn btn-primary">Registrarme</button><br>
-
-                        </form>
+                        <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
+                        <form action="/cliente/actualizar-perfil" method="POST">
+            
+                            <p th:if="${error != null}" th:text="${error}" style =color:red;></p>
+            
+                          <label>Nombre</label>
+                          <input type="text" class="form-control" name="nombre" th:value="${perfil.nombre}" />
+            
+                          <label>Apellido</label>
+                          <input type="text" class="form-control" name="apellido" th:value="${perfil.apellido}" />
+            
+                          <label>Telefono</label>
+                          <div class="input-group">
+                            <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
+                                   name="telefono" th:value="${perfil.telefono}" style="width: 309px;" required />
+                        </div>
+                          <label>Domicilio</label>
+                          <input type="text" class="form-control" name="domicilio" th:value="${perfil.domicilio}" />
+                          
+                          <label>E-Mail</label>
+                          <input type="mail" class="form-control" name="mail" th:value="${perfil.mail}" required />
+                          
+                          <label>Clave</label>
+                          <input type="password" class="form-control" name="clave" th:value="${perfil.clave}" />
+            
+                          <label>Repetir Clave</label>
+                          <input type="password" class="form-control" name="clave2" th:value="${perfil.clave2}" />
+            
+                          <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
+                        </form>   
                     </div>
                 </div>
             </div>
@@ -158,3 +156,5 @@
     </body>
 
 </html>
+
+
