@@ -12,6 +12,7 @@ import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,29 +40,18 @@ public class ServicioUsuario implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         
-           Usuario usuario = null;
-           if (usuario == null){
-               usuario = clienteRepositorio.getOne(mail);
-           }
-           if(usuario == null){
-               usuario = comercioRepositorio.getOne(mail);
-           }
-           
-        if (usuario != null && usuario.getClass().getName().equals(Cliente.class.getName())) {
+        System.out.println(mail);
+       System.out.println("---------------------------------llegué al loadbyus");
+        
+        Optional<Comercio> respuestaComercio = comercioRepositorio.findById(mail);
+        Optional<Cliente> respuestaCliente = clienteRepositorio.findById(mail);
 
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_CLIENTE");
-            permisos.add(p1);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", usuario);
-
-            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
-            return user;
-        } else if (usuario != null && usuario.getClass().getName().equals(Comercio.class.getName())){
+        
+       
+        
+        if (respuestaComercio.isPresent()) {
             
+            Comercio usuarioComercio = respuestaComercio.get();
 
             List<GrantedAuthority> permisos = new ArrayList();
 
@@ -70,13 +60,75 @@ public class ServicioUsuario implements UserDetailsService {
 
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", usuario);
+            session.setAttribute("usuariosession", usuarioComercio);
 
-            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
+            User user = new User(usuarioComercio.getMail(), usuarioComercio.getClave(), permisos);
             return user;
-        }else {
-            return null;
+
+        } else if (respuestaCliente.isPresent()) {
+            
+            Cliente usuarioCliente = respuestaCliente.get();
+            
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_CLIENTE");
+            permisos.add(p1);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", usuarioCliente);
+
+            User user = new User(usuarioCliente.getMail(), usuarioCliente.getClave(), permisos);
+            return user;
+
+        } else {
+            throw new UsernameNotFoundException("El usuario no se encontro");
+            
         }
+        
+        
+        
+        
+//        System.out.println("llegue al username");
+//           Usuario usuario = null;
+//           if (usuario == null){
+//               usuario = clienteRepositorio.getOne(mail);
+//           }
+//           if(usuario == null){
+//               usuario = comercioRepositorio.getOne(mail);
+//           }
+//           System.out.println(usuario.getNombre());
+//           
+//        if (usuario != null && usuario instanceof Cliente) {
+//
+//            List<GrantedAuthority> permisos = new ArrayList();
+//
+//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_CLIENTE");
+//            permisos.add(p1);
+//
+//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//            HttpSession session = attr.getRequest().getSession(true);
+//            session.setAttribute("usuariosession", usuario);
+//
+//            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
+//            return user;
+//        } else if (usuario != null && usuario instanceof Comercio){
+//            
+//
+//            List<GrantedAuthority> permisos = new ArrayList();
+//
+//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_COMERCIO");
+//            permisos.add(p1);
+//
+//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+//            HttpSession session = attr.getRequest().getSession(true);
+//            session.setAttribute("usuariosession", usuario);
+//
+//            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
+//            return user;
+//        }else {
+//            return null;
+//        }
     }
 
 
