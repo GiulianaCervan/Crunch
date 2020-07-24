@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="utf-8">
@@ -36,7 +36,7 @@
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-           
+
             <h2 class="masthead-heading mb-0">Creá tu cupón!!</h2>
 
 
@@ -54,31 +54,29 @@
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-8">
 
-                            <form action="/crearCupon" method="POST">
+                            <form action="/comercio/crearCupon" method="POST">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-8">
                                             <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                                             <label class="masthead-heading mb-0">Titulo</label>
-                                            <h1><input type="text" class="form-control" name="titulo" th:value="${titulo}"
+                                            <h1><input type="text" class="form-control" name="titulo"
                                                     style="width: 477.98438px;"> </h1>
                                             <label>Descripción</label>
-                                            <textarea name="Descripción" rows="10"
-                                                cols="60" placeholder="Escribe aquí la descripción de tu cupón" name="descripcion" th:value="${descripcion}"></textarea>
+                                            <textarea rows="10" cols="60"
+                                                placeholder="Escribe aquí la descripción de tu cupón"
+                                                name="descripcion"></textarea>
                                             <label>Fecha de vencimiento</label>
-                                            <input type="date" class="form-control" th:value="${vencimiento}"
-                                                style="width: 477.98438px;">
-                                            <label>E-Mail</label>
-                                            <input type="mail" class="form-control" name="mail" th:value="${mail}"
+                                            <input type="date" class="form-control" name="vencimiento"
                                                 style="width: 477.98438px;">
                                             <label>Cantidad de cupones</label>
-                                            <input type="number" class="form-control" name="cantidad" th:value="${cantidad}"
+                                            <input type="number" class="form-control" name="cantidad"
                                                 style="width: 477.98438px;">
-                                                <br></br>
+                                            <br></br>
                                             <button type="submit" class="btn btn-primary">Crear</button>
 
                                         </div>
-                                        
+
 
                                     </div>
                                 </div>

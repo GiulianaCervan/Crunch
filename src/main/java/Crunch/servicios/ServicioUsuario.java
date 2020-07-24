@@ -89,46 +89,7 @@ public class ServicioUsuario implements UserDetailsService {
         
         
         
-//        System.out.println("llegue al username");
-//           Usuario usuario = null;
-//           if (usuario == null){
-//               usuario = clienteRepositorio.getOne(mail);
-//           }
-//           if(usuario == null){
-//               usuario = comercioRepositorio.getOne(mail);
-//           }
-//           System.out.println(usuario.getNombre());
-//           
-//        if (usuario != null && usuario instanceof Cliente) {
 //
-//            List<GrantedAuthority> permisos = new ArrayList();
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_CLIENTE");
-//            permisos.add(p1);
-//
-//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//            HttpSession session = attr.getRequest().getSession(true);
-//            session.setAttribute("usuariosession", usuario);
-//
-//            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
-//            return user;
-//        } else if (usuario != null && usuario instanceof Comercio){
-//            
-//
-//            List<GrantedAuthority> permisos = new ArrayList();
-//
-//            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_COMERCIO");
-//            permisos.add(p1);
-//
-//            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-//            HttpSession session = attr.getRequest().getSession(true);
-//            session.setAttribute("usuariosession", usuario);
-//
-//            User user = new User(usuario.getMail(), usuario.getClave(), permisos);
-//            return user;
-//        }else {
-//            return null;
-//        }
     }
 
 

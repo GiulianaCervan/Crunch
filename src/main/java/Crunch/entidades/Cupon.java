@@ -26,9 +26,9 @@ public class Cupon {
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar vencimiento;
-    private boolean disponible;
+    private boolean disponible = true;
 
-    private boolean vencido;
+    private boolean vencido = false;
     
     @Enumerated(EnumType.STRING)
     private TipoCupon tipo;
