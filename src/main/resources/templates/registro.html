@@ -12,7 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
@@ -54,30 +54,29 @@
                         <form action="/registrar" method="POST" >
                             <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" />
+                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" required/>
 
                             <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" />
+                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" required/>
 
                             <div class="container">
                                 <div class="row">
                                     <label>Telefono</label>
                                     <div class="input-group">
                                         <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
-                                               name="telefono" th:value="${telefono}" required pattern="[0-10]{10}"
-                                               title="El numero de telefono debe tener 10 digitos. Recuerde cód.area + número sin el 15" style="width: 309px;" />
+                                               name="telefono" th:value="${telefono}" style="width: 309px;" required />
                                     </div>
                                 </div>
                             </div>
                             <label>Dirección</label>
                             <input type="text" class="form-control" name="domicilio"
-                                th:value="${domicilio}" />
+                                th:value="${domicilio}" required/>
                             <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" />
+                            <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
                             <label>Clave</label>
-                            <input type="password" class="form-control" name="clave1" th:value="${clave1}" />
+                            <input type="password" class="form-control" name="clave1" th:value="${clave1}" required/>
                             <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" />
+                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" required/>
 
                             <br> <button type="submit" class="btn btn-primary">Registrarme</button><br>
 

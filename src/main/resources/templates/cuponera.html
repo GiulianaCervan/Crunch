@@ -10,7 +10,7 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
@@ -36,8 +36,7 @@
         </nav>
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image--><img src="assets/img/logo.jpg" alt="" class="rounded-circle" style=" width: 400px;">
-                <!-- Masthead Heading-->
+                
                 <h2 class="masthead-heading mb-0">Tus cupones</h2>
                 
                 <div class="divider-custom">
@@ -51,6 +50,12 @@
             <div class="container">
               
                 <!-- Portfolio Grid Items-->
+                <select class="form-control" name="rubros">
+                    <option th:each="rubro : ${Rubro}"
+                        th:value="${T(com.baeldung.thymeleaf.model.Rubro).values()}" th:value="${rubroOpt}"
+                        th:text="${rubroOpt}">
+                    </option>
+                </select>
                 <div class="row justify-content-center">
                     <table class="table table-striped table-dark">
                         <thead>

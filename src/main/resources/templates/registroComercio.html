@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
@@ -60,11 +60,11 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="masthead-heading mb-0">Registrate</h2>
-                        <form action="/registrar" method="POST" enctype="multipart/form-data">
+                        <form action="/registrar-comercio" method="POST" enctype="multipart/form-data">
                             <p th:if="${error != null}" th:text="${error}" style=" color:red"></p>
                             <label>Nombre del comercio</label>
                             <input type="text" class="form-control" name="nombreComercio"
-                                th:value="${nombreComercio}" />
+                                th:value="${nombreComercio}" required />
                             <label>Nombre del titular del comercio</label>
                             <input type="text" class="form-control" name="nombre" th:value="${nombre}" />
                             <label>Apellido del titular del comercio</label>
@@ -76,9 +76,7 @@
                                     <div class="input-group">
                                         <input type="tel" class="form-control"
                                             placeholder="(Cod. de área)(Numero de telefono)" name="telefono"
-                                            th:value="${telefono}" required pattern="[0-10]{10}"
-                                            title="El numero de telefono debe tener 10 digitos. Recuerde cód.area + número sin el 15"
-                                            style="width: 309px;" />
+                                            th:value="${telefono}" style="width: 309px;" />
 
                                     </div>
                                 </div>
@@ -86,7 +84,7 @@
 
                             <label>Dirección del Comercio</label>
                             <input type="text" class="form-control" name="direccion"
-                                th:value="${direccion}" />
+                                th:value="${direccion}"  />
                             <label>E-Mail</label>
                             <input type="mail" class="form-control" name="mail" th:value="${mail}" />
                             <label th:for="Rubro">Rubro</label>
