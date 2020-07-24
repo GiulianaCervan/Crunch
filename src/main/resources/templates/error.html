@@ -1,12 +1,12 @@
-!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Crunch - Registro Comercio</title>
+    <title>Crunch - Exito</title>
     <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
@@ -20,106 +20,35 @@
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">CRUNCH</a>
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/index">VOLVER</a>
-                    </li>
 
+                <ul class="navbar-nav ml-auto" id="menu">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/">VOLVER</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-
-            <h2 class="masthead-heading mb-0">Registrá tu comercio</h2>
-            <!-- Icon Divider-->
-            <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div>
-            </div>
-            <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu
-                zona </p>
+            <h1  class="masthead-heading mb-0" th:text="${codigo}"></h1>
+            <h2 class="masthead-subheading mb-0" th:text="${mensaje == null ? 'Intenta nuevamente' : mensaje}"></h2>
+            
+            
+        <hr class="dashed">
+        </div>
         </div>
     </header>
-    <section class="page-section portfolio" id="portfolio">
-        <div class="container">
-            <!-- Portfolio Section Heading-->
-
-            <!-- Icon Divider-->
-
-            <div class="container">
-
-                <div class="col-lg-6 order-lg-1">
-                    <div class="p-5">
-                        <h2 class="masthead-heading mb-0">Registrate</h2>
-                        <form action="/registrar" method="POST" enctype="multipart/form-data">
-                            <p th:if="${error != null}" th:text="${error}" style=" color:red"></p>
-                            <label>Nombre del comercio</label>
-                            <input type="text" class="form-control" name="nombreComercio"
-                                th:value="${nombreComercio}" />
-                            <label>Nombre del titular del comercio</label>
-                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" />
-                            <label>Apellido del titular del comercio</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" />
-
-                            <div class="container">
-                                <div class="row">
-                                    <label for="">Telefono</label>
-                                    <div class="input-group">
-                                        <input type="tel" class="form-control"
-                                            placeholder="(Cod. de área)(Numero de telefono)" name="telefono"
-                                            th:value="${telefono}" required pattern="[0-10]{10}"
-                                            title="El numero de telefono debe tener 10 digitos. Recuerde cód.area + número sin el 15"
-                                            style="width: 309px;" />
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <label>Dirección del Comercio</label>
-                            <input type="text" class="form-control" name="direccion"
-                                th:value="${direccion}" />
-                            <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" />
-                            <label th:for="Rubro">Rubro</label>
-                            <select class="form-control" name="rubros">
-                                <option th:each="rubro : ${Rubro}"
-                                    th:value="${T(com.baeldung.thymeleaf.model.Rubro).values()}" th:value="${rubroOpt}"
-                                    th:text="${rubroOpt}">
-                                </option>
-                            </select>
-                            <label>Clave</label>
-                            <input type="password" class="form-control" name="clave" th:value="${clave}" />
-                            <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" />
-                            <label>Tu logo</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFileLang" lang="es">
-                                <label class="custom-file-label" for="customFileLang">Subí una imagen de
-                                    tu logo</label>
-                            </div>
-                            <br><br>
-                            <button type="submit" class="btn btn-primary">Registrarme</button>
-                        </form>
-                    </div>
-                </div>
-
-    </section>
-    <!-- Portfolio Modal-->
-    <hr class="dashed">
     <section class="page-section" id="contact">
         <div class="container">
             <!-- Contact Section Heading-->
             <div class="text-center">
-                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS </h2>
+                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS</h2>
             </div>
             <!-- Icon Divider-->
             <div class="divider-custom">
@@ -140,7 +69,7 @@
                     <div class="d-flex flex-column align-items-center">
                         <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
                         <div class="text-muted">Email</div><a class="lead font-weight-bold"
-                            href="mailto:crunch@crunch.com">crunch@crunch.com</a>
+                            href="mailto:name@example.com">crunchapp7@gmail.com</a>
                     </div>
                 </div>
             </div>
@@ -152,11 +81,11 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">MENDOZA</h4>
-                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
+                    <p class="pre-wrap lead mb-0"></p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
+                    <h4 class="mb-4">SEGUINOS</h4><a class="btn btn-outline-light btn-social mx-1"
                         href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
                         class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
                             class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
@@ -167,7 +96,7 @@
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="mb-4">NOSOTROS</h4>
-                    <p class="pre-wrap lead mb-0">Manso grupo </p>
+                    <p class="pre-wrap lead mb-0"></p>
                 </div>
             </div>
         </div>
