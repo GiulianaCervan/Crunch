@@ -2,9 +2,11 @@ package Crunch.controladores;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioComercio;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -114,10 +116,9 @@ public class ControladorPortal {
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam(required = false) String mail, @RequestParam(required = false) String clave1, @RequestParam(required = false) String clave2, @RequestParam(required = false) String nombre, @RequestParam(required = false) String apellido, @RequestParam(required = false) String domicilio, @RequestParam(required = false) String telefono, @RequestParam(required = false) String area) {
+    public String registrar(ModelMap modelo,@RequestParam String mail,@RequestParam String clave1,@RequestParam String clave2,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String domicilio,@RequestParam String telefono,@RequestParam String area) {
         try {
-            area.concat(telefono);
-            
+            area += telefono;
             servicioCliente.crear(mail, clave1, clave2, nombre, apellido, domicilio, area);
         } catch (ExcepcionServicio e) {
 
@@ -136,4 +137,28 @@ public class ControladorPortal {
         return "exito.html";
     }
    
+    @GetMapping("/registro-comercio")
+    public String registroComercio(){
+        return "registroComercio.html";
+    }
+    
+    @PostMapping("/registrar-comercio")
+    public String registrarComercio(ModelMap modelo,@RequestParam(required = false) String mail,@RequestParam(required = false) String clave,@RequestParam(required = false) String clave2,@RequestParam(required = false) String nombre,@RequestParam(required = false) String apellido,@RequestParam(required = false) String telefono,@RequestParam(required = false) String direccion, @RequestParam(required = false) String nombreComercio, @RequestParam(required = false) List<RubroAsignado> rubros){
+        try {
+            servicioComercio.crear(mail, clave, clave2, nombre, apellido, telefono, direccion, nombreComercio, rubros);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error",e.getMessage());
+            
+            modelo.put("mail",mail);
+            modelo.put("nombre",nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("telefono",telefono);
+            modelo.put("direccion", direccion);
+            modelo.put("nombreComercio", nombreComercio);
+            
+            return "registroComercio";
+        }
+        return "exito.html";
+    }
+
 }
