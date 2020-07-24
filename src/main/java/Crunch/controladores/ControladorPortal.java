@@ -43,7 +43,7 @@ public class ControladorPortal {
         
         String rol = userDetails.getAuthorities().toString();
         System.out.println(userDetails);
-        System.out.println(rol);
+        
         switch(rol){
             
             case "[ROLE_CLIENTE]":
