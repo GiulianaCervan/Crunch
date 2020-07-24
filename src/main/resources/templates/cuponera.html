@@ -52,36 +52,32 @@
               
                 <!-- Portfolio Grid Items-->
                 <div class="row justify-content-center">
-                    <table class="table table-striped table-dark">
-                        <thead>
-                          <tr>
-                            <th scope="col">.</th>
-                            <th scope="col">Comercio</th>
-                            <th scope="col">Cupón</th>
-                            <th scope="col">Cantidad</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="col-12">
+                        <h2>Mis cupones</h2>
+                        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                             th:text="${mensaje}"
+                             class="alert">
+                        </div>
+                        
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Comercio</th>
+                                <th>Dirección Comercio</th>
+                                <th>Descripción</th>
+                                 
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cupon : ${cupones}">
+                                <td th:text="${cupon.titulo}"></td>
+                                <td th:text="${cupon.comercio.direccion}"></td>
+                                <td th:text="${cupon.descripcion}"></td>
+                                  
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     </div>
                 </div>
             </div>
