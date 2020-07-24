@@ -7,6 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Crunch - Registro usuario </title>
+        <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
@@ -62,16 +63,24 @@
                                 <div class="row">
                                     <label>Telefono</label>
                                     <div class="input-group">
+<<<<<<< HEAD
                                         <input type="text" placeholder="(Cod. de área)" required class="form-control"
                                                name="area" th:value="${area}" style="width: 126px;" />
 
                                         <input type="text" class="form-control" placeholder="(Numero de telefono)"
                                                name="telefono" th:value="${telefono}" required pattern="[0-9]{9}"
                                                title="El numero de telefono debe tener 9 digitos" style="width: 309px;" />
+=======
+                                        <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
+                                               name="telefono" th:value="${telefono}" required pattern="[0-10]{10}"
+                                               title="El numero de telefono debe tener 10 digitos. Recuerde cód.area + número sin el 15" style="width: 309px;" />
+>>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
                                     </div>
                                 </div>
                             </div>
-
+                            <label>Dirección</label>
+                            <input type="text" class="form-control" name="domicilio"
+                                th:value="${domicilio}" />
                             <label>E-Mail</label>
                             <input type="mail" class="form-control" name="mail" th:value="${mail}" />
                             <label>Clave</label>
@@ -101,7 +110,7 @@
                     <div class="col-lg-4">
                         <div class="d-flex flex-column align-items-center">
                             <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-                            <div class="text-muted">Phone</div>
+                            <div class="text-muted">Telefono</div>
                             <div class="lead font-weight-bold">(555) 555-5555</div>
                         </div>
                     </div>
