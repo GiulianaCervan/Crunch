@@ -7,11 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Crunch - Crear cupon</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
@@ -20,20 +21,14 @@
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top"></a>
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">REGISTRATE</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#about">INICIAR SESIÓN</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#contact">NOSOTROS</a>
+                            href="/inicio">VOLVER</a>
                     </li>
                 </ul>
             </div>
@@ -41,14 +36,12 @@
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <!-- Masthead Avatar Image--><img src="assets/img/CRUNCH IMG.jpeg" alt="" class="rounded-circle"
-                style=" width: 400px;">
-
-            <h1 class="masthead-heading mb-0"></h1>
+           
+            <h2 class="masthead-heading mb-0">Creá tu cupón!!</h2>
 
 
             <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0"> </p>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0"></p>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
@@ -60,53 +53,38 @@
                 <div class="container">
                     <div class="col-lg-6 order-lg-1">
                         <div class="p-8">
-                            <h2 class="masthead-heading mb-0" style=" width: 900px;">CREA TU PROPIO CUPÓN DE DESCUENTO
-                            </h2>
 
-                            <form action="/cupon.html" method="POST">
+                            <form action="/crearCupon" method="POST">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-sm">
+                                        <div class="col-xs-12 col-md-8">
                                             <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                                            <label class="masthead-heading mb-0">TIPO DE DESCUENTO</label>
-                                            <h1><input type="text" class="form-control" name="text" th:value="${text}"
+                                            <label class="masthead-heading mb-0">Titulo</label>
+                                            <h1><input type="text" class="form-control" name="titulo" th:value="${titulo}"
                                                     style="width: 477.98438px;"> </h1>
                                             <label>Descripción</label>
                                             <textarea name="Descripción" rows="10"
-                                                cols="60">Escribe aquí la descripción de tu cupón</textarea>
-                                            <label>Fecha</label>
-                                            <input type="mail" class="form-control" name="mail" th:value="${mail}"
+                                                cols="60" placeholder="Escribe aquí la descripción de tu cupón" name="descripcion" th:value="${descripcion}"></textarea>
+                                            <label>Fecha de vencimiento</label>
+                                            <input type="date" class="form-control" th:value="${vencimiento}"
                                                 style="width: 477.98438px;">
                                             <label>E-Mail</label>
                                             <input type="mail" class="form-control" name="mail" th:value="${mail}"
                                                 style="width: 477.98438px;">
-                                            <label>Cantidad</label>
-                                            <input type="mail" class="form-control" name="mail" th:value="${mail}"
+                                            <label>Cantidad de cupones</label>
+                                            <input type="number" class="form-control" name="cantidad" th:value="${cantidad}"
                                                 style="width: 477.98438px;">
-                                            <label>Tu logo</label>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="customFileLang"
-                                                    lang="es">
-                                                <label class="custom-file-label" for="customFileLang">Subí una imagen de
-                                                    tu logo</label>
-                                            </div>
-                                            <label></label>
-                                            <br><button type="submit" class="btn btn-primary">Crear</button>
+                                                <br></br>
+                                            <button type="submit" class="btn btn-primary">Crear</button>
 
                                         </div>
-
+                                        
 
                                     </div>
                                 </div>
-
-
-
-
                             </form>
-
                         </div>
                     </div>
-
     </section>
     <!-- Portfolio Modal-->
     <footer class="footer text-center">
