@@ -54,18 +54,32 @@ public class ControladorComercio {
     public String cupon(){
         return "cupon.html";
     }
-   // @PreAuthorize("hasAnyRol('ROLE_COMERCIO')")
+   
+    @PreAuthorize("hasAnyRol('ROLE_COMERCIO')")
     @PostMapping("/crearCupon")
-    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento,ModelMap modelo){
+    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam  Integer cantidad ,ModelMap modelo){
         
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
         try {
-            System.out.println(titulo);
-            System.out.println(descripcion);
-            System.out.println(vencimiento);
             
+            servicioCupon.crear(titulo, descripcion, vencimiento, userMail, cantidad);
+         
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            modelo.put("titulo", titulo);
+            modelo.put("descripcion", descripcion);
+            modelo.put("vencimiento", vencimiento);
+            modelo.put("cantidad", cantidad);
             
-        } catch (Exception e) {
+            return "cupon.html";
+        }catch (Exception e){
+            modelo.put("error", e.getMessage());
+            return "error.html";
         }
-        return "";
+       
+        modelo.put("exito", "Cupon creado correctamente");
+        return "inicioComercio.html";
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
+import Crunch.utilidades.TipoCupon;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -69,14 +70,22 @@ public class ServicioCupon {
                 cupon.setDescripcion(descripcion);
                 cupon.setComercio(comercio);
                 
-                Calendar hoy = Calendar.getInstance();
-                Calendar minimo = hoy;
+                
+                Calendar minimo = Calendar.getInstance();
+                minimo.add(Calendar.DAY_OF_WEEK, 7);
+                Calendar fechaC = null;
                 minimo.add(Calendar.DAY_OF_MONTH, 7);
                 
+                String[] fecha = vencimiento.split("-");
                 
-                if (true) {
-                    
+                fechaC.set(Calendar.YEAR, Integer.parseInt(fecha[0]));
+                fechaC.set(Calendar.MONTH, Integer.parseInt(fecha[1]));
+                fechaC.set(Calendar.DAY_OF_WEEK, Integer.parseInt(fecha[2]));
+             
+                if (fechaC.before(minimo)) {
+                    throw new ExcepcionServicio("La fecha minima de duracion de un cupon es de una semana");
                 }
+                cupon.setTipo(TipoCupon.PROMOCION);
                 
 
 
