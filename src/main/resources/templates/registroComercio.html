@@ -1,9 +1,5 @@
 !DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
-=======
-<html lang="en">
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
 
 <head>
     <meta charset="utf-8">
@@ -11,10 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Crunch - Registro Comercio</title>
-<<<<<<< HEAD
-=======
     <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
@@ -43,13 +36,6 @@
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-<<<<<<< HEAD
-            <!-- Masthead Avatar Image--><img src="assets/img/CRUNCH IMG.jpeg" alt="" class="rounded-circle"
-                style:="height: 400px" ; />
-            <!-- Masthead Heading-->
-=======
-
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
             <h2 class="masthead-heading mb-0">Registrá tu comercio</h2>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
@@ -73,87 +59,46 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="masthead-heading mb-0">Registrate</h2>
-<<<<<<< HEAD
-                        <form action="/registrar" method="POST">
-=======
-                        <form action="/registrar" method="POST" enctype="multipart/form-data">
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
+                        <form action="/registrar-comercio" method="POST" enctype="multipart/form-data">
                             <p th:if="${error != null}" th:text="${error}" style=" color:red"></p>
                             <label>Nombre del comercio</label>
-                            <input type="text" class="form-control" name="nombreComercio"
-                                th:value="${nombreComercio}" />
+                            <input type="text" class="form-control" name="nombreComercio" th:value="${nombreComercio}"
+                                required />
                             <label>Nombre del titular del comercio</label>
-<<<<<<< HEAD
-                            <input type="text" class="form-control" name="titular" th:value="${titular}" />
+                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" required />
                             <label>Apellido del titular del comercio</label>
-                            <input type="text" class="form-control" name="apellidoTitular"
-                                th:value="${apellidoTitular}" />
-=======
-                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" />
-                            <label>Apellido del titular del comercio</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" />
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
+                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" required />
 
                             <div class="container">
                                 <div class="row">
                                     <label for="">Telefono</label>
                                     <div class="input-group">
-<<<<<<< HEAD
-                                        <input type="tel" placeholder="(Cod. de área)" required class="form-control"
-                                            name="area" th:value="${area}" style="width: 126px;" />
-
-                                        <input type="tel" required class="form-control"
-                                            placeholder="(Numero de telefono)" name="telefono" th:value="${telefono}"
-                                            required pattern="[0-9]{9}"
-                                            title="El numero de telefono debe tener 9 digitos" style="width: 309px;" />
-=======
                                         <input type="tel" class="form-control"
                                             placeholder="(Cod. de área)(Numero de telefono)" name="telefono"
-                                            th:value="${telefono}" required pattern="[0-10]{10}"
-                                            title="El numero de telefono debe tener 10 digitos. Recuerde cód.area + número sin el 15"
-                                            style="width: 309px;" />
-
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
+                                            th:value="${telefono}" style="width: 309px;" required />
                                     </div>
                                 </div>
                             </div>
 
                             <label>Dirección del Comercio</label>
-<<<<<<< HEAD
-                            <input type="text" class="form-control" name="direccionComercio"
-                                th:value="${direccionComercio}" />
+                            <input type="text" class="form-control" name="direccion" th:value="${direccion}" required />
                             <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" />
-                            <label>Clave</label>
-                            <input type="password" class="form-control" name="clave1" th:value="${clave1}" />
-                            <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" />
-                            <br /><button type="submit" class="btn btn-primary">Registrarme</button>
-=======
-                            <input type="text" class="form-control" name="direccion"
-                                th:value="${direccion}" />
-                            <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" />
+                            <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
                             <label th:for="Rubro">Rubro</label>
-                            <select class="form-control" name="rubros">
-                                <option th:each="rubro : ${Rubro}"
-                                    th:value="${T(com.baeldung.thymeleaf.model.Rubro).values()}" th:value="${rubroOpt}"
-                                    th:text="${rubroOpt}">
+                            <select class="form-control" name="rubros" multiple="multiple">
+                                <option th:each="rubro : ${rubros}" th:text="${rubro}">
                                 </option>
                             </select>
                             <label>Clave</label>
-                            <input type="password" class="form-control" name="clave" th:value="${clave}" />
+                            <input type="password" class="form-control" name="clave" th:value="${clave}" required />
                             <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" />
+                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" required />
                             <label>Tu logo</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFileLang" lang="es">
-                                <label class="custom-file-label" for="customFileLang">Subí una imagen de
-                                    tu logo</label>
-                            </div>
+
+                            <input type="file" name="archivo" lang="es" required>
+
                             <br><br>
                             <button type="submit" class="btn btn-primary">Registrarme</button>
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
                         </form>
                     </div>
                 </div>
@@ -178,11 +123,7 @@
                 <div class="col-lg-4">
                     <div class="d-flex flex-column align-items-center">
                         <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-<<<<<<< HEAD
-                        <div class="text-muted">Phone</div>
-=======
                         <div class="text-muted">Telefono</div>
->>>>>>> 9171914a946d494d034c01f3a38614976ad22d9f
                         <div class="lead font-weight-bold">(555) 555-5555</div>
                     </div>
                 </div>
