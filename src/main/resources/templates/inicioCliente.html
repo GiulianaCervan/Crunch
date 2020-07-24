@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title  th:if="${session.usuariosession != null}" th:text="${Crunch - +session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></title>
+        <title  th:if="${session.usuariosession != null}" th:text="${Crunch - +session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Cliente</title>
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -61,9 +61,11 @@
                         </li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">COMERCIOS</a>
                         </li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">ABOUT</a>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">MIS CUPONES</a>
                         </li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">CONTACTO</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">CERRAR SESIÓN</a>
                         </li>
                     </ul>
                 </div>
@@ -71,16 +73,10 @@
         </nav>
         <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
-                <!-- Masthead Avatar Image--><img  class="rounded-circle" src="assets/img/logo.jpg" alt="" style="width: 400px">
-                <!-- Masthead Heading-->
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
+                <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h2>
+                
                 <!-- Masthead Subheading-->
-                <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los cometcios de tu zona</p>
+                <p class="pre-wrap masthead-subheading font-weight-light mb-0"></p>
             </div>
         </header>
         <section class="page-section portfolio" id="portfolio">
@@ -382,65 +378,7 @@
                 </div>
             </div>
         </div>
-        <section class="page-section bg-primary text-white mb-0" id="about">
-            <div class="container">
-                <!-- About Section Heading-->
-                <div class="text-center">
-                    <h2 class="page-section-heading d-inline-block text-white">¿Que es CRUNCH?</h2>
-                </div>
-                <!-- Icon Divider-->
-                <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- About Section Content-->
-                <div class="row">
-                    <div class="col-lg-4 ml-auto">
-                        <p class="pre-wrap lead">Fomentamos la colaboración entre negocios a través de una app web con un sistema de cupones y puntos. </p>
-                        <p class="pre-wrap lead">De esta manera generamos una economia circular que beneficia tanto a comercios como a los clientes de los mismos.</p>
-                    </div>
-                    <div class="col-lg-4 mr-auto">
-                        <p class="pre-wrap lead">¿Pero cómo se usa?</p>
-                        <p class="pre-wrap lead">Es muy facil, comerciantes y clientes deben registrarse en la App.  Los comercios generan cupones de descuentos y los clientes los obtienen cada vez que compran en los locales adheridos.</p>
-                    </div>
-                </div>
-                <hr class="divider my-4" />
-                <div class="text-center">
-                    <h9 class="page-section-heading d-inline-block text-white">Más compras, más puntos y descuentos tendrás</h9>
-                </div>
-            </div>
-        </section>
-        <section class="page-section" id="contact">
-            <div class="container">
-                <!-- Contact Section Heading-->
-                <div class="text-center">
-                    <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS</h2>
-                </div>
-                <!-- Icon Divider-->
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Content-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-4">
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-                            <div class="text-muted">Telefono</div>
-                            <div class="lead font-weight-bold">(555) 555-5555</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
-                            <div class="text-muted">Email</div><a class="lead font-weight-bold" href="mailto:name@example.com">crunchapp7@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+       
         <footer class="footer text-center">
             <div class="container">
                 <div class="row">
