@@ -29,23 +29,35 @@ public class Foto {
     private byte[] contenido;
 
     public String getId() {
-        return id;  
+        return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setMime(String contentType) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setNombre(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setContedido(byte[] bytes) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+    public String getMime() {
+        return mime;
+    }
+
+    public void setMime(String mime) {
+        this.mime = mime;
+    }
+
+    public byte[] getContenido() {
+        return contenido;
+    }
+
+    public void setContenido(byte[] contenido) {
+        this.contenido = contenido;
     }
 
     
