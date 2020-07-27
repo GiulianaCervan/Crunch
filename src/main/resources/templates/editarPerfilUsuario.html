@@ -1,160 +1,162 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="https://www.thymeleaf.org/">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <title>Crunch - Registro usuario </title>
-        <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Crunch - Registro usuario </title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet">
-        <!-- Fonts CSS-->
-        <link rel="stylesheet" href="css/heading.css">
-        <link rel="stylesheet" href="css/body.css">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet">
+    <!-- Fonts CSS-->
+    <link rel="stylesheet" href="css/heading.css">
+    <link rel="stylesheet" href="css/body.css">
 
-    </head>
+</head>
 
-    <body id="page-top">
-        <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-            <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
-                <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
-                        type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                        aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                                                             href="/">VOLVER</a>
-                        </li>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH</a>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/">VOLVER</a>
+                    </li>
 
-                    </ul>
-                </div>
+                </ul>
             </div>
-        </nav>
-        <header class="masthead bg-primary text-white text-center">
-            <div class="container d-flex align-items-center flex-column">
-                <h1 class="text-uppercase text-white font-weight-bold" th:if="${session.usuariosession != null}" th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h1>
-                       <div class="divider-custom divider-light">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
+        </div>
+    </nav>
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <h1 class="text-uppercase text-white font-weight-bold" th:if="${session.usuariosession != null}"
+                th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h1>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
             </div>
-        </header>
-        <section class="page-section portfolio" id="portfolio">
-            <div class="container">
-                <div class="col-lg-6 order-lg-1">
-                    <div class="p-5">
-                        <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
-                        <form action="/cliente/actualizar-perfil" method="POST">
-            
-                            <p th:if="${error != null}" th:text="${error}" style =color:red;></p>
-            
-                          <label>Nombre</label>
-                          <input type="text" class="form-control" name="nombre" th:value="${perfil.nombre}" />
-            
-                          <label>Apellido</label>
-                          <input type="text" class="form-control" name="apellido" th:value="${perfil.apellido}" />
-            
-                          <label>Telefono</label>
-                          <div class="input-group">
+        </div>
+    </header>
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container row">
+            <div class="col-xs-12 col-sm-6 col-md-8" style="padding-left: 20%">
+                    <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
+                    <form action="/cliente/actualizar-perfil" method="POST">
+
+                        <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
+
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" name="nombre" th:value="${perfil.nombre}" style="width: 309px"/>
+
+                        <label>Apellido</label>
+                        <input type="text" class="form-control" name="apellido" th:value="${perfil.apellido}" style="width: 309px"/>
+
+                        <label>Telefono</label>
+                        <div class="input-group" style="width: 309px">
                             <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
-                                   name="telefono" th:value="${perfil.telefono}" style="width: 309px;" required />
+                                name="telefono" th:value="${perfil.telefono}" style="width: 309px" required />
                         </div>
-                          <label>Domicilio</label>
-                          <input type="text" class="form-control" name="domicilio" th:value="${perfil.domicilio}" />
-                          
-                          <label>E-Mail</label>
-                          <input type="mail" class="form-control" name="mail" th:value="${perfil.mail}" required />
-                          
-                          <label>Clave</label>
-                          <input type="password" class="form-control" name="clave" th:value="${perfil.clave}" />
-            
-                          <label>Repetir Clave</label>
-                          <input type="password" class="form-control" name="clave2" th:value="${perfil.clave2}" />
-            
-                          <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
-                        </form>   
+                        <label>Domicilio</label>
+                        <input type="text" class="form-control" name="domicilio" th:value="${perfil.domicilio}" style="width: 309px"/>
+
+                        <label>E-Mail</label>
+                        <input type="mail" class="form-control" name="mail" th:value="${perfil.mail}" style="width: 309px" required />
+
+                        <label>Clave</label>
+                        <input type="password" class="form-control" name="clave" th:value="${perfil.clave}" style="width: 309px"/>
+
+                        <label>Repetir Clave</label>
+                        <input type="password" class="form-control" name="clave2" th:value="${perfil.clave2}" style="width: 309px" />
+
+                        <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
+                    </form>
+            </div>
+            <div class="display-3">
+            <div class="col-xs-6 .col-md-4">
+                <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 200px">
+            </div>
+            </div>
+        </div>
+    </section>
+    <hr class="dashed">
+    <section class="page-section" id="contact">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS </h2>
+            </div>
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="text-muted">Telefono</div>
+                        <div class="lead font-weight-bold">(555) 555-5555</div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
+                        <div class="text-muted">Email</div><a class="lead font-weight-bold"
+                            href="mailto:crunch@crunch.com">crunch@crunch.com</a>
                     </div>
                 </div>
             </div>
-        </section>
-        <hr class="dashed">
-        <section class="page-section" id="contact">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS </h2>
+        </div>
+    </section>
+    <footer class="footer text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">MENDOZA</h4>
+                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
                 </div>
-                <div class="divider-custom">
-                    <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
+                        href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
+                        class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
+                            class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
+                        href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a
+                        class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i
+                            class="fab fa-fw fa-dribbble"></i></a>
                 </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-4">
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-                            <div class="text-muted">Telefono</div>
-                            <div class="lead font-weight-bold">(555) 555-5555</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="d-flex flex-column align-items-center">
-                            <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
-                            <div class="text-muted">Email</div><a class="lead font-weight-bold"
-                                                                  href="mailto:crunch@crunch.com">crunch@crunch.com</a>
-                        </div>
-                    </div>
+                <div class="col-lg-4">
+                    <h4 class="mb-4">NOSOTROS</h4>
+                    <p class="pre-wrap lead mb-0">Manso grupo </p>
                 </div>
             </div>
-        </section>
-        <footer class="footer text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="mb-4">MENDOZA</h4>
-                        <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
-                    </div>
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
-                                                          href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
-                            class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
-                                class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
-                                                                href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a
-                            class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i
-                                class="fab fa-fw fa-dribbble"></i></a>
-                    </div>
-                    <div class="col-lg-4">
-                        <h4 class="mb-4">NOSOTROS</h4>
-                        <p class="pre-wrap lead mb-0">Manso grupo </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Copyright Section-->
-        <section class="copyright py-4 text-center text-white">
-            <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>
-        </section>
-        <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
-        <div class="scroll-to-top d-lg-none position-fixed"><a
-                class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
-                    class="fa fa-chevron-up"></i></a></div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <!-- Third party plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-        <!-- Contact form JS-->
-        <script src="assets/mail/jqBootstrapValidation.js"></script>
-        <script src="assets/mail/contact_me.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
+        </div>
+    </footer>
+    <!-- Copyright Section-->
+    <section class="copyright py-4 text-center text-white">
+        <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>
+    </section>
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes)-->
+    <div class="scroll-to-top d-lg-none position-fixed"><a
+            class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top"><i
+                class="fa fa-chevron-up"></i></a></div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <!-- Third party plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Contact form JS-->
+    <script src="assets/mail/jqBootstrapValidation.js"></script>
+    <script src="assets/mail/contact_me.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
 
 </html>
-
-
