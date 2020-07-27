@@ -2,14 +2,15 @@
 package Crunch.entidades;
 
 import Crunch.utilidades.TipoCupon;
+
 import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
 import javax.persistence.Temporal;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -25,7 +26,7 @@ public class Cupon {
     private String descripcion;
     
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Calendar vencimiento;
+    private Date vencimiento;
     private boolean disponible = true;
 
     private boolean vencido = false;
@@ -42,17 +43,17 @@ public class Cupon {
     public Cupon() {
     }
 
-    public Cupon(String id, String titulo, String descripcion, Calendar vencimiento, boolean disponible, boolean vencido, Comercio comercio, Cliente cliente) {
-
+    public Cupon(String id, String titulo, String descripcion, Date vencimiento, TipoCupon tipo, Comercio comercio, Cliente cliente) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.vencimiento = vencimiento;
-        this.disponible = disponible;
-        this.vencido = vencido;
+        this.tipo = tipo;
         this.comercio = comercio;
         this.cliente = cliente;
     }
+
+  
 
     public TipoCupon getTipo() {
         return tipo;
@@ -86,13 +87,6 @@ public class Cupon {
         this.descripcion = descripcion;
     }
 
-    public Calendar getVencimiento() {
-        return vencimiento;
-    }
-
-    public void setVencimiento(Calendar vencimiento) {
-        this.vencimiento = vencimiento;
-    }
 
     public boolean isDisponible() {
         return disponible;
@@ -127,6 +121,16 @@ public class Cupon {
         this.cliente = cliente;
 
     }
+
+    public Date getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
+    }
+    
+    
     
     
     

@@ -69,11 +69,12 @@ public class ServicioCupon {
                 cupon.setTitulo(titulo);
                 cupon.setDescripcion(descripcion);
                 cupon.setComercio(comercio);
+                cupon.setTipo(TipoCupon.PROMOCION);
                 
                 
                 Calendar minimo = Calendar.getInstance();
                 minimo.add(Calendar.DAY_OF_WEEK, 7);
-                Calendar fechaC = null;
+                Calendar fechaC = Calendar.getInstance();
                 minimo.add(Calendar.DAY_OF_MONTH, 7);
                 
                 String[] fecha = vencimiento.split("-");
@@ -85,10 +86,8 @@ public class ServicioCupon {
                 if (fechaC.before(minimo)) {
                     throw new ExcepcionServicio("La fecha minima de duracion de un cupon es de una semana");
                 }
-                cupon.setTipo(TipoCupon.PROMOCION);
-                
-
-
+         
+                cupon.setVencimiento(new java.sql.Date(fechaC.getTimeInMillis()));
                 comercio.getCuponesPromo().add(cupon);
                 repositorioCupon.save(cupon);
 
