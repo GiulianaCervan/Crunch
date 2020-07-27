@@ -2,23 +2,31 @@ package Crunch.controladores;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.Foto;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioComercio;
 import Crunch.servicios.ServicioCupon;
+import Crunch.servicios.ServicioFoto;
 import Crunch.utilidades.Rubro;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 
 @Controller
 @RequestMapping("/")
@@ -30,6 +38,8 @@ public class ControladorPortal {
     private ServicioComercio servicioComercio;
     @Autowired
     private ServicioCupon servicioCupon;
+    @Autowired
+    private ServicioFoto servicioFoto;
 
     @GetMapping("/")
     public String index() {
@@ -75,6 +85,7 @@ public class ControladorPortal {
                     modelo.put("error", e.getMessage());
                 }
                 
+     
                     return "inicioComercio.html";
                     
             default:
@@ -153,6 +164,14 @@ public class ControladorPortal {
             return "registroComercio";
         }
         return "exito.html";
+    }
+    
+    @GetMapping("/cargar/{id}")
+    public ResponseEntity<byte[]> cargarfoto(@PathVariable String id){
+        Foto foto = servicioFoto.buscarFoto(id);
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+        return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
 
 }
