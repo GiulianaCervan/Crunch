@@ -69,5 +69,12 @@ public class ServicioFoto {
         return null;
     }
     
+    public Foto buscarFoto(String id){
+        
+        Foto foto = fotoRepositorio.getOne(id);
+        
+        return foto;
+    }
+    
   
 }
