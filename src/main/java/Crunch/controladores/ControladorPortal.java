@@ -85,7 +85,7 @@ public class ControladorPortal {
                     modelo.put("error", e.getMessage());
                 }
                 
-     
+                    modelo.addAttribute("comercio", comercio);
                     return "inicioComercio.html";
                     
             default:
