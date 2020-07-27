@@ -46,6 +46,13 @@ public class ControladorPortal {
     public String index() {
         return "index.html";
     }
+    
+    @GetMapping("/cupones/{rubro}")
+    public String mostrarCupones(@PathVariable String rubro, ModelMap modelo){
+        
+        modelo.put("cupones", servicioCupon.mostrarBanners(rubro));
+        return "cupones.html";
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE','ROLE_COMERCIO')")
     @GetMapping("/inicio")

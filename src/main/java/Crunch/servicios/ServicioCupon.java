@@ -16,6 +16,7 @@ import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
 import Crunch.utilidades.TipoCupon;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -255,7 +256,55 @@ public class ServicioCupon {
 
     }
 
-    public List<Cupon> mostrarPorRubros(String rubro) {
+    /**
+     * Busca en todos los cupones y genera los banners en funcion de sus titulos y sus comercios
+     * 
+     * @param rubro
+     * @return 
+     */
+    public List<Cupon> mostrarBanners(String rubro){
+        
+        List<Cupon> cupones = mostrarPorRubros(rubro);
+        List<Cupon> banners = new ArrayList<>();
+        
+        for (Cupon cupon : cupones) {
+            
+            for (Cupon banner : banners) {
+                
+                if (cupon.getTitulo().equals(banner.getTitulo()) && cupon.getComercio().equals(banner.getComercio())) {
+                    break;
+                }else{
+                    banners.add(cupon);
+                }
+            }
+                
+            
+        }
+        
+        return banners;
+               
+    }
+    
+    public String buscarCuponDisponible(String titulo, String comercio) throws ExcepcionServicio{
+        
+        List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, comercio);
+        
+        for (Cupon cupon : cupones) {
+            
+            if (cupon.isDisponible()) {
+                return cupon.getId();
+            }
+        }
+        throw new ExcepcionServicio("Lo lamentamos, ya no quedan cupones disponibles");
+    }
+    
+    /**
+     * Pide el rubro de los cupones a filtrar, en caso de no tenerlo, devuelve todos los cupones de la base de datos
+     * 
+     * @param rubro
+     * @return 
+     */
+    private List<Cupon> mostrarPorRubros(String rubro) {
 
         List<Cupon> todos = repositorioCupon.findAll();
         List<Cupon> porRubro = null;
@@ -276,8 +325,13 @@ public class ServicioCupon {
         return porRubro;
     }
 
-    //Borrado de cupones vencidos al hacer login
-//Validador generico
+   /**
+    * Validador generico
+    * 
+    * @param titulo
+    * @param descripcion
+    * @throws ExcepcionServicio 
+    */
     private void validar(String titulo, String descripcion) throws ExcepcionServicio {
 
         if (titulo == null || titulo.isEmpty()) {
