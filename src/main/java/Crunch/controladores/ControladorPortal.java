@@ -86,25 +86,7 @@ public class ControladorPortal {
         
 
     }
-//    public String registrar(ModelMap modelo, HttpSession session, MultipartFile archivo, @RequestParam String documento, @RequestParam String nombre,@RequestParam String apellido, @RequestParam String domicilio,@RequestParam String telefono, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String idZona){
-//        Cliente cliente = null;
-//        
-//        try {
-//            cliente = clienteRepositorio.buscarClientePorId(documento);
-//            clienteServicio.modificar(documento, nombre, apellido, domicilio, telefono, clave1, clave2, idZona);
-//            session.setAttribute("usuariosession", cliente);
-//            return "redirect:/perfil";
-//            
-//        } catch (ErrorServicio e) {
-//      
-//            List<Zona> zonas = zonaRepositorio.findAll();
-//            modelo.put("zonas", zonas);
-//            modelo.put("error", e.getMessage());           
-//            modelo.put("perfil", cliente);
-//           
-//            return "error.html";
-//        }
-//    }
+//    
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo) {
