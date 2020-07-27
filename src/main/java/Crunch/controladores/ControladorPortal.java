@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +72,7 @@ public class ControladorPortal {
                     modelo.put("error", e.getMessage());
                 }
                 
+                servicioCupon.verificarVencidos(cliente.getMail());
                 
                 return "inicioCliente.html";
                 
@@ -84,7 +86,8 @@ public class ControladorPortal {
                 } catch (ExcepcionServicio e) {
                     modelo.put("error", e.getMessage());
                 }
-                
+                    servicioCupon.verificarVencidos(comercio.getMail());
+                    modelo.addAttribute("comercio",comercio);
      
                     return "inicioComercio.html";
                     
@@ -170,7 +173,8 @@ public class ControladorPortal {
     public ResponseEntity<byte[]> cargarfoto(@PathVariable String id){
         Foto foto = servicioFoto.buscarFoto(id);
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
+       
+        headers.setContentType(MediaType.asMediaType( MimeType.valueOf(foto.getMime())));
         return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
 
