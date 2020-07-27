@@ -31,7 +31,7 @@ public class ControladorComercio {
     @Autowired
     private ServicioCupon servicioCupon;
     
-    @PreAuthorize("hasAnyRol('ROLE_COMERCIO')")
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/perfil")
     public String mostrarPerfil(ModelMap modelo, HttpSession session){
         
@@ -49,13 +49,14 @@ public class ControladorComercio {
         return "";
         
     }
-    
+   
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cupon")
     public String cupon(){
         return "cupon.html";
     }
    
-    @PreAuthorize("hasAnyRol('ROLE_COMERCIO')")
+   @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/crearCupon")
     public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam  Integer cantidad ,ModelMap modelo){
         
@@ -75,6 +76,7 @@ public class ControladorComercio {
             
             return "cupon.html";
         }catch (Exception e){
+            e.printStackTrace();
             modelo.put("error", e.getMessage());
             return "error.html";
         }

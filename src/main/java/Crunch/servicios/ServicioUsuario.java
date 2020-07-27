@@ -40,8 +40,7 @@ public class ServicioUsuario implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         
-        System.out.println(mail);
-       System.out.println("---------------------------------llegué al loadbyus");
+       
         
         Optional<Comercio> respuestaComercio = comercioRepositorio.findById(mail);
         Optional<Cliente> respuestaCliente = clienteRepositorio.findById(mail);
