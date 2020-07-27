@@ -193,7 +193,7 @@ public class ServicioCupon {
      * lista de cupones si tiene cupones vencidos o los pone como tal, si el
      * cupon lleva mas de 7 dias vencidos, los borra
      *
-     * @param mailCliente
+     * @param mail
      */
     @Transactional
     public void verificarVencidos(String mail) {

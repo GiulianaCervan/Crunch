@@ -53,14 +53,13 @@
                 </div>
 
             </div>
-        
-
-            <div class=".col-xs-6 .col-md-4">
-                <img class="rounded-circle" th:src="@{/cargar/__${comercio.foto.id}__}" id="derecha" alt="" style="width: 300px" ;>
-                <!-- Masthead Subheading-->
+            <div class="col-xs-6 .col-md-4">
+                <div class="foto">
+                    <img th:src="@{/cargar/__${comercio.foto.id}__}" width="100px" height="100px">
+                </div>
             </div>
     </header>
-    
+
     <!-- Portfolio Modal-->
     <footer class="footer text-center">
         <div class="container">
