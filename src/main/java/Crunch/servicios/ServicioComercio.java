@@ -1,9 +1,14 @@
 package Crunch.servicios;
 
+import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Foto;
+import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
+import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
+import Crunch.utilidades.Rubro;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,8 @@ public class ServicioComercio {
     private ComercioRepositorio comercioRepositorio;
     @Autowired
     private ServicioFoto servicioFoto;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
 
     /**
      * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
@@ -49,7 +56,7 @@ public class ServicioComercio {
      *
      * @param nombreComercio
      * @param direccion
-     * @param rubros
+     * @param rubro
      * @param mail
      * @param clave
      * @param nombre
@@ -62,16 +69,20 @@ public class ServicioComercio {
     public void crear(MultipartFile archivo,String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
         
         validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
-
+        
+        List<Cliente> clienteRegistrados = clienteRepositorio.findAll();
+        
+        for (Cliente cliente : clienteRegistrados) {
+            
+            if (cliente.getMail().equals(mail)) {
+                throw new ExcepcionServicio("Lo lamentamos, ya hay un cliente registrado con ese mail, para disfutrar de la web como comercio use un mail comercial");
+            }
+        }
         
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
 
         Comercio comercio = new Comercio();
-        /**
-         * Saqué del método crear los atributos de:
-         * cuponesPromo,cuponesCanje,raspaditas,reputacion,valoracion
-         *                          ATTE Lauta
-         */
+        
         comercio.setMail(mail);
         comercio.setClave(claveEncriptada);
         comercio.setNombre(nombre);
@@ -79,7 +90,17 @@ public class ServicioComercio {
         comercio.setTelefono(telefono);
         comercio.setDireccion(direccion);
         comercio.setNombreComercio(nombreComercio);
-//        comercio.setRubros();
+        
+        String[] separados = rubro.split(",");
+        
+        
+        for (String separado : separados) {
+            Rubro rubroEnum = Rubro.valueOf(separado);
+            RubroAsignado rubroAsignado = null;
+            rubroAsignado.setRubro(rubroEnum);
+            comercio.getRubros().add(rubroAsignado);
+        }
+        
 
         Foto foto = servicioFoto.guardar(archivo);
         comercio.setFoto(foto);

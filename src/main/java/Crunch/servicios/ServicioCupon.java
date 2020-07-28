@@ -180,6 +180,7 @@ public class ServicioCupon {
                     repositorioCupon.delete(cupon);
                     repositorioCliente.save(cliente);
                     repositorioComercio.save(comercio);
+                    break;
                 } else {
                     throw new ExcepcionServicio("El cupon no se puede canjear, esta vencido");
                 }
