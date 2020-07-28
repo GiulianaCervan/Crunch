@@ -1,34 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Crunch.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Raspadita {
     
     @Id
-    private String identificador;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     private Integer puntuacion;
 
     public Raspadita() {
-    }
-
-    public Raspadita(String identificador, Integer puntuacion) {
-        this.identificador = identificador;
-        this.puntuacion = puntuacion;
-    }
-
-    public String getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(String identificador) {
-        this.identificador = identificador;
     }
 
     public Integer getPuntuacion() {
@@ -39,7 +26,13 @@ public class Raspadita {
         this.puntuacion = puntuacion;
     }
 
-    public void canje() {
-
+    public String getId() {
+        return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+  
 }
