@@ -2,8 +2,13 @@ package Crunch.servicios;
 
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Foto;
+import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ComercioRepositorio;
+import Crunch.repositorios.RubroRepositorio;
+import Crunch.utilidades.Rubro;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,8 @@ public class ServicioComercio {
     @Autowired
     private ServicioFoto servicioFoto;
 
+    @Autowired
+    private RubroRepositorio rubroRepositorio;
     /**
      * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
      * 
@@ -79,8 +86,18 @@ public class ServicioComercio {
         comercio.setTelefono(telefono);
         comercio.setDireccion(direccion);
         comercio.setNombreComercio(nombreComercio);
-//        comercio.setRubros();
-
+        String[] separados = rubro.split(",");
+        
+        List<RubroAsignado> rubros = new ArrayList<>();
+        for (String separado : separados) {
+            Rubro rubroEnum = Rubro.valueOf(separado);
+            RubroAsignado rubroAsignado = new RubroAsignado();
+            rubroAsignado.setRubro(rubroEnum);
+            rubros.add(rubroAsignado);
+            rubroRepositorio.save(rubroAsignado);
+        }
+        
+        comercio.setRubros(rubros);
         Foto foto = servicioFoto.guardar(archivo);
         comercio.setFoto(foto);
         

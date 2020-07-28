@@ -96,11 +96,13 @@
                             <input type="text" class="form-control" name="direccion" th:value="${direccion}" required />
                             <label>E-Mail</label>
                             <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
-                            <label th:for="Rubro">Rubro</label>
-                            <select class="form-control" name="rubros" multiple="multiple">
+                            <label >Rubro</label>
+                            <br>
+                             <select class="form-control" name="rubros" multiple="multiple">
                                 <option th:each="rubro : ${rubros}" th:text="${rubro}">
                                 </option>
                             </select>
+
                             <label>Clave</label>
                             <input type="password" class="form-control" name="clave" th:value="${clave}" required />
                             <label>Repetir Clave</label>
