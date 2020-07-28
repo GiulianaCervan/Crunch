@@ -1,12 +1,9 @@
 package Crunch.entidades;
 
-import Crunch.utilidades.Rubro;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Comercio extends Usuario {
