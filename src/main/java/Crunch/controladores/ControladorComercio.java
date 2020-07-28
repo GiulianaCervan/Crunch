@@ -82,6 +82,6 @@ public class ControladorComercio {
         }
        
         modelo.put("exito", "Cupon creado correctamente");
-        return "inicioComercio.html";
+        return "redirect:/inicio";
     }
 }

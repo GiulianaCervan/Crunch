@@ -47,8 +47,8 @@ public class ControladorPortal {
         return "index.html";
     }
     
-    @GetMapping("/cupones")
-    public String mostrarCupones(@RequestParam String rubro, ModelMap modelo){
+    @GetMapping("/cupones/{rubro}")
+    public String mostrarCupones(@PathVariable String rubro, ModelMap modelo){
         
         modelo.put("cupones", servicioCupon.mostrarBanners(rubro));
         return "cupones.html";
