@@ -68,7 +68,7 @@ public class ServicioCliente{
         for (Comercio comercio : comerciosRegistrados) {
             
             if (comercio.getMail().equals(mail)) {
-                throw new ExcepcionServicio("Lo lamentamos, pero ya hay un cliente regitrado con ese mail, para usar la web como cliente use un mail particular");
+                throw new ExcepcionServicio("Lo lamentamos, pero ya hay un comercio regitrado con ese mail, para usar la web como cliente use un mail particular");
             }
         }
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
@@ -124,6 +124,21 @@ public class ServicioCliente{
             throw new ExcepcionServicio("No se ha encontrado el cliente solicitado.");
         }
     }
+    
+    /**
+     * Se le otorga un mail o pedazo de el y devuelve una lista de Clientes con las coicidencias parciales
+     * 
+     * @param mail
+     * @return 
+     */
+    public List<Cliente> buscarClientes(String mail){
+        
+        List<Cliente> clientes = clienteRepositorio.buscarClientesPorMail("%" + mail + "%");
+        
+        return clientes;
+    }
+    
+   
 
     /**
      * Este método lo utilizo para poder validar el cliente que quiero
