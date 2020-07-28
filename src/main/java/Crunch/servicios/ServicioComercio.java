@@ -7,7 +7,13 @@ import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
+<<<<<<< HEAD
 import Crunch.utilidades.Rubro;
+=======
+import Crunch.repositorios.RubroRepositorio;
+import Crunch.utilidades.Rubro;
+import java.util.ArrayList;
+>>>>>>> 3a07b25f17001dfa77f93bff96ce06c60166375c
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -26,6 +32,8 @@ public class ServicioComercio {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
+    @Autowired
+    private RubroRepositorio rubroRepositorio;
     /**
      * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
      * 
@@ -90,17 +98,19 @@ public class ServicioComercio {
         comercio.setTelefono(telefono);
         comercio.setDireccion(direccion);
         comercio.setNombreComercio(nombreComercio);
-        
+
         String[] separados = rubro.split(",");
         
-        
+        List<RubroAsignado> rubros = new ArrayList<>();
         for (String separado : separados) {
             Rubro rubroEnum = Rubro.valueOf(separado);
-            RubroAsignado rubroAsignado = null;
+            RubroAsignado rubroAsignado = new RubroAsignado();
             rubroAsignado.setRubro(rubroEnum);
-            comercio.getRubros().add(rubroAsignado);
+            rubros.add(rubroAsignado);
+            rubroRepositorio.save(rubroAsignado);
         }
         
+        comercio.setRubros(rubros);
 
         Foto foto = servicioFoto.guardar(archivo);
         comercio.setFoto(foto);
