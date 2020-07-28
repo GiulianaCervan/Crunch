@@ -18,6 +18,7 @@ import Crunch.repositorios.ComercioRepositorio;
 import Crunch.utilidades.TipoCupon;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,23 +72,22 @@ public class ServicioCupon {
                 cupon.setDescripcion(descripcion);
                 cupon.setComercio(comercio);
                 cupon.setTipo(TipoCupon.PROMOCION);
-                
-                
+
                 Calendar minimo = Calendar.getInstance();
                 minimo.add(Calendar.DAY_OF_WEEK, 7);
                 Calendar fechaC = Calendar.getInstance();
                 minimo.add(Calendar.DAY_OF_MONTH, 7);
-                
+
                 String[] fecha = vencimiento.split("-");
-                
+
                 fechaC.set(Calendar.YEAR, Integer.parseInt(fecha[0]));
                 fechaC.set(Calendar.MONTH, Integer.parseInt(fecha[1]));
                 fechaC.set(Calendar.DAY_OF_WEEK, Integer.parseInt(fecha[2]));
-             
+
                 if (fechaC.before(minimo)) {
                     throw new ExcepcionServicio("La fecha minima de duracion de un cupon es de una semana");
                 }
-         
+
                 cupon.setVencimiento(new java.sql.Date(fechaC.getTimeInMillis()));
                 comercio.getCuponesPromo().add(cupon);
                 repositorioCupon.save(cupon);
@@ -162,6 +162,7 @@ public class ServicioCupon {
      *
      * @param mailComercio
      * @param idCupon
+     * @throws Crunch.excepciones.ExcepcionServicio
      */
     @Transactional
     public void validarCupon(String mailComercio, String idCupon) throws ExcepcionServicio {
@@ -180,6 +181,7 @@ public class ServicioCupon {
                     repositorioCupon.delete(cupon);
                     repositorioCliente.save(cliente);
                     repositorioComercio.save(comercio);
+                    break;
                 } else {
                     throw new ExcepcionServicio("El cupon no se puede canjear, esta vencido");
                 }
@@ -202,11 +204,10 @@ public class ServicioCupon {
         Optional<Cliente> respuestaCliente = repositorioCliente.findById(mail);
         Optional<Comercio> respuestaComercio = repositorioComercio.findById(mail);
 
-       
         Calendar hoy = Calendar.getInstance();
         Calendar semana = hoy;
         semana.add(Calendar.DAY_OF_WEEK, 7);
-        
+
         if (respuestaCliente.isPresent()) {
 
             Cliente cliente = respuestaCliente.get();
@@ -231,9 +232,9 @@ public class ServicioCupon {
         } else if (respuestaComercio.isPresent()) {
 
             Comercio comercio = respuestaComercio.get();
-            
+
             for (Cupon cupon : comercio.getCuponesPromo()) {
-                
+
                 if (hoy.after(cupon.getVencimiento())) {
                     cupon.setVencido(true);
                     repositorioCupon.save(cupon);
@@ -249,7 +250,7 @@ public class ServicioCupon {
                     repositorioComercio.save(comercio);
 
                 }
-                
+
             }
 
         }
@@ -257,63 +258,79 @@ public class ServicioCupon {
     }
 
     /**
-     * Busca en todos los cupones y genera los banners en funcion de sus titulos y sus comercios
-     * 
+     * Busca en todos los cupones y genera los banners en funcion de sus titulos
+     * y sus comercios
+     *
      * @param rubro
-     * @return 
+     * @return
      */
-    public List<Cupon> mostrarBanners(String rubro){
-        
+    public List<Cupon> mostrarBanners(String rubro) {
+
         List<Cupon> cupones = mostrarPorRubros(rubro);
         List<Cupon> banners = new ArrayList<>();
-        
+        banners.add(cupones.get(0));
+        Boolean encontrado = false;
+
+        Iterator<Cupon> iterador = banners.iterator();
         for (Cupon cupon : cupones) {
-            
+
+           
             for (Cupon banner : banners) {
-                
-                if (cupon.getTitulo().equals(banner.getTitulo()) && cupon.getComercio().equals(banner.getComercio())) {
+
+               
+                if ((cupon.getTitulo().equals(banner.getTitulo())) && cupon.getComercio().equals(banner.getComercio())) {
+                    encontrado = false;
                     break;
-                }else{
-                    banners.add(cupon);
+                } else {
+                    
+                    encontrado = true;
+                    
                 }
             }
+            if (encontrado == true) {
+                banners.add(cupon);
                 
-            
+            }
+            encontrado = false;
+
         }
-        
+//        for (Cupon banner : banners) {
+//            System.out.println(banner.getTitulo()+"..........");
+//        }
+
         return banners;
-               
+
     }
-    
-    public String buscarCuponDisponible(String titulo, String comercio) throws ExcepcionServicio{
-        
+
+    public String buscarCuponDisponible(String titulo, String comercio) throws ExcepcionServicio {
+
         List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, comercio);
-        
+
         for (Cupon cupon : cupones) {
-            
+
             if (cupon.isDisponible()) {
                 return cupon.getId();
             }
         }
         throw new ExcepcionServicio("Lo lamentamos, ya no quedan cupones disponibles");
     }
-    
+
     /**
-     * Pide el rubro de los cupones a filtrar, en caso de no tenerlo, devuelve todos los cupones de la base de datos
-     * 
+     * Pide el rubro de los cupones a filtrar, en caso de no tenerlo, devuelve
+     * todos los cupones de la base de datos
+     *
      * @param rubro
-     * @return 
+     * @return
      */
     private List<Cupon> mostrarPorRubros(String rubro) {
 
         List<Cupon> todos = repositorioCupon.findAll();
-        List<Cupon> porRubro = null;
+        List<Cupon> porRubro = new ArrayList<>();
         for (Cupon cupon : todos) {
 
             for (RubroAsignado rubroComercio : cupon.getComercio().getRubros()) {
 
-                //********REVISAR ASIGNACION DE ENUM
-                if (rubroComercio.getRubro().equals(rubro)) {
+                if (rubroComercio.getRubro().name().equals(rubro)) {
 
                     porRubro.add(cupon);
                 }
@@ -325,13 +342,13 @@ public class ServicioCupon {
         return porRubro;
     }
 
-   /**
-    * Validador generico
-    * 
-    * @param titulo
-    * @param descripcion
-    * @throws ExcepcionServicio 
-    */
+    /**
+     * Validador generico
+     *
+     * @param titulo
+     * @param descripcion
+     * @throws ExcepcionServicio
+     */
     private void validar(String titulo, String descripcion) throws ExcepcionServicio {
 
         if (titulo == null || titulo.isEmpty()) {

@@ -1,8 +1,11 @@
 package Crunch.servicios;
 
 import Crunch.entidades.Cliente;
+import Crunch.entidades.Comercio;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
+import Crunch.repositorios.ComercioRepositorio;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ public class ServicioCliente{
 
     @Autowired
     private ClienteRepositorio clienteRepositorio;
+    @Autowired
+    private ComercioRepositorio comercioRepositorio;
     
     /**
      * Se le ingresa el mail de cliente registrado y devuelve el Objeto Cliente
@@ -57,7 +62,15 @@ public class ServicioCliente{
     public void crear(String mail, String clave,String clave2, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
 
         validar(mail, clave,clave2, nombre, apellido, domicilio, telefono);
-
+        
+        List<Comercio> comerciosRegistrados = comercioRepositorio.findAll();
+        
+        for (Comercio comercio : comerciosRegistrados) {
+            
+            if (comercio.getMail().equals(mail)) {
+                throw new ExcepcionServicio("Lo lamentamos, pero ya hay un comercio regitrado con ese mail, para usar la web como cliente use un mail particular");
+            }
+        }
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
         /**
          * Saqué del método crear los atributos de:
@@ -71,6 +84,8 @@ public class ServicioCliente{
         cliente.setApellido(apellido);
         cliente.setTelefono(telefono);
         cliente.setDomicilio(domicilio);
+        
+        
         
         
         clienteRepositorio.save(cliente);
@@ -109,6 +124,21 @@ public class ServicioCliente{
             throw new ExcepcionServicio("No se ha encontrado el cliente solicitado.");
         }
     }
+    
+    /**
+     * Se le otorga un mail o pedazo de el y devuelve una lista de Clientes con las coicidencias parciales
+     * 
+     * @param mail
+     * @return 
+     */
+    public List<Cliente> buscarClientes(String mail){
+        
+        List<Cliente> clientes = clienteRepositorio.buscarClientesPorMail("%" + mail + "%");
+        
+        return clientes;
+    }
+    
+   
 
     /**
      * Este método lo utilizo para poder validar el cliente que quiero

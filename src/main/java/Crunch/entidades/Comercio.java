@@ -17,9 +17,6 @@ public class Comercio extends Usuario {
     @OneToMany
     private List<Cupon> cuponesPromo;
 
-    @OneToMany
-    private List<Raspadita> raspaditas;
-
     private Float reputacion;
 
     @OneToMany
@@ -32,17 +29,18 @@ public class Comercio extends Usuario {
         super();
     }
 
-    public Comercio(String nombreComercio, String direccion, List<RubroAsignado> rubros, List<Cupon> cuponesPromo, List<Raspadita> raspaditas, Float reputacion, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+    public Comercio(String nombreComercio, String direccion, List<RubroAsignado> rubros, List<Cupon> cuponesPromo, Float reputacion, List<Valoracion> valoraciones, Foto foto, String mail, String clave, String nombre, String apellido, String telefono) {
         super(mail, clave, nombre, apellido, telefono);
         this.nombreComercio = nombreComercio;
         this.direccion = direccion;
         this.rubros = rubros;
         this.cuponesPromo = cuponesPromo;
-        this.raspaditas = raspaditas;
         this.reputacion = reputacion;
         this.valoraciones = valoraciones;
+        this.foto = foto;
     }
 
+    
     public String getNombreComercio() {
         return nombreComercio;
     }
@@ -73,14 +71,6 @@ public class Comercio extends Usuario {
 
     public void setCuponesPromo(List<Cupon> cuponesPromo) {
         this.cuponesPromo = cuponesPromo;
-    }
-
-    public List<Raspadita> getRaspaditas() {
-        return raspaditas;
-    }
-
-    public void setRaspaditas(List<Raspadita> raspaditas) {
-        this.raspaditas = raspaditas;
     }
 
     public Float getReputacion() {

@@ -3,17 +3,19 @@ package Crunch.entidades;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 
 @Entity
-public class Cliente extends Usuario{
-    
+public class Cliente extends Usuario {
+
     private String domicilio;
-    private Integer puntos;
+
+    @OneToMany
+    private List<Puntos> puntos;
+
     @OneToMany
     private List<Cupon> cuponPromo;
-    @OneToMany
-    private List<Raspadita> raspaditas;
+
     @OneToMany
     private List<Valoracion> valoraciones;
 
@@ -21,16 +23,13 @@ public class Cliente extends Usuario{
         super();
     }
 
-    public Cliente(String domicilio, Integer puntos, List<Cupon> cuponPromo, List<Raspadita> raspaditas, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
+    public Cliente(String domicilio, List<Puntos> puntos, List<Cupon> cuponPromo, List<Valoracion> valoraciones, String mail, String clave, String nombre, String apellido, String telefono) {
         super(mail, clave, nombre, apellido, telefono);
         this.domicilio = domicilio;
         this.puntos = puntos;
         this.cuponPromo = cuponPromo;
-        this.raspaditas = raspaditas;
         this.valoraciones = valoraciones;
     }
-
-   
 
     public String getDomicilio() {
         return domicilio;
@@ -38,14 +37,6 @@ public class Cliente extends Usuario{
 
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
-    }
-
-    public Integer getPuntos() {
-        return puntos;
-    }
-
-    public void setPuntos(Integer puntos) {
-        this.puntos = puntos;
     }
 
     public List<Cupon> getCuponPromo() {
@@ -56,15 +47,6 @@ public class Cliente extends Usuario{
         this.cuponPromo = cuponPromo;
     }
 
-
-    public List<Raspadita> getRaspaditas() {
-        return raspaditas;
-    }
-
-    public void setRaspaditas(List<Raspadita> raspaditas) {
-        this.raspaditas = raspaditas;
-    }
-
     public List<Valoracion> getValoraciones() {
         return valoraciones;
     }
@@ -73,8 +55,13 @@ public class Cliente extends Usuario{
         this.valoraciones = valoraciones;
     }
 
+    public List<Puntos> getPuntos() {
+        return puntos;
+    }
 
-    
+    public void setPuntos(List<Puntos> puntos) {
+        this.puntos = puntos;
+    }
 
     @Override
     public String getMail() {
@@ -125,8 +112,5 @@ public class Cliente extends Usuario{
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-
-   
-
 
 }

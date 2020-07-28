@@ -1,10 +1,14 @@
 package Crunch.servicios;
 
+import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Foto;
+import Crunch.entidades.Puntos;
 import Crunch.entidades.RubroAsignado;
 import Crunch.excepciones.ExcepcionServicio;
+import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
+import Crunch.repositorios.PuntosRepositorio;
 import Crunch.repositorios.RubroRepositorio;
 import Crunch.utilidades.Rubro;
 import java.util.ArrayList;
@@ -23,40 +27,45 @@ public class ServicioComercio {
     private ComercioRepositorio comercioRepositorio;
     @Autowired
     private ServicioFoto servicioFoto;
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+    @Autowired
+    private PuntosRepositorio puntosRepositorio;
 
     @Autowired
     private RubroRepositorio rubroRepositorio;
+
     /**
      * Se le ingresa el mail del comercio y devuelve el Objeto Comercio
-     * 
+     *
      * @param mail
      * @return
-     * @throws ExcepcionServicio 
+     * @throws ExcepcionServicio
      */
-    public Comercio buscarPorId(String mail) throws ExcepcionServicio{
-        
+    public Comercio buscarPorId(String mail) throws ExcepcionServicio {
+
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El campo mail no puede estar vacio o ser nulo");
         }
-        
+
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
         Comercio comercio = null;
         if (respuesta.isPresent()) {
             comercio = respuesta.get();
-            
-        }else{
+
+        } else {
             throw new ExcepcionServicio("El comercio no fue encontrado con el mail otorgado");
         }
         return comercio;
-        
-        
+
     }
+
     /**
      * Este método crea y guarda en la base de datos un objeto Cliente.
      *
      * @param nombreComercio
      * @param direccion
-     * @param rubros
+     * @param rubro
      * @param mail
      * @param clave
      * @param nombre
@@ -66,19 +75,23 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(MultipartFile archivo,String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
-        
+    public void crear(MultipartFile archivo, String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
+
         validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
 
-        
+        List<Cliente> clienteRegistrados = clienteRepositorio.findAll();
+
+        for (Cliente cliente : clienteRegistrados) {
+
+            if (cliente.getMail().equals(mail)) {
+                throw new ExcepcionServicio("Lo lamentamos, ya hay un cliente registrado con ese mail, para disfutrar de la web como comercio use un mail comercial");
+            }
+        }
+
         String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
 
         Comercio comercio = new Comercio();
-        /**
-         * Saqué del método crear los atributos de:
-         * cuponesPromo,cuponesCanje,raspaditas,reputacion,valoracion
-         *                          ATTE Lauta
-         */
+
         comercio.setMail(mail);
         comercio.setClave(claveEncriptada);
         comercio.setNombre(nombre);
@@ -86,8 +99,9 @@ public class ServicioComercio {
         comercio.setTelefono(telefono);
         comercio.setDireccion(direccion);
         comercio.setNombreComercio(nombreComercio);
+
         String[] separados = rubro.split(",");
-        
+
         List<RubroAsignado> rubros = new ArrayList<>();
         for (String separado : separados) {
             Rubro rubroEnum = Rubro.valueOf(separado);
@@ -96,11 +110,12 @@ public class ServicioComercio {
             rubros.add(rubroAsignado);
             rubroRepositorio.save(rubroAsignado);
         }
-        
+
         comercio.setRubros(rubros);
+
         Foto foto = servicioFoto.guardar(archivo);
         comercio.setFoto(foto);
-        
+
         comercioRepositorio.save(comercio);
     }
 
@@ -139,6 +154,44 @@ public class ServicioComercio {
             comercioRepositorio.save(comercio);
         } else {
             throw new ExcepcionServicio("No se ha encontrado el comercio solicitado.");
+        }
+    }
+
+    @Transactional
+    public void darPuntos(Integer cantidad, String mailCliente, String mailComercio) throws ExcepcionServicio {
+
+        if (cantidad == null || cantidad < 0) {
+            throw new ExcepcionServicio("La cantiad de puntos debe ser mayor a 0");
+        }
+        Boolean encontrado = false;
+        Optional<Cliente> respuesta = clienteRepositorio.findById(mailCliente);
+        Cliente cliente = null;
+        if (respuesta.isPresent()) {
+
+            cliente = respuesta.get();
+
+            for (Puntos punto : cliente.getPuntos()) {
+
+                if (punto.getComercio().getMail().equals(mailComercio)) {
+
+                    punto.setCantidad(punto.getCantidad() + cantidad);
+                    encontrado = true;
+                    puntosRepositorio.save(punto);
+                    break;
+                }
+            }
+            if (encontrado == false) {
+
+                Puntos punto = new Puntos();
+                punto.setCantidad(cantidad);
+                cliente.getPuntos().add(punto);
+                puntosRepositorio.save(punto);
+                clienteRepositorio.save(cliente);
+
+            }
+
+        } else {
+            throw new ExcepcionServicio("Ocurrio un error y no se puedo encontrar el cliente");
         }
     }
 
@@ -194,7 +247,6 @@ public class ServicioComercio {
 //        if (rubros == null || rubros.isEmpty()) {
 //            throw new ExcepcionServicio("El/los rubro/s no puede/n ser nulo/s");
 //        }
-
     }
 
 }

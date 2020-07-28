@@ -5,10 +5,15 @@
  */
 package Crunch.controladores;
 
+import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.excepciones.ExcepcionServicio;
+import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioComercio;
 import Crunch.servicios.ServicioCupon;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,20 +26,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 @RequestMapping("/comercio")
 public class ControladorComercio {
-    
+
     @Autowired
     private ServicioComercio servicioComercio;
     @Autowired
     private ServicioCupon servicioCupon;
-    
+    @Autowired
+    private ServicioCliente servicioCliente;
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/perfil")
-    public String mostrarPerfil(ModelMap modelo, HttpSession session){
-        
+    public String mostrarPerfil(ModelMap modelo, HttpSession session) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
@@ -42,46 +48,72 @@ public class ControladorComercio {
         try {
             comercio = servicioComercio.buscarPorId(userMail);
             session.setAttribute("usuariosession", comercio);
-            
+
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
         }
         return "";
-        
+
     }
-   
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cupon")
-    public String cupon(){
+    public String cupon() {
         return "cupon.html";
     }
-   
-   @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/crearCupon")
-    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam  Integer cantidad ,ModelMap modelo){
-        
+    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer cantidad, ModelMap modelo) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
         try {
-            
+
             servicioCupon.crear(titulo, descripcion, vencimiento, userMail, cantidad);
-         
+
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("titulo", titulo);
             modelo.put("descripcion", descripcion);
             modelo.put("vencimiento", vencimiento);
             modelo.put("cantidad", cantidad);
-            
+
             return "cupon.html";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-       
+
         modelo.put("exito", "Cupon creado correctamente");
         return "redirect:/inicio";
     }
+
+//    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+//    @PostMapping("/buscarClientes")
+//    public String Clientes(@RequestParam String mailCliente, ModelMap modelo) {
+//
+//        List<Cliente> clientes = servicioCliente.buscarClientes(mailCliente);
+//
+//        modelo.put("clientes", clientes);
+//
+//        return "//TabladeClientes";
+//    }
+
+//    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+//    @PostMapping("/buscarClientes")
+//    public String darPuntos(@RequestParam String mailCliente, ModelMap modelo) {
+//        Cliente cliente = null;
+//        try {
+//            cliente = servicioCliente.buscarPorId(mailCliente);
+//            modelo.put("cliente", cliente);
+//        } catch (ExcepcionServicio e) {
+//            modelo.put("error", e.getMessage());
+//            return "error.html";
+//        }
+//        return "//darPuntos";
+//
+//    }
 }

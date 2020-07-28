@@ -2,6 +2,7 @@ package Crunch.controladores;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.Cupon;
 import Crunch.entidades.Foto;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
@@ -9,6 +10,7 @@ import Crunch.servicios.ServicioComercio;
 import Crunch.servicios.ServicioCupon;
 import Crunch.servicios.ServicioFoto;
 import Crunch.utilidades.Rubro;
+import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,8 +51,11 @@ public class ControladorPortal {
     
     @GetMapping("/cupones/{rubro}")
     public String mostrarCupones(@PathVariable String rubro, ModelMap modelo){
-        
-        modelo.put("cupones", servicioCupon.mostrarBanners(rubro));
+        List<Cupon> cupones = servicioCupon.mostrarBanners(rubro);
+        for (Cupon cupone : cupones) {
+            System.out.println(cupone.getTitulo() + "CONTROLADOR");
+        }
+        modelo.put("cupones", cupones);
         return "cupones.html";
     }
 
