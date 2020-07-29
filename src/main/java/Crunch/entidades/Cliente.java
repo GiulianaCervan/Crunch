@@ -14,7 +14,7 @@ public class Cliente extends Usuario {
     private List<Puntos> puntos;
 
     @OneToMany
-    private List<Cupon> cuponPromo;
+    private List<Cupon> cupones;
 
     @OneToMany
     private List<Valoracion> valoraciones;
@@ -27,7 +27,7 @@ public class Cliente extends Usuario {
         super(mail, clave, nombre, apellido, telefono);
         this.domicilio = domicilio;
         this.puntos = puntos;
-        this.cuponPromo = cuponPromo;
+        this.cupones = cuponPromo;
         this.valoraciones = valoraciones;
     }
 
@@ -39,12 +39,12 @@ public class Cliente extends Usuario {
         this.domicilio = domicilio;
     }
 
-    public List<Cupon> getCuponPromo() {
-        return cuponPromo;
+    public List<Cupon> getCupones() {
+        return cupones;
     }
 
-    public void setCuponPromo(List<Cupon> cuponPromo) {
-        this.cuponPromo = cuponPromo;
+    public void setCupones(List<Cupon> cupones) {
+        this.cupones = cupones;
     }
 
     public List<Valoracion> getValoraciones() {

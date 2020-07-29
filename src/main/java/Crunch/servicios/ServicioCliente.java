@@ -2,6 +2,7 @@ package Crunch.servicios;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.Puntos;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
@@ -138,7 +139,25 @@ public class ServicioCliente{
         return clientes;
     }
     
-   
+   /**
+    * Este método otorga los puntos que tiene el cliente dependiendo del comercio
+    * 
+    * @param cliente
+    * @param comercio
+    * @return 
+    */
+   public Integer puntosPorComercio (Cliente cliente,Comercio comercio){
+       
+       for (Puntos punto : cliente.getPuntos()) {
+           
+           if (punto.getComercio().equals(comercio)){
+                return punto.getCantidad();
+           }
+           
+       }
+      return 0;
+   }
+           
 
     /**
      * Este método lo utilizo para poder validar el cliente que quiero

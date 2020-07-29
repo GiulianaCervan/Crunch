@@ -40,6 +40,8 @@ public class Cupon {
     @ManyToOne
     private Cliente cliente;
     
+    private Integer costo;
+    
     public Cupon() {
     }
 
@@ -129,11 +131,13 @@ public class Cupon {
     public void setVencimiento(Date vencimiento) {
         this.vencimiento = vencimiento;
     }
-    
-    
-    
-    
-    
-    
+
+    public Integer getCosto() {
+        return costo;
+    }
+
+    public void setCosto(Integer costo) {
+        this.costo = costo;
+    }
     
 }
