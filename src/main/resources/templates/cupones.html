@@ -46,33 +46,35 @@
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-          
+
             <!-- Masthead Heading-->
             <h1 class="masthead-heading mb-0">Cupones disponibles!!</h1>
-
-            <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0"> </p>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
-        <table>
+        <table th:each="cupon : ${cupones}">
             <tbody>
-                <tr th:each="cupon:${cupones}">
-                    <div class="container">
-                        <div class="coupon">
-                            <div class="container" id="imagen" style="width: 548px">
-                                <br>
-                                <h5 th:text="${cupon.titulo}">TITULO</h5>
-                                <img class="shape" src="assets/img/logo.jpg" alt="" style="width: 25%;">
-                                <p th:text="${cupon.descripcion}">grgs</p>
-                                <p th:text="${CODIGO: +cupon.id}">gdsgg</p>
-                                <p th:text="${Valido hasta: +cupon.vencimiento}">eggg</p>
-                                <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
-                                <br><br>
-                            </div>
+                
+                    <td class="col-md-4 col-sm-6">
+
+                        <div class="container" id="imagen" style="width: 548px">
+                            <br>
+                            <h2 th:text="${cupon.titulo}"></h2>
+
+                            <p th:text="${cupon.descripcion}"></p>
+                            <p th:text="${'CODIGO: '+cupon.id}"></p>
+                            <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
+                            <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
+                            <br><br>
                         </div>
-                    </div>
-                </tr>
+                        <br>
+                    </td>
+            
             </tbody>
         </table>
     </section>

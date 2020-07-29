@@ -10,13 +10,11 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/css/styles.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
-        <style>
-            div.divider-custom-line#division{border-color: white;}
-        </style>
+      
     </head>
     <body id="page-top">
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
@@ -38,10 +36,9 @@
             <div class="container d-flex align-items-center flex-column">
                 
                 <h2 class="masthead-heading mb-0">Tus cupones</h2>
-                
-                <div class="divider-custom">
-                    <div class="divider-custom-line"  id="division"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star" style="color: white;"></i></div>
+                <div class="divider-custom divider-light">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                     <div class="divider-custom-line"></div>
                 </div>
             </div>
@@ -50,12 +47,12 @@
             <div class="container">
               
                 <!-- Portfolio Grid Items-->
-                <select class="form-control" name="rubros">
-                    <option th:each="rubro : ${Rubro}"
-                        th:value="${T(com.baeldung.thymeleaf.model.Rubro).values()}" th:value="${rubroOpt}"
-                        th:text="${rubroOpt}">
-                    </option>
+                <h5>Filtrar por rubro</h5>
+                <select class="form-control" name="rubros" style="width: 20%;">
+                        <option th:each="rubro : ${rubros}" th:text="${rubro}">
+                        </option>
                 </select>
+                <br>
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <h2>Mis cupones</h2>
