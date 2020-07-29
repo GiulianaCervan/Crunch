@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
 @Controller
 @RequestMapping("/")
 public class ControladorPortal {
@@ -48,13 +47,19 @@ public class ControladorPortal {
     public String index() {
         return "index.html";
     }
-    
+
     @GetMapping("/cupones/{rubro}")
-    public String mostrarCupones(@PathVariable String rubro, ModelMap modelo){
+    public String mostrarCupones(@PathVariable String rubro, ModelMap modelo) {
         List<Cupon> cupones = servicioCupon.mostrarBanners(rubro);
-        for (Cupon cupone : cupones) {
-            System.out.println(cupone.getTitulo() + "CONTROLADOR");
-        }
+
+        modelo.put("cupones", cupones);
+        return "cupones.html";
+    }
+
+    @GetMapping("/cupones")
+    public String mostrarTodosLosCupones(ModelMap modelo) {
+        List<Cupon> cupones = servicioCupon.mostrarBanners(null);
+
         modelo.put("cupones", cupones);
         return "cupones.html";
     }
@@ -63,17 +68,15 @@ public class ControladorPortal {
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo, HttpSession session) {
 
-        
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
-        
+
         String userMail = userDetails.getUsername();
-        
+
         String rol = userDetails.getAuthorities().toString();
-        
-        
-        switch(rol){
-            
+
+        switch (rol) {
+
             case "[ROLE_CLIENTE]":
                 Cliente cliente = null;
                 try {
@@ -83,33 +86,29 @@ public class ControladorPortal {
                 } catch (ExcepcionServicio e) {
                     modelo.put("error", e.getMessage());
                 }
-                
+
                 servicioCupon.verificarVencidos(cliente.getMail());
-                
+
                 return "inicioCliente.html";
-                
-                
+
             case "[ROLE_COMERCIO]":
                 Comercio comercio = null;
                 try {
-                    comercio = servicioComercio.buscarPorId(userMail);  
+                    comercio = servicioComercio.buscarPorId(userMail);
                     servicioCupon.verificarVencidos(userMail);
                     session.setAttribute("usuariosession", comercio);
                 } catch (ExcepcionServicio e) {
                     modelo.put("error", e.getMessage());
                 }
-                    servicioCupon.verificarVencidos(comercio.getMail());
-                    modelo.addAttribute("comercio",comercio);
-     
-                    return "inicioComercio.html";
-                    
+                servicioCupon.verificarVencidos(comercio.getMail());
+                modelo.addAttribute("comercio", comercio);
+
+                return "inicioComercio.html";
+
             default:
                 modelo.put("error", "Algo a pasado...");
                 return "index.html";
         }
-        
-        
-        
 
     }
 //    
@@ -132,7 +131,7 @@ public class ControladorPortal {
 
     @PostMapping("/registrar")
 
-    public String registrar(ModelMap modelo,@RequestParam String mail,@RequestParam String clave1,@RequestParam String clave2,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String domicilio,@RequestParam String telefono) {
+    public String registrar(ModelMap modelo, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String domicilio, @RequestParam String telefono) {
 
         try {
             servicioCliente.crear(mail, clave1, clave2, nombre, apellido, domicilio, telefono);
@@ -144,49 +143,50 @@ public class ControladorPortal {
             modelo.put("apellido", apellido);
             modelo.put("telefono", telefono);
             modelo.put("mail", mail);
-            modelo.put("domicilio",domicilio);
-            
+            modelo.put("domicilio", domicilio);
+
             return "registro.html";
         }
         return "exito.html";
     }
-   
+
     @GetMapping("/registro-comercio")
-    public String registroComercio(ModelMap modelo){
+    public String registroComercio(ModelMap modelo) {
         modelo.put("rubros", Rubro.values());
         return "registroComercio.html";
     }
-    
+
     @PostMapping("/registrar-comercio")
-    public String registrarComercio(ModelMap modelo,MultipartFile archivo,@RequestParam String mail,@RequestParam String clave,@RequestParam String clave2,@RequestParam String nombre,@RequestParam String apellido,@RequestParam String telefono,@RequestParam String direccion, @RequestParam String nombreComercio, @RequestParam String rubros){
+    public String registrarComercio(ModelMap modelo, MultipartFile archivo, @RequestParam String mail, @RequestParam String clave, @RequestParam String clave2, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String telefono, @RequestParam String direccion, @RequestParam String nombreComercio, @RequestParam String rubros) {
         try {
             System.out.println("------------------------------rubros:" + rubros);
-            servicioComercio.crear(archivo,mail, clave, clave2, nombre, apellido, telefono, direccion, nombreComercio, rubros);
-            
+            servicioComercio.crear(archivo, mail, clave, clave2, nombre, apellido, telefono, direccion, nombreComercio, rubros);
+
         } catch (ExcepcionServicio e) {
-            modelo.put("error",e.getMessage());
-            
-            modelo.put("mail",mail);
-            modelo.put("nombre",nombre);
+            modelo.put("error", e.getMessage());
+
+            modelo.put("mail", mail);
+            modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
-            modelo.put("telefono",telefono);
+            modelo.put("telefono", telefono);
             modelo.put("direccion", direccion);
             modelo.put("nombreComercio", nombreComercio);
             /**
-             * modelo.put("rubros",rubros); Revisar el imput de los rubron en el front
+             * modelo.put("rubros",rubros); Revisar el imput de los rubron en el
+             * front
              */
-            
+
             return "registroComercio";
         }
         return "exito.html";
     }
-    
+
     @GetMapping("/cargar/{id}")
-    public ResponseEntity<byte[]> cargarfoto(@PathVariable String id){
+    public ResponseEntity<byte[]> cargarfoto(@PathVariable String id) {
         Foto foto = servicioFoto.buscarFoto(id);
         final HttpHeaders headers = new HttpHeaders();
-       
-        headers.setContentType(MediaType.asMediaType( MimeType.valueOf(foto.getMime())));
+
+        headers.setContentType(MediaType.asMediaType(MimeType.valueOf(foto.getMime())));
         return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
     

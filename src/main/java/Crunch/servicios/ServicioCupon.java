@@ -205,29 +205,39 @@ public class ServicioCupon {
         Optional<Comercio> respuestaComercio = repositorioComercio.findById(mail);
 
         Calendar hoy = Calendar.getInstance();
-        Calendar semana = hoy;
-        semana.add(Calendar.DAY_OF_WEEK, 7);
+        Calendar semana = Calendar.getInstance();
+        
 
+        List<Cupon> aBorrar = new ArrayList<>();
         if (respuestaCliente.isPresent()) {
 
             Cliente cliente = respuestaCliente.get();
+
             for (Cupon cupon : cliente.getCuponPromo()) {
 
+                semana.setTime(cupon.getVencimiento());
+                semana.add(Calendar.DAY_OF_MONTH, 7);
+                
                 if (hoy.after(cupon.getVencimiento())) {
                     cupon.setVencido(true);
                     repositorioCupon.save(cupon);
                 }
                 if (semana.after(cupon.getVencimiento())) {
-                    Comercio comercio = cupon.getComercio();
 
-                    cliente.getCuponPromo().remove(cupon);
-                    comercio.getCuponesPromo().remove(cupon);
-
-                    repositorioCupon.delete(cupon);
-                    repositorioCliente.save(cliente);
-                    repositorioComercio.save(comercio);
+                    aBorrar.add(cupon);
 
                 }
+            }
+
+            for (Cupon cupon : aBorrar) {
+                Comercio comercio = cupon.getComercio();
+
+                cliente.getCuponPromo().remove(cupon);
+                comercio.getCuponesPromo().remove(cupon);
+
+                repositorioCupon.delete(cupon);
+                repositorioCliente.save(cliente);
+                repositorioComercio.save(comercio);
             }
         } else if (respuestaComercio.isPresent()) {
 
@@ -235,22 +245,31 @@ public class ServicioCupon {
 
             for (Cupon cupon : comercio.getCuponesPromo()) {
 
+                semana.setTime(cupon.getVencimiento());
+                semana.add(Calendar.DAY_OF_MONTH, 7);
+                
                 if (hoy.after(cupon.getVencimiento())) {
                     cupon.setVencido(true);
                     repositorioCupon.save(cupon);
                 }
                 if (semana.after(cupon.getVencimiento())) {
-                    Cliente cliente = cupon.getCliente();
 
-                    cliente.getCuponPromo().remove(cupon);
-                    comercio.getCuponesPromo().remove(cupon);
-
-                    repositorioCupon.delete(cupon);
-                    repositorioCliente.save(cliente);
-                    repositorioComercio.save(comercio);
+                    aBorrar.add(cupon);
 
                 }
 
+            }
+
+            for (Cupon cupon : aBorrar) {
+
+                Cliente cliente = cupon.getCliente();
+
+                cliente.getCuponPromo().remove(cupon);
+                comercio.getCuponesPromo().remove(cupon);
+
+                repositorioCupon.delete(cupon);
+                repositorioCliente.save(cliente);
+                repositorioComercio.save(comercio);
             }
 
         }
@@ -271,37 +290,40 @@ public class ServicioCupon {
         banners.add(cupones.get(0));
         Boolean encontrado = false;
 
-        Iterator<Cupon> iterador = banners.iterator();
         for (Cupon cupon : cupones) {
 
-           
             for (Cupon banner : banners) {
 
-               
                 if ((cupon.getTitulo().equals(banner.getTitulo())) && cupon.getComercio().equals(banner.getComercio())) {
                     encontrado = false;
                     break;
                 } else {
-                    
+
                     encontrado = true;
-                    
+
                 }
             }
             if (encontrado == true) {
                 banners.add(cupon);
-                
+
             }
             encontrado = false;
 
         }
-//        for (Cupon banner : banners) {
-//            System.out.println(banner.getTitulo()+"..........");
-//        }
 
         return banners;
 
     }
 
+    /**
+     * Busca. dentro de la lista del comercio un cupon que no este otorgado y
+     * devuelve su id
+     *
+     * @param titulo
+     * @param comercio
+     * @return
+     * @throws ExcepcionServicio
+     */
     public String buscarCuponDisponible(String titulo, String comercio) throws ExcepcionServicio {
 
         List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, comercio);
@@ -326,6 +348,9 @@ public class ServicioCupon {
 
         List<Cupon> todos = repositorioCupon.findAll();
         List<Cupon> porRubro = new ArrayList<>();
+        if (rubro == null || rubro.isEmpty()) {
+            return todos;
+        }
         for (Cupon cupon : todos) {
 
             for (RubroAsignado rubroComercio : cupon.getComercio().getRubros()) {
@@ -336,9 +361,7 @@ public class ServicioCupon {
                 }
             }
         }
-        if (rubro == null || rubro.isEmpty()) {
-            return todos;
-        }
+
         return porRubro;
     }
 

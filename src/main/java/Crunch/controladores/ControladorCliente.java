@@ -27,10 +27,11 @@ public class ControladorCliente {
     private ServicioCupon servicioCupon;
    
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
-    @PostMapping("/otorgar/")
+    @PostMapping("/otorgar")
     public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo){
         try {
-            servicioCupon.buscarCuponDisponible(titulo, mailComercio);
+            String idCupon = servicioCupon.buscarCuponDisponible(titulo, mailComercio);
+            servicioCupon.otorgar(mailComercio, idCupon);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "redirect:/inicio";
