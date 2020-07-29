@@ -32,16 +32,22 @@ public class ControladorCliente {
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
+
     public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo) {
+
         try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
+
+            String userMail = userDetails.getUsername();
             String idCupon = servicioCupon.buscarCuponDisponible(titulo, mailComercio);
-            servicioCupon.otorgar(mailComercio, idCupon);
+            servicioCupon.otorgar(userMail, idCupon);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "redirect:/inicio";
         }
 
-        return "";
+        return "exitoCuponAdq.html";
 
     }
 
@@ -52,10 +58,10 @@ public class ControladorCliente {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
-        
+
         List<Cupon> cupones = servicioCupon.mostrarCuponesCliente(userMail);
         modelo.put("cupones", cupones);
-        
+
         return "cuponera.html";
     }
 }
