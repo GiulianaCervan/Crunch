@@ -9,6 +9,8 @@ import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCupon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,15 +31,20 @@ public class ControladorCliente {
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
     public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo){
+        
         try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserDetails userDetails = (UserDetails) principal;
+
+            String userMail = userDetails.getUsername();
             String idCupon = servicioCupon.buscarCuponDisponible(titulo, mailComercio);
-            servicioCupon.otorgar(mailComercio, idCupon);
+            servicioCupon.otorgar(userMail, idCupon);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "redirect:/inicio";
         }
         
-        return "";
+        return "exitoCuponAdq.html";
         
     }
 }

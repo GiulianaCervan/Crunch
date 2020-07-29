@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Crunch</title>
+    <title>Crunch - Exito</title>
     <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
@@ -16,50 +16,6 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-    <style>
-        div#imagen {
-            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        }
-    </style>
-   <style>
-    nav#menu li>a{
-        background-color: grey;
-        color: white;
-        padding: 10px;
-        display: block;
-        text-decoration: none;
-        min-width: 100px;
-    }
-    #menu li>a:hover{
-        color: #000;
-        background-color: #eaeaea;
-    }
-    #menu>li{
-        float: left;
-        text-align:center
-    }
-    #menu>li>ul{
-        display: none;
-    }
-    #menu>li:hover>ul {
-        display:block;
-    }
-    *{
-        margin: 0;
-        padding: 0;
-    }
-
-    ul{
-        list-style: none;
-    }
-</style>
-<style>
-    section#portfolio{
-    column-count: 2;
-    column-gap: 0%;
-    column-fill: 3%;
-}
-</style>
 </head>
 
 <body id="page-top">
@@ -69,51 +25,54 @@
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
+
                 <ul class="navbar-nav ml-auto" id="menu">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">REGISTRATE</a>
-                        <ul>
-                            <li><a href="/registro-comercio">COMERCIO</a></li>
-                            <li><a href="/registro">USUARIO</a></li>
-                        </ul>  
-                    </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="/">VOLVER</a>
                     </li>
-                   
                 </ul>
             </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-
-            <!-- Masthead Heading-->
-            <h1 class="masthead-heading mb-0">Cupones disponibles!!</h1>
-            <div class="divider-custom divider-light">
+            <h4 class="masthead-heading mb-0">Cupón adquirido correctamente!!</h4>
+            <!-- Masthead Subheading-->
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Para visualizarlo haga click en "Ver cupones"</p>
+            <br><br>
+            <a class="btn btn-primary" href="/cuponera" data-dismiss="modal">Ver cupones</a><br>
+        </div>
+    </header>
+    <section class="page-section" id="contact">
+        <div class="container">
+            <!-- Contact Section Heading-->
+            <div class="text-center">
+                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS</h2>
+            </div>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-        </div>
-    </header>
-    <section class="page-section portfolio" id="portfolio" style="padding-top: 5%;">
-        <div th:each="cupon : ${cupones}" id="cuponess">
-            <div class="container">
-                <div class="container" id="imagen" style="width: 100%">
-                        <br>
-                        <h2 th:text="${cupon.titulo}" ></h2>
-                        <p th:text="${cupon.descripcion}"></p>
-                        <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
-                        <form method="POST" action="/cliente/otorgar">
-                            <input name="titulo" th:value="${cupon.titulo}" style="visibility: hidden;">
-                            <input name="mailComercio" th:value="${cupon.comercio.mail}" style="visibility: hidden;">
-                        <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
-                        </form>
-                        <br>
+            <!-- Contact Section Content-->
+            <div class="row justify-content-center">
+                <div class="col-lg-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="text-muted">Telefono</div>
+                        <div class="lead font-weight-bold">(555) 555-5555</div>
+                    </div>
                 </div>
-                <br>
+                <div class="col-lg-4">
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
+                        <div class="text-muted">Email</div><a class="lead font-weight-bold"
+                            href="mailto:name@example.com">crunchapp7@gmail.com</a>
+                    </div>
+                </div>
             </div>
-        <div>
+        </div>
     </section>
     <footer class="footer text-center">
         <div class="container">
@@ -121,11 +80,11 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">MENDOZA</h4>
-                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
+                    <p class="pre-wrap lead mb-0"></p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
+                    <h4 class="mb-4">SEGUINOS</h4><a class="btn btn-outline-light btn-social mx-1"
                         href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
                         class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
                             class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
@@ -136,7 +95,7 @@
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="mb-4">NOSOTROS</h4>
-                    <p class="pre-wrap lead mb-0">Manso grupo </p>
+                    <p class="pre-wrap lead mb-0"></p>
                 </div>
             </div>
         </div>
