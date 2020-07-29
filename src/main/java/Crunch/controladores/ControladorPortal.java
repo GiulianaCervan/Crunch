@@ -190,8 +190,6 @@ public class ControladorPortal {
         return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
     
-    @GetMapping("/cuponera")
-    public String cupones() {
-        return "cuponera.html";
-    }
+
+
 }
