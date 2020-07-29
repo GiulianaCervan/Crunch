@@ -5,10 +5,14 @@
  */
 package Crunch.controladores;
 
+import Crunch.entidades.Cupon;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCupon;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,13 +26,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/cliente")
 public class ControladorCliente {
-    
+
     @Autowired
     private ServicioCupon servicioCupon;
-   
+
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
-    public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo){
+    public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo) {
         try {
             String idCupon = servicioCupon.buscarCuponDisponible(titulo, mailComercio);
             servicioCupon.otorgar(mailComercio, idCupon);
@@ -36,8 +40,22 @@ public class ControladorCliente {
             modelo.put("error", e.getMessage());
             return "redirect:/inicio";
         }
-        
+
         return "";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @PostMapping("/cliente/cupones")
+    public String mostrarMisCupones(ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
         
+        List<Cupon> cupones = servicioCupon.mostrarCuponesCliente(userMail);
+        modelo.put("cupones", cupones);
+        
+        return "cuponera.html";
     }
 }
