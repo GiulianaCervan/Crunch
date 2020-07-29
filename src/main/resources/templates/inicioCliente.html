@@ -9,7 +9,7 @@
     <title th:if="${session.usuariosession != null}"
         th:text="${'Crunch - ' +  session.usuariosession.nombre + ' ' + session.usuariosession.apellido}"></title>
     <!-- Font Awesome icons (free version)-->
-    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
+    <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -22,18 +22,18 @@
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
+            <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/cliente" th:if="${session.usuariosession != null}"
+                            th:if="${session.usuariosession != null}"
                             th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">COMERCIOS</a>
+                            href="#portfolio">CUPONES</a>
                     </li>
                    
                 </ul>
@@ -42,11 +42,12 @@
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-8">
+        <div class="container">
+            
                 <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
                     th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h2>
-                <br><br>
+                <br>
+                
                 <button class="button button1" data-dismiss="modal" onclick="openNav()">MENÚ</button>
                 <div id="myNav" class="overlay">
 
@@ -56,18 +57,18 @@
                     <!-- Overlay content -->
                     <div class="overlay-content">
                         <a href="#">Mi perfil</a>
-                        <a href="">Mis cupones</a>
-                        <a href="/index">Cerrar Sesión</a>
+                        <a href="/cuponera">Mis cupones</a>
+                      <a href="/logout">Cerrar Sesión</a>
+
 
                     </div>
 
                 </div>
 
-            </div>
-            <div class="col-xs-6 .col-md-4">
-                <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 200px" ;>
-                <!-- Masthead Subheading-->
-            </div>
+                <br><br>
+            <div class="container">
+            <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
+        </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
@@ -176,14 +177,14 @@
                                 <p></p>
                                 <tr>
 
-                                    <td><button class="button button1">Pet-Shop's</button></td>
+                                    <td><a class="button button1" href="/cupones/PETSHOP">Pet-Shop's</a></td>
 
-                                    <td><button class="button button1">Veterinarias</button></td>
+                                    <td><a class="button button1" href="/cupones/VETERINARIA">Veterinarias</a></td>
 
                                 </tr>
                                 <p></p>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -215,26 +216,25 @@
                                 <!-- Portfolio Modal - Text-->
                                 <p></p>
                                 <tr>
+                                    <td><a class="button button1" href="/cupones/PANADERIA">Panaderias</a></td>
 
-                                    <td><button class="button button1">Panaderias</button></td>
+                                    <td><a class="button button1" href="/cupones/VERDULERIA">Verdulerias</a></td>
 
-                                    <td><button class="button button1">Verdulerias</button></td>
+                                    <td><a class="button button1" href="/cupones/ALMACEN">Almacenes</a></td>
 
-                                    <td><button class="button button1">Almacenes</button></td>
-
-                                    <td><button class="button button1">Carnicerias</button></td>
+                                    <td><a class="button button1" href="/cupones/CARNICERIA">Carnicerias</a></td>
 
                                 </tr>
                                 <tr>
-                                    <td><button class="button button1">Roticerias</button></td>
+                                    <td><a class="button button1" href="/cupones/ROTICERIA">Roticerias</a></td>
 
-                                    <td><button class="button button1">Pollerias</button></td>
+                                    <td><a class="button button1" href="/cupones/POLLERIA">Pollerias</a></td>
 
-                                    <td><button class="button button1">Dieteticas</button></td>
+                                    <td><a class="button button1" href="/cupones/DIETETICA">Dieteticas</a></td>
 
                                 </tr>
                                 <p></p> <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -267,16 +267,16 @@
                                 <p></p>
                                 <tr>
 
-                                    <td><button class="button button1">Gomerias</button></td>
+                                    <td><a class="button button1" href="/cupones/GOMERIA">Gomerias</a></td>
 
-                                    <td><button class="button button1">Lubricentros</button></td>
+                                    <td><a class="button button1" href="/cupones/LUBRICENTRO">Lubricentros</a></td>
 
-                                    <td><button class="button button1">Mecanica y electricidad</button></td>
+                                    <td><a class="button button1" href="/cupones/MECANICA">Mecanica y electricidad</a></td>
 
                                 </tr>
                                 <p></p>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -309,14 +309,14 @@
                                 <p></p>
                                 <tr>
 
-                                    <td><button class="button button1">Peluquerias</button></td>
+                                    <td><a class="button button1" href="/cupones/PELUQUERIA">Peluquerias</a></td>
 
-                                    <td><button class="button button1">Farmacias</button></td>
+                                    <td><a class="button button1" href="/cupones/FARMACIA">Farmacias</a></td>
 
                                 </tr>
                                 <p></p>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -350,26 +350,25 @@
                                 <form method="POST" action="">
                                     <tr>
 
-                                        <td> <button class="button button1" type="submit"
-                                                th:value="ferreteria">Ferreterias</button></td>
+                                      
+                                        <td> <a class="button button1" type="submit" th:value="ferreteria">Ferreterias</a></td>
 
+                                        <td><a class="button button1" href="/cupones/PINTURERIA">Pinturerias</a></td>
 
-                                        <td><button class="button button1">Pinturerias</button></td>
-
-                                        <td><button class="button button1">Librerias</button></td>
+                                        <td><a class="button button1" href="/cupones/LIBRERIA">Librerias</a></td>
 
                                     </tr>
                                     <tr>
 
-                                        <td><button class="button button1">Tinturerias</button></td>
+                                        <td><a class="button button1" href="/cupones/TINTURERIA">Tinturerias</a></td>
 
-                                        <td><button class="button button1">Art. Limpieza</button></td>
+                                        <td><a class="button button1" href="/cupones/LIMPIEZA">Art. Limpieza</a></td>
 
                                     </tr>
                                 </form>
                                 <p></p>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -401,14 +400,14 @@
                                 <p></p>
                                 <tr>
 
-                                    <td><button class="button button1">Computacion</button></td>
+                                    <td><a class="button button1" href="/cupones/COMPUTACION">Computacion</a></td>
 
-                                    <td><button class="button button1">Electronica</button></td>
+                                    <td><a class="button button1" href="/cupones/ELECTRONICA">Electronica</a></td>
 
                                 </tr>
                                 <p></p>
                                 <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
+                                        class="fas fa-times fa-fw"></i>Cerrar</button>
                             </div>
                         </div>
                     </div>

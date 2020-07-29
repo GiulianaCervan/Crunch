@@ -189,5 +189,7 @@ public class ControladorPortal {
         headers.setContentType(MediaType.asMediaType(MimeType.valueOf(foto.getMime())));
         return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
+    
+
 
 }

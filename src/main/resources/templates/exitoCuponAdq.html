@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Crunch - Error</title>
+    <title>Crunch - Exito</title>
     <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
@@ -24,19 +24,23 @@
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+
+                <ul class="navbar-nav ml-auto" id="menu">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/">VOLVER</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <h1  class="masthead-heading mb-0" th:text="${codigo}"></h1>
-            <h2 class="masthead-subheading mb-0" th:text="${mensaje == null ? 'Intenta nuevamente' : mensaje}"></h2>
-            
-            
-        <hr class="dashed">
-        </div>
-        <div class="container" style="text-align: center;">
-            <button class="button button1" href="/" data-dismiss="modal">Volver</button>
+            <h4 class="masthead-heading mb-0">Cupón adquirido correctamente!!</h4>
+            <!-- Masthead Subheading-->
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Para visualizarlo haga click en "Ver cupones"</p>
+            <br><br>
+            <a class="btn btn-primary" href="/cuponera" data-dismiss="modal">Ver cupones</a><br>
         </div>
     </header>
     <section class="page-section" id="contact">
