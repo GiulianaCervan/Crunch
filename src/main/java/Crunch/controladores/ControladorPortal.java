@@ -190,5 +190,6 @@ public class ControladorPortal {
         return new ResponseEntity<>(foto.getContenido(), headers, HttpStatus.OK);
     }
     
-  
+
+
 }
