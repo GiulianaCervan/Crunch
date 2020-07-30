@@ -55,7 +55,7 @@ public class ControladorComercio {
         return "";
 
     }
-
+    
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cupon")
     public String cupon() {
@@ -81,6 +81,49 @@ public class ControladorComercio {
             modelo.put("cantidad", cantidad);
 
             return "cupon.html";
+        } catch (Exception e) {
+            e.printStackTrace();
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+
+        modelo.put("exito", "Cupon creado correctamente");
+        return "redirect:/inicio";
+    }
+    
+    
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/cuponDeCanje")
+    public String cuponDeCanje() {
+            /**
+             * FALTARIA hacer el html de CuponDeCanje que en teoría sería 
+             * igual al cupon pero con el agregado de un input llamado
+             * costo, para que me manda el costo en puntos de ese cupon.
+             */
+        return "cuponDeCanje.html";
+    }
+    
+    
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/crearCuponDeCanje")
+    public String crearCuponDeCanje(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo, @RequestParam Integer cantidad, ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        try {
+
+            servicioCupon.crearCuponCanje(titulo, descripcion, vencimiento, userMail,costo,cantidad);
+
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            modelo.put("titulo", titulo);
+            modelo.put("descripcion", descripcion);
+            modelo.put("vencimiento", vencimiento);
+            modelo.put("costo",costo);
+            modelo.put("cantidad", cantidad);
+
+            return "cuponDeCanje.html";
         } catch (Exception e) {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
