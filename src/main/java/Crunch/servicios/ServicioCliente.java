@@ -20,6 +20,8 @@ public class ServicioCliente{
     private ClienteRepositorio clienteRepositorio;
     @Autowired
     private ComercioRepositorio comercioRepositorio;
+    @Autowired
+    private ServicioComercio servicioComercio;
     
     /**
      * Se le ingresa el mail de cliente registrado y devuelve el Objeto Cliente
@@ -146,7 +148,10 @@ public class ServicioCliente{
     * @param comercio
     * @return 
     */
-   public Integer puntosPorComercio (Cliente cliente,Comercio comercio){
+   public Integer puntosPorComercio (String mailCliente,String mailComercio) throws ExcepcionServicio{
+       
+       Cliente cliente = buscarPorId(mailCliente);
+       Comercio comercio = servicioComercio.buscarPorId(mailComercio);
        
        for (Puntos punto : cliente.getPuntos()) {
            

@@ -186,6 +186,7 @@ public class ServicioCupon {
             if (cupon.getTitulo().equals(titulo) && cupon.isDisponible()) {
                 comercio.getCupones().remove(cupon);
                 repositorioCupon.delete(cupon);
+                break;
             }
         }
         repositorioComercio.save(comercio);
@@ -243,7 +244,7 @@ public class ServicioCupon {
         Cliente cliente = repositorioCliente.getOne(mailCliente);
         List<Puntos> puntos = cliente.getPuntos();
         
-        validarPuntos(cupon.getCosto(),servicioCliente.puntosPorComercio(cliente, cupon.getComercio()));
+        validarPuntos(cupon.getCosto(),servicioCliente.puntosPorComercio(mailCliente, cupon.getComercio().getMail()));
         
         for (Puntos punto : puntos) {
             if(punto.getComercio().equals(cupon.getComercio())){
@@ -450,7 +451,7 @@ public class ServicioCupon {
         
         Cliente cliente = repositorioCliente.getOne(mailCliente);
         
-        return cliente.getCuponPromo();
+        return cliente.getCupones();
     }
 
     /**
@@ -534,7 +535,7 @@ public class ServicioCupon {
             throw new ExcepcionServicio("No tienes puntos de este comercio.");
         }
         if(costo > puntos){
-            throw new ExcepcionServicio("No tienes los suficinetes puntos para adquirir este cupón.");
+            throw new ExcepcionServicio("No tienes los suficientes puntos para adquirir este cupón.");
         }
     }
 }
