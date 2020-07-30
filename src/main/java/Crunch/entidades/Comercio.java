@@ -65,7 +65,7 @@ public class Comercio extends Usuario {
         this.rubros = rubros;
     }
 
-    public List<Cupon> getCuponesPromo() {
+    public List<Cupon> getCupones() {
         return cuponesPromo;
     }
 

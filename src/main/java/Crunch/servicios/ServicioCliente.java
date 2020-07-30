@@ -2,6 +2,7 @@ package Crunch.servicios;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.Puntos;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.repositorios.ClienteRepositorio;
 import Crunch.repositorios.ComercioRepositorio;
@@ -19,6 +20,8 @@ public class ServicioCliente{
     private ClienteRepositorio clienteRepositorio;
     @Autowired
     private ComercioRepositorio comercioRepositorio;
+    @Autowired
+    private ServicioComercio servicioComercio;
     
     /**
      * Se le ingresa el mail de cliente registrado y devuelve el Objeto Cliente
@@ -138,7 +141,28 @@ public class ServicioCliente{
         return clientes;
     }
     
-   
+   /**
+    * Este método otorga los puntos que tiene el cliente dependiendo del comercio
+    * 
+    * @param cliente
+    * @param comercio
+    * @return 
+    */
+   public Integer puntosPorComercio (String mailCliente,String mailComercio) throws ExcepcionServicio{
+       
+       Cliente cliente = buscarPorId(mailCliente);
+       Comercio comercio = servicioComercio.buscarPorId(mailComercio);
+       
+       for (Puntos punto : cliente.getPuntos()) {
+           
+           if (punto.getComercio().equals(comercio)){
+                return punto.getCantidad();
+           }
+           
+       }
+      return 0;
+   }
+           
 
     /**
      * Este método lo utilizo para poder validar el cliente que quiero

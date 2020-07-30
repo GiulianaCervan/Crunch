@@ -8,6 +8,7 @@ package Crunch.servicios;
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
 import Crunch.entidades.Cupon;
+import Crunch.entidades.Puntos;
 import Crunch.entidades.RubroAsignado;
 import Crunch.repositorios.RepositorioCupon;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,14 @@ public class ServicioCupon {
     private ClienteRepositorio repositorioCliente;
     @Autowired
     private ComercioRepositorio repositorioComercio;
+    
+    @Autowired 
+    private ServicioCliente servicioCliente;
 
     /**
      * Pide la informacion del cliente que esta logueado, busco al cliente,
      * itera en base a la cantidad de cupones que se quieren crear, asignandoles
-     * a sus campos los mismos valores, los agrega a la lista de cuponesPromo
+     * a sus campos los mismos valores, los agrega a la lista de cupones
      * del cliente y persiste en BD a los cupones y al cliente con las
      * actualizaciones
      *
@@ -58,7 +62,7 @@ public class ServicioCupon {
 
         Comercio comercio = repositorioComercio.findById(mailComercio).get();
 
-        for (Cupon cupon : comercio.getCuponesPromo()) {
+        for (Cupon cupon : comercio.getCupones()) {
             if (cupon.getTitulo().equals(titulo)) {
                 throw new ExcepcionServicio("Ya tiene creado un cupon con ese Titulo");
             }
@@ -89,7 +93,70 @@ public class ServicioCupon {
                 }
 
                 cupon.setVencimiento(new java.sql.Date(fechaC.getTimeInMillis()));
-                comercio.getCuponesPromo().add(cupon);
+                comercio.getCupones().add(cupon);
+                repositorioCupon.save(cupon);
+
+            }
+            repositorioComercio.save(comercio);
+        } else {
+            throw new ExcepcionServicio("La cantidad de cupones a crear no puede ser menor a 1");
+        }
+    }
+    /**
+     * Pide la informacion del cliente que esta logueado, busco al cliente,
+     * itera en base a la cantidad de cupones que se quieren crear, asignandoles
+     * a sus campos los mismos valores, los agrega a la lista de cupones
+     * del cliente y persiste en BD a los cupones y al cliente con las
+     * actualizaciones, PERO estas tienen un costo.
+     *
+     * @param titulo
+     * @param descripcion
+     * @param vencimiento
+     * @param mailComercio
+     * @param costo
+     * @param cantidad
+     * @throws ExcepcionServicio 
+     */
+    @Transactional
+    public void crearCuponCanje(String titulo, String descripcion, String vencimiento, String mailComercio,Integer costo, Integer cantidad) throws ExcepcionServicio {
+
+        validarCuponCanje(titulo, descripcion,costo);
+
+        Comercio comercio = repositorioComercio.findById(mailComercio).get();
+
+        for (Cupon cupon : comercio.getCupones()) {
+            if (cupon.getTitulo().equals(titulo)) {
+                throw new ExcepcionServicio("Ya tiene creado un cupon con ese Titulo");
+            }
+        }
+        if (cantidad > 0) {
+            for (int i = 0; i < cantidad; i++) {
+
+                Cupon cupon = new Cupon();
+
+                cupon.setTitulo(titulo);
+                cupon.setDescripcion(descripcion);
+                cupon.setComercio(comercio);
+                cupon.setCosto(costo);
+                cupon.setTipo(TipoCupon.PROMOCION);
+
+                Calendar minimo = Calendar.getInstance();
+                minimo.add(Calendar.DAY_OF_WEEK, 7);
+                Calendar fechaC = Calendar.getInstance();
+                minimo.add(Calendar.DAY_OF_MONTH, 7);
+
+                String[] fecha = vencimiento.split("-");
+
+                fechaC.set(Calendar.YEAR, Integer.parseInt(fecha[0]));
+                fechaC.set(Calendar.MONTH, Integer.parseInt(fecha[1]));
+                fechaC.set(Calendar.DAY_OF_WEEK, Integer.parseInt(fecha[2]));
+
+                if (fechaC.before(minimo)) {
+                    throw new ExcepcionServicio("La fecha minima de duracion de un cupon es de una semana");
+                }
+
+                cupon.setVencimiento(new java.sql.Date(fechaC.getTimeInMillis()));
+                comercio.getCupones().add(cupon);
                 repositorioCupon.save(cupon);
 
             }
@@ -115,10 +182,11 @@ public class ServicioCupon {
 
         Comercio comercio = repositorioComercio.getOne(titulo);
 
-        for (Cupon cupon : comercio.getCuponesPromo()) {
+        for (Cupon cupon : comercio.getCupones()) {
             if (cupon.getTitulo().equals(titulo) && cupon.isDisponible()) {
-                comercio.getCuponesPromo().remove(cupon);
+                comercio.getCupones().remove(cupon);
                 repositorioCupon.delete(cupon);
+                break;
             }
         }
         repositorioComercio.save(comercio);
@@ -126,7 +194,7 @@ public class ServicioCupon {
 
     /**
      * Busca el cupon en la BD, lo setea como no disponible, se lo agrega a
-     * lista de CuponesPromo del cliente logueado, y persisite los cambios.
+     * lista de Cupones del cliente logueado, y persisite los cambios.
      *
      * @param mailCliente
      * @param idCupon
@@ -148,7 +216,49 @@ public class ServicioCupon {
 
         cupon.setDisponible(false);
         cupon.setCliente(cliente);
-        cliente.getCuponPromo().add(cupon);
+        cliente.getCupones().add(cupon);
+
+        repositorioCupon.save(cupon);
+        repositorioCliente.save(cliente);
+
+    }
+    /**
+     * Este método busca el cliente en la base de datos, si este tiene los puntos
+     * necesarios para adquirir el cupon entonces se lo asigna cliente
+     * @param mailCliente
+     * @param idCupon
+     * @throws ExcepcionServicio 
+     */
+    @Transactional
+    public void otorgarCuponCanje(String mailCliente, String idCupon) throws ExcepcionServicio {
+
+        validar(mailCliente, idCupon);
+
+        Optional<Cupon> respuesta = repositorioCupon.findById(idCupon);
+        Cupon cupon = null;
+        if (respuesta.isPresent()) {
+            cupon = respuesta.get();
+        } else {
+            throw new ExcepcionServicio("No se encontro el cupon");
+        }
+        Cliente cliente = repositorioCliente.getOne(mailCliente);
+        List<Puntos> puntos = cliente.getPuntos();
+        
+        validarPuntos(cupon.getCosto(),servicioCliente.puntosPorComercio(mailCliente, cupon.getComercio().getMail()));
+        
+        for (Puntos punto : puntos) {
+            if(punto.getComercio().equals(cupon.getComercio())){
+                Integer puntoDespuesCompra = punto.getCantidad() - cupon.getCosto();
+                
+                punto.setCantidad(puntoDespuesCompra);
+            }
+        }
+        
+        cupon.setDisponible(false);
+        cupon.setCliente(cliente);
+        
+        
+        cliente.getCupones().add(cupon);
 
         repositorioCupon.save(cupon);
         repositorioCliente.save(cliente);
@@ -169,14 +279,14 @@ public class ServicioCupon {
 
         Comercio comercio = repositorioComercio.getOne(idCupon);
 
-        for (Cupon cupon : comercio.getCuponesPromo()) {
+        for (Cupon cupon : comercio.getCupones()) {
 
             if (cupon.getId().equals(idCupon)) {
                 if (!cupon.isVencido()) {
                     Cliente cliente = cupon.getCliente();
 
-                    cliente.getCuponPromo().remove(cupon);
-                    comercio.getCuponesPromo().remove(cupon);
+                    cliente.getCupones().remove(cupon);
+                    comercio.getCupones().remove(cupon);
 
                     repositorioCupon.delete(cupon);
                     repositorioCliente.save(cliente);
@@ -213,7 +323,7 @@ public class ServicioCupon {
 
             Cliente cliente = respuestaCliente.get();
 
-            for (Cupon cupon : cliente.getCuponPromo()) {
+            for (Cupon cupon : cliente.getCupones()) {
 
                 semana.setTime(cupon.getVencimiento());
                 semana.add(Calendar.DAY_OF_MONTH, 7);
@@ -232,8 +342,8 @@ public class ServicioCupon {
             for (Cupon cupon : aBorrar) {
                 Comercio comercio = cupon.getComercio();
 
-                cliente.getCuponPromo().remove(cupon);
-                comercio.getCuponesPromo().remove(cupon);
+                cliente.getCupones().remove(cupon);
+                comercio.getCupones().remove(cupon);
 
                 repositorioCupon.delete(cupon);
                 repositorioCliente.save(cliente);
@@ -243,7 +353,7 @@ public class ServicioCupon {
 
             Comercio comercio = respuestaComercio.get();
 
-            for (Cupon cupon : comercio.getCuponesPromo()) {
+            for (Cupon cupon : comercio.getCupones()) {
 
                 semana.setTime(cupon.getVencimiento());
                 semana.add(Calendar.DAY_OF_MONTH, 7);
@@ -264,8 +374,8 @@ public class ServicioCupon {
 
                 Cliente cliente = cupon.getCliente();
 
-                cliente.getCuponPromo().remove(cupon);
-                comercio.getCuponesPromo().remove(cupon);
+                cliente.getCupones().remove(cupon);
+                comercio.getCupones().remove(cupon);
 
                 repositorioCupon.delete(cupon);
                 repositorioCliente.save(cliente);
@@ -341,7 +451,7 @@ public class ServicioCupon {
         
         Cliente cliente = repositorioCliente.getOne(mailCliente);
         
-        return cliente.getCuponPromo();
+        return cliente.getCupones();
     }
 
     /**
@@ -374,7 +484,7 @@ public class ServicioCupon {
     
 
     /**
-     * Validador generico
+     * Validador para los cupones genéricos sin costo.
      *
      * @param titulo
      * @param descripcion
@@ -387,6 +497,45 @@ public class ServicioCupon {
         }
         if (descripcion == null || descripcion.isEmpty()) {
             throw new ExcepcionServicio("La descripcion no puede ser nulo o estar vacio");
+        }
+    }
+    
+    /**
+     * Validador para los cupones que tienen un costo en puntos.
+     * @param titulo
+     * @param descripcion
+     * @param costo
+     * @throws ExcepcionServicio 
+     */
+    private void validarCuponCanje(String titulo, String descripcion,Integer costo) throws ExcepcionServicio {
+
+        if (titulo == null || titulo.isEmpty()) {
+            throw new ExcepcionServicio("El titulo no puede ser nulo o estar vacio");
+        }
+        if (descripcion == null || descripcion.isEmpty()) {
+            throw new ExcepcionServicio("La descripcion no puede ser nulo o estar vacio");
+        }
+        
+        if (costo == null || costo <= 0){
+            throw new ExcepcionServicio("El valor de este cupón es inválido.");
+        }
+        
+    }        
+
+    /**
+     * Este método verifica si los puntos del cliente son sufucientes para 
+     * adquirir el cupon. 
+     * 
+     * @param costo
+     * @param puntos
+     * @throws ExcepcionServicio 
+     */
+    private void validarPuntos(Integer costo,Integer puntos) throws ExcepcionServicio {
+        if(puntos == 0){
+            throw new ExcepcionServicio("No tienes puntos de este comercio.");
+        }
+        if(costo > puntos){
+            throw new ExcepcionServicio("No tienes los suficientes puntos para adquirir este cupón.");
         }
     }
 }
