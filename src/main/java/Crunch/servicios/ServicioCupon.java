@@ -445,6 +445,13 @@ public class ServicioCupon {
         }
         throw new ExcepcionServicio("Lo lamentamos, ya no quedan cupones disponibles");
     }
+    
+    public List<Cupon> mostrarCuponesCliente(String mailCliente){
+        
+        Cliente cliente = repositorioCliente.getOne(mailCliente);
+        
+        return cliente.getCuponPromo();
+    }
 
     /**
      * Pide el rubro de los cupones a filtrar, en caso de no tenerlo, devuelve
@@ -473,6 +480,7 @@ public class ServicioCupon {
 
         return porRubro;
     }
+    
 
     /**
      * Validador para los cupones genéricos sin costo.
