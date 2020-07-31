@@ -48,15 +48,13 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu
-                zona </p>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu zona </p>
         </div>
     </header>
     <section>
         <br />
-        <div class="row justify-content-center">
-            <div class="col-sm-4">
-                <div class="p-5">
+        <div class="row">
+            <div class="col-md-3 ml-md-auto">
                     <form method="POST" action="/logincheck">
                         <p th:if="${error != null}" th:text="${error}" style="color: red;"></p>
 
@@ -72,15 +70,14 @@
                             </div>
 
                         <button type="submit" class="btn btn-primary">Ingresar</button>
-                        <div class="row justify-content-center">
-                            <div class="col-sm-8">
-                                <h3>No estas registrado?</h3>
-                                <h4 style="color: blue;"><button class="btn btn-primary" type="button"><a href="/registro">Registrate!</a></button></h4>
-                            </div>
-                        </div>
+                        
                     </form>
-                </div>
             </div>
+                <div class="col-md-5 ml-md-auto">
+                        <br><br><h3>No estas registrado?</h3>
+                        <br><a class="btn btn-primary" href="/registro" style="margin-left: 20%;">Registrate</a>
+                     
+                 </div>
         </div>
 
         <br />

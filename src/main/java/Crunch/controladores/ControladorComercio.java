@@ -156,7 +156,7 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/modificar")
+    @GetMapping("/modificarPerfil")
     public String modificar(HttpSession session, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
