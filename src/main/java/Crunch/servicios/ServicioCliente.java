@@ -103,27 +103,21 @@ public class ServicioCliente {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void modificar(String mail, String clave, String clave2, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
+    public void modificar(String mail, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
 
-        validar(mail, clave, clave2, nombre, apellido, domicilio, telefono);
+        validarModificar(mail, nombre, apellido, domicilio, telefono);
 
         Optional<Cliente> respuesta = clienteRepositorio.findById(mail);
         if (respuesta.isPresent()) {
 
             Cliente cliente = respuesta.get();
 
-            String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+            cliente.setNombre(nombre);
+            cliente.setApellido(apellido);
+            cliente.setDomicilio(domicilio);
+            cliente.setTelefono(telefono);
 
-            if (claveEncriptada.equals(cliente.getClave())) {
-                cliente.setNombre(nombre);
-                cliente.setApellido(apellido);
-                cliente.setDomicilio(domicilio);
-                cliente.setTelefono(telefono);
-                
-                clienteRepositorio.save(cliente);
-            }else{
-                throw new ExcepcionServicio("La clave no es correcta");
-            }
+            clienteRepositorio.save(cliente);
 
         } else {
             throw new ExcepcionServicio("No se ha encontrado el cliente solicitado.");
@@ -166,11 +160,11 @@ public class ServicioCliente {
         }
         return 0;
     }
-    
-    public List<Puntos> mostrarPuntos(String mail){
-        
+
+    public List<Puntos> mostrarPuntos(String mail) {
+
         Cliente cliente = clienteRepositorio.getOne(mail);
-        
+
         return cliente.getPuntos();
     }
 
@@ -219,6 +213,28 @@ public class ServicioCliente {
             throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
         }
 
+    }
+
+    private void validarModificar(String mail, String nombre, String apellido, String domicilio, String telefono) throws ExcepcionServicio {
+        if (mail == null || mail.isEmpty()) {
+            throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
+        }
+
+        if (nombre == null || nombre.isEmpty()) {
+            throw new ExcepcionServicio("El nombre no puede ser nulo o estar vacío.");
+        }
+
+        if (apellido == null || apellido.isEmpty()) {
+            throw new ExcepcionServicio("El apellido no puede ser nulo o estar vacío.");
+        }
+
+        if (domicilio == null || domicilio.isEmpty()) {
+            throw new ExcepcionServicio("El domicilio no puede ser nulo o estar vacío.");
+        }
+
+        if (telefono == null || telefono.isEmpty()) {
+            throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
+        }
     }
 
 }

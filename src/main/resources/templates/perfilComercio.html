@@ -47,20 +47,27 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12">
 
-                    <h1 th:text="${'Nombre Titular Comercio: '+ session.usuariosession.nombre}"></h1>
-                    <h1 th:text="${'Apeliido Titular Comercio: '+ session.usuariosession.apellido}"></h1>
-                    <h1 th:text="${'Telefono: '+ session.usuariosession.telefono}"> </h1>
-                    <h1 th:text="${'Direccion del Comercio: '+ session.usuariosession.direccion}"> </h1>
-                    <h1 th:text="${'E-mail: '+ session.usuariosession.mail}"></h1>
-                    <h1 th:text="${'Nombre del comercio: '+ session.usuariosession.nombreComercio}"></h1>
-                    
+
+                    <h1 th:text="${'Nombre Titular Comercio: '+ comercio.nombre}"></h1>
+                    <h1 th:text="${'Apellido Titular Comercio: '+comercio.apellido}"></h1>
+                    <h1 th:text="${'Telefono: '+comercio.telefono}"> </h1>
+                    <h1 th:text="${'Direccion del Comercio: '+comercio.direccion}"> </h1>
+                    <h1 th:text="${'E-mail: '+comercio.mail}"></h1>
+                    <h1 th:text="${'Nombre del comercio: '+comercio.nombreComercio}"></h1>
+                    <h1 >Rubros:</h1>
+                    <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}"></h5>
+    
+                   
+
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
                 </div>
             </div>
             
-            <a class="boton-personalizado-4" href="/comercio/mostrarPerfil" >CAMBIAR  DATOS</a>
+
+            <a class="boton-personalizado-4" href="/comercio/modificar" >CAMBIAR  DATOS</a>
+
         </div>
         
     </header>

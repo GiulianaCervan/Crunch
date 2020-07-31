@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/">VOLVER</a>
+                            href="/inicio">VOLVER</a>
                     </li>
 
                 </ul>
@@ -49,39 +49,39 @@
     <section class="page-section portfolio" id="portfolio">
         <div class="container row">
             <div class="col-xs-12 col-sm-6 col-md-8" style="padding-left: 20%">
-                    <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
-                    <form action="/cliente/modificarPerfil" method="POST" style="text-align: justify;">
 
-                        <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
+                <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
+                <form action="/cliente/modificarPerfil" method="POST" style="text-align: justify;">
 
-                        <label>Nombre</label>
-                        <input type="text" class="form-control" name="nombre" th:value="${nombre}" style="width: 309px"/>
 
-                        <label>Apellido</label>
-                        <input type="text" class="form-control" name="apellido" th:value="${apellido}" style="width: 309px"/>
+                    <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
 
-                        <label>Telefono</label>
-                        <div class="input-group" style="width: 309px">
-                            <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
-                                name="telefono" th:value="${telefono}" style="width: 309px" required />
-                        </div>
-                        <label>Domicilio</label>
-                        <input type="text" class="form-control" name="domicilio" th:value="${domicilio}" style="width: 309px"/>
 
-                        
-                        <label>Clave</label>
-                        <input type="password" class="form-control" name="clave" th:value="${clave}" style="width: 309px"/>
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" name="nombre" th:value="${nombre}" style="width: 309px" />
 
-                        <label>Repetir Clave</label>
-                        <input type="password" class="form-control" name="clave2" th:value="${clave2}" style="width: 309px" />
+                    <label>Apellido</label>
+                    <input type="text" class="form-control" name="apellido" th:value="${apellido}"
+                        style="width: 309px" />
 
-                        <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
-                    </form>
+                    <label>Telefono</label>
+                    <div class="input-group" style="width: 309px">
+                        <input type="tel" class="form-control" placeholder="(Cod. de área)(Numero de telefono)"
+                            name="telefono" th:value="${telefono}" style="width: 309px" required />
+                    </div>
+                    <label>Domicilio</label>
+                    <input type="text" class="form-control" name="domicilio" th:value="${domicilio}"
+                        style="width: 309px" />
+
+
+
+                    <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
+                </form>
             </div>
             <div class="display-3">
-            <div class="col-xs-6 .col-md-4">
-                <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 200px">
-            </div>
+                <div class="col-xs-6 .col-md-4">
+                    <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 200px">
+                </div>
             </div>
         </div>
     </section>
