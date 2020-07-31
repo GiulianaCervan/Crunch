@@ -50,7 +50,7 @@
         <div class="container row">
             <div class="col-xs-12 col-sm-6 col-md-8" style="padding-left: 20%">
                     <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
-                    <form action="/cliente/modificarPerfil" method="POST" style="text-align: justify;">
+                    <form action="/comercio/modificarPerfil" method="POST" style="text-align: justify;">
 
                         <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
 
@@ -76,8 +76,7 @@
                             </div>
                             <label>Dirección del Comercio</label>
                             <input type="text" class="form-control" name="direccion" th:value="${direccion}" required />
-                            <label>E-Mail</label>
-                            <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
+                            
                             <label>Rubro</label>
                             <br>
                             <select class="form-control" name="rubros" multiple="multiple">
@@ -85,13 +84,7 @@
                                 </option>
                             </select>
 
-                            <label>Clave</label>
-                            <input type="password" class="form-control" name="clave" th:value="${clave}" required />
-                            <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" required />
-                            <label>Tu logo</label>
-
-                            <input type="file" name="archivo" lang="es" required>
+                            
 
                         <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
                     </form>
