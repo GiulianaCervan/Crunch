@@ -44,9 +44,8 @@
     </nav>
     <header class="masthead bg-primary text-white text-center" id="hola">
         <div class="container">
-                <h2>Bienvenidos!!</h2>
                 <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
-                    th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></h2>
+                    th:text="${'Hola '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}"></h2>
                 <br>
                 
                 <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>

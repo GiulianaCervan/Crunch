@@ -156,7 +156,7 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/modificar")
+    @GetMapping("/modificarPerfil")
     public String modificar(HttpSession session, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -179,7 +179,7 @@ public class ControladorComercio {
         modelo.put("direccion", comercio.getDireccion());
         modelo.put("telefono", comercio.getTelefono());
         modelo.put("rubros", Rubro.values());
-        return "//paginaModificar";
+        return "editarPerfilComercio.html";
 
     }
 
