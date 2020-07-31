@@ -46,6 +46,7 @@
         <div class="container">
                 <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
                     th:text="${'Hola '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}"></h2>
+                    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
                 <br>
                 
                 <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>

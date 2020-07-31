@@ -43,7 +43,6 @@ public class ControladorCliente {
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
-
     public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo) {
 
         try {
@@ -52,7 +51,14 @@ public class ControladorCliente {
 
             String userMail = userDetails.getUsername();
             String idCupon = servicioCupon.buscarCuponDisponible(titulo, mailComercio);
-            servicioCupon.otorgar(userMail, idCupon);
+            Cupon cupon = servicioCupon.buscarCuponPorId(idCupon);
+            
+            if (cupon.getCosto() == null){
+                servicioCupon.otorgar(userMail, idCupon);
+            }else if(cupon.getCosto() != null){
+                servicioCupon.otorgarCuponCanje(userMail, idCupon);
+            }
+            
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "redirect:/inicio";
