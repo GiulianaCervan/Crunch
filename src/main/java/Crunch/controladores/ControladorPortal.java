@@ -176,7 +176,7 @@ public class ControladorPortal {
              * front
              */
 
-            return "registroComercio";
+            return "registroComercio.html";
         }
         return "exito.html";
     }

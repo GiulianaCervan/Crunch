@@ -257,7 +257,7 @@ public class ControladorComercio {
         String userMail = userDetails.getUsername();
 
         try {
-
+            System.out.println("++++++mailcliente antes de dar puntos"+mail);
             servicioComercio.darPuntos(cantidad, mail, userMail);
 
         } catch (ExcepcionServicio e) {
