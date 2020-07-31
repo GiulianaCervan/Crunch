@@ -138,7 +138,7 @@ public class ServicioCupon {
                 cupon.setDescripcion(descripcion);
                 cupon.setComercio(comercio);
                 cupon.setCosto(costo);
-                cupon.setTipo(TipoCupon.PROMOCION);
+                cupon.setTipo(TipoCupon.CANJE);
 
                 Calendar minimo = Calendar.getInstance();
                 minimo.add(Calendar.DAY_OF_WEEK, 7);

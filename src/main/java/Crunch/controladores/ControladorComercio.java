@@ -175,29 +175,28 @@ public class ControladorComercio {
 
         modelo.put("nombre", comercio.getNombre());
         modelo.put("apellido", comercio.getApellido());
-        modelo.put("nombreComecio", comercio.getNombreComercio());
+        modelo.put("nombreComercio", comercio.getNombreComercio());
         modelo.put("direccion", comercio.getDireccion());
         modelo.put("telefono", comercio.getTelefono());
         modelo.put("rubros", Rubro.values());
-        return "//paginaModificar";
+        return "editarPerfilComercio.html";
 
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @PostMapping("/modificar")
+    @PostMapping("/modificarPerfil")
     public String modificarComercio(HttpSession session, ModelMap modelo, @RequestParam String direccion, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String telefono, @RequestParam String clave, @RequestParam String clave2,
-            @RequestParam String rubros, @RequestParam String nombreComercio) {
+            @RequestParam String apellido, @RequestParam String telefono,@RequestParam(required = false) String rubros, @RequestParam String nombreComercio) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
 
         try {
-            servicioComercio.modificar(userMail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
+            servicioComercio.modificar(userMail, nombreComercio, nombre, apellido, telefono, direccion, rubros);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
-            return "/paginaModificar";
+            return "editarPerfilComercio.html";
         }
 
         modelo.put("exito", "Perfil modificado correctamente");
