@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Crunch</title>
+    <title>Crunch - Crear cupon</title>
     <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
@@ -16,12 +16,6 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-    <style>
-        div#imagen {
-            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        }
-    </style>
-   
 
 </head>
 
@@ -32,17 +26,10 @@
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto" id="menu">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">REGISTRATE</a>
-                        <ul>
-                            <li><a href="/registro-comercio">COMERCIO</a></li>
-                            <li><a href="/registro">USUARIO</a></li>
-                        </ul>  
-                    </li>
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/">VOLVER</a>
+                            href="/inicio">VOLVER</a>
                     </li>
-                   
                 </ul>
             </div>
         </div>
@@ -50,42 +37,58 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
 
-            <!-- Masthead Heading-->
-            <h1 class="masthead-heading mb-0">Cupones disponibles!!</h1>
+            <h2 class="masthead-heading mb-0">Creá tu cupón!!</h2>
             <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
+
+            <!-- Masthead Subheading-->
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0"></p>
         </div>
     </header>
+    <section class="page-section portfolio" id="portfolio">
 
-    <section class="page-section portfolio" id="portfolio" style="padding-top: 5%;">
         <div class="container">
-            <div class="row">
-                <div th:each="cupon : ${cupones}" id="cuponess" class="col-md-6 col-sm-12">
-                    <!-- <div class="container"> -->
-                        <div class="container" id="imagen" style="width: 100%">
-                                <br>
-                                <h2 th:text="${cupon.titulo}" ></h2>
-                                <p th:text="${cupon.descripcion}"></p>
-                                <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
-                                
-                                <form method="POST" action="/cliente/otorgar">
-                                    <input name="titulo" th:value="${cupon.titulo}" style="visibility: hidden;">
-                                    <input name="mailComercio" th:value="${cupon.comercio.mail}" style="visibility: hidden;">
-                                <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
-                                </form>
-                                <br>
-                        </div>
-                        <br>
-                    <!-- </div> -->
-                <div>
-            </div>
-        </div>
-        
+            <!-- Portfolio Section Heading-->
 
+            <div class="text-left">
+                <div class="container" >
+                    <div class="col-lg-6 order-lg-1">
+                        <div class="p-8">
+
+                            <form action="/comercio/crearCupon" method="POST">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-8">
+                                            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                                            <label class="masthead-heading mb-0">Titulo</label>
+                                            <h1><input type="text" class="form-control" name="titulo"
+                                                    style="width: 477.98438px;"> </h1>
+                                            <label>Descripción</label>
+                                            <textarea rows="10" cols="60"
+                                                placeholder="Escribe aquí la descripción de tu cupón"
+                                                name="descripcion" style="width:475px;"></textarea>
+                                            <label>Fecha de vencimiento</label>
+                                            <input type="date" class="form-control" name="vencimiento"
+                                                style="width: 477.98438px;">
+                                            <label>Cantidad de cupones</label>
+                                            <input type="number" class="form-control" name="cantidad"
+                                                style="width: 477.98438px;">
+                                            <br></br>
+                                            <button type="submit" class="btn btn-primary">Crear</button>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
     </section>
+    <!-- Portfolio Modal-->
     <footer class="footer text-center">
         <div class="container">
             <div class="row">

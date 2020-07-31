@@ -5,16 +5,20 @@
  */
 package Crunch.controladores;
 
+import Crunch.entidades.Cliente;
 import Crunch.entidades.Cupon;
 import Crunch.excepciones.ExcepcionServicio;
+import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioCupon;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +33,9 @@ public class ControladorCliente {
 
     @Autowired
     private ServicioCupon servicioCupon;
+    @Autowired
+    private ServicioCliente servicioCliente;
+    
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
@@ -52,7 +59,7 @@ public class ControladorCliente {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
-    @PostMapping("/cliente/cupones")
+    @GetMapping("/cupones")
     public String mostrarMisCupones(ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -63,5 +70,12 @@ public class ControladorCliente {
         modelo.put("cupones", cupones);
 
         return "cuponera.html";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @GetMapping("/perfil")
+    public String perfil(){
+       
+      return "perfilCliente.html";  
     }
 }
