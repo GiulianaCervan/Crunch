@@ -58,15 +58,14 @@
     </header>
     <!--inicio tabla -->
     <section class="page-section portfolio" id="portfolio">
-        
+
         <div class="container">
+            <form action="/comercio/buscarClientes" method="POST">
+                <label for="site-search">Ingresar mail</label>
+                <input type="text" id="site-search" name="mailCliente">
 
-            <label for="site-search">Ingresar mail</label>
-            <input type="search" id="site-search" name="q"
-                   aria-label="Search through site content">
-            
-            <button>Buscar</button>
-
+                <button type="submit">Buscar</button>
+            </form>
             <div class="row justify-content-center">
                 <div class="col-12">
 
@@ -79,19 +78,29 @@
                             <tr>
                                 <th>Nombre</th>
                                 <th>Mail</th>
-                                
+                                <th>Cantidad</th>
+                                <th>Funcion</th>
+
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="cupon : ${cupones}">
-                                <td th:text="${cupon.titulo}"></td>
-                                <td th:text="${cupon.comercio.direccion}"></td>
-                               
-                            </tr>
                             
+                                <tr th:each="cliente : ${clientes}">
+                                    <form action="/comercio/darPuntos" method="POST">
+                                    <input type="hidden" class="form-control"  th:value="${cliente.mail}" />
+                                    <td th:text="${cliente.nombre + ' ' + cliente.apellido}"></td>
+                                    <td th:text="${cliente.mail}"></td>
+                                    
+                                    <td><input type="number" name="cantidad"></td>
+                                    <td><button type="submit" class="boton-personalizado-4">AGREGAR</button></td>
+                                </form>
+                                </tr>
+                           
+
                         </tbody>
                     </table>
+                
                 </div>
             </div>
         </div>

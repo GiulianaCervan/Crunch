@@ -211,7 +211,7 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/validar")
+    @GetMapping("/validarCupon")
     public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -243,13 +243,14 @@ public class ControladorComercio {
         List<Cliente> clientes = servicioCliente.buscarClientes(mailCliente);
 
         modelo.put("clientes", clientes);
+        
 
         return "buscar.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/darPuntos")
-    public String darPuntos(@RequestParam String mailCliente, ModelMap modelo, @RequestParam Integer cantidad, @RequestParam String idCupon) {
+    public String darPuntos(@RequestParam(required = false) String mail, ModelMap modelo, @RequestParam Integer cantidad) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -257,7 +258,7 @@ public class ControladorComercio {
 
         try {
 
-            servicioComercio.darPuntos(cantidad, mailCliente, userMail);
+            servicioComercio.darPuntos(cantidad, mail, userMail);
 
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
