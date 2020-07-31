@@ -55,7 +55,7 @@ public class ControladorComercio {
         return "";
 
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cupon")
     public String cupon() {
@@ -90,20 +90,18 @@ public class ControladorComercio {
         modelo.put("exito", "Cupon creado correctamente");
         return "redirect:/inicio";
     }
-    
-    
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cuponDeCanje")
     public String cuponDeCanje() {
-            /**
-             * FALTARIA hacer el html de CuponDeCanje que en teoría sería 
-             * igual al cupon pero con el agregado de un input llamado
-             * costo, para que me manda el costo en puntos de ese cupon.
-             */
+        /**
+         * FALTARIA hacer el html de CuponDeCanje que en teoría sería igual al
+         * cupon pero con el agregado de un input llamado costo, para que me
+         * manda el costo en puntos de ese cupon.
+         */
         return "cuponDeCanje.html";
     }
-    
-    
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/crearCuponDeCanje")
     public String crearCuponDeCanje(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo, @RequestParam Integer cantidad, ModelMap modelo) {
@@ -113,14 +111,14 @@ public class ControladorComercio {
         String userMail = userDetails.getUsername();
         try {
 
-            servicioCupon.crearCuponCanje(titulo, descripcion, vencimiento, userMail,costo,cantidad);
+            servicioCupon.crearCuponCanje(titulo, descripcion, vencimiento, userMail, costo, cantidad);
 
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("titulo", titulo);
             modelo.put("descripcion", descripcion);
             modelo.put("vencimiento", vencimiento);
-            modelo.put("costo",costo);
+            modelo.put("costo", costo);
             modelo.put("cantidad", cantidad);
 
             return "cuponDeCanje.html";
@@ -134,6 +132,70 @@ public class ControladorComercio {
         return "redirect:/inicio";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/mostrarPerfil")
+    public String mostrarPerfilComercio(HttpSession session, ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        
+        Comercio comercio = null;
+        
+        try {
+            servicioComercio.buscarPorId(userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+        }
+        modelo.put("comercio", comercio);
+        
+        return "perfilComercio.html";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/modificar")
+    public String modificar(HttpSession session, ModelMap modelo){
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        
+        Comercio comercio = null;
+        
+        try {
+            comercio = servicioComercio.buscarPorId(userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+        
+        modelo.put("comercio", comercio);
+        return "//paginaModificar";
+    }
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/modificar")
+    public String modificarComercio(HttpSession session, ModelMap modelo,  @RequestParam String direccion, @RequestParam String nombre,
+            @RequestParam String apellido, @RequestParam String telefono, @RequestParam String clave, @RequestParam String clave2,
+            @RequestParam String rubros, @RequestParam String nombreComercio){
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        
+        try {
+            servicioComercio.modificar(userMail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "/paginaModificar";
+        }
+        
+        modelo.put("exito", "Perfil modificado correctamente");
+        
+        return "redirect:/inicio";
+        
+    }
+    
+
 //    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
 //    @PostMapping("/buscarClientes")
 //    public String Clientes(@RequestParam String mailCliente, ModelMap modelo) {
@@ -144,9 +206,8 @@ public class ControladorComercio {
 //
 //        return "//TabladeClientes";
 //    }
-
 //    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-//    @PostMapping("/buscarClientes")
+//    @PostMapping("/darPuntos")
 //    public String darPuntos(@RequestParam String mailCliente, ModelMap modelo) {
 //        Cliente cliente = null;
 //        try {
