@@ -7,10 +7,14 @@ package Crunch.controladores;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Cupon;
+import Crunch.entidades.Puntos;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioCupon;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,7 +39,7 @@ public class ControladorCliente {
     private ServicioCupon servicioCupon;
     @Autowired
     private ServicioCliente servicioCliente;
-    
+
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
@@ -71,11 +75,90 @@ public class ControladorCliente {
 
         return "cuponera.html";
     }
-    
+
+
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @GetMapping("/perfil")
-    public String perfil(){
-       
-      return "perfilCliente.html";  
+    public String mostrarPerfil(HttpSession session, ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        Cliente cliente = null;
+        try {
+            cliente = servicioCliente.buscarPorId(userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+        }
+
+        modelo.put("cliente", cliente);
+        return "perfilCliente.html";
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @GetMapping("/modificar")
+    public String modificar(HttpSession session, ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        Cliente cliente = null;
+        try {
+            cliente = servicioCliente.buscarPorId(userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+        modelo.put("cliente", cliente);
+
+        return "//paginaModificar";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @PostMapping("/modificarPerfil")
+    public String modificarPerfil(HttpSession session, ModelMap modelo, @RequestParam String domicilio, @RequestParam String nombre,
+            @RequestParam String apellido, @RequestParam String telefono, @RequestParam String clave, @RequestParam String clave2) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        try {
+            servicioCliente.modificar(userMail, clave, clave2, nombre, apellido, domicilio, telefono);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
+            modelo.put("telefono", telefono);
+            modelo.put("domicilio", domicilio);
+            return "redirect:/modificar";
+        }
+        modelo.put("exito", "Perfil modificado con exito");
+        return "redirect:/inicio";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @GetMapping("/mostrarPuntos")
+    public String mostrarPuntos(HttpSession session, ModelMap modelo) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        List<Puntos> puntos = new ArrayList();
+        try {
+            puntos = servicioCliente.mostrarPuntos(userMail);
+        } catch (Exception e) {
+            modelo.put("error", e.getMessage());
+        }
+        
+        modelo.put("puntos", puntos);
+        
+        return "//mostarPuntos";
+      
+    }
+
 }

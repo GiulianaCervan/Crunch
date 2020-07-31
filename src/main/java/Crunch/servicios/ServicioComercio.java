@@ -75,7 +75,8 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void crear(MultipartFile archivo, String mail, String clave, String clave2, String nombre, String apellido, String telefono, String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
+    public void crear(MultipartFile archivo, String mail, String clave, String clave2, String nombre, String apellido, String telefono,
+            String direccion, String nombreComercio, String rubro) throws ExcepcionServicio {
 
         validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
 
@@ -134,24 +135,41 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
-        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
+    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, 
+            String telefono, String direccion, String rubro) throws ExcepcionServicio {
+
+        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
+
         if (respuesta.isPresent()) {
 
             Comercio comercio = respuesta.get();
 
             String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
-            comercio.setClave(claveEncriptada);
-            comercio.setNombreComercio(nombreComercio);
-            comercio.setNombre(nombre);
-            comercio.setApellido(apellido);
-            comercio.setTelefono(telefono);
-            comercio.setDireccion(direccion);
-//            comercio.setRubros(rubros);
 
-            comercioRepositorio.save(comercio);
+            if (claveEncriptada.equals(comercio.getClave())) {
+                comercio.setNombreComercio(nombreComercio);
+                comercio.setNombre(nombre);
+                comercio.setApellido(apellido);
+                comercio.setTelefono(telefono);
+                comercio.setDireccion(direccion);
+
+                String[] separados = rubro.split(",");
+                List<RubroAsignado> rubros = new ArrayList<>();
+                
+                for (String separado : separados) {
+                    Rubro rubroEnum = Rubro.valueOf(separado);
+                    RubroAsignado rubroAsignado = new RubroAsignado();
+                    rubroAsignado.setRubro(rubroEnum);
+                    rubros.add(rubroAsignado);
+                    rubroRepositorio.save(rubroAsignado);
+                }
+
+                comercio.setRubros(rubros);
+                comercioRepositorio.save(comercio);
+            }
+
         } else {
             throw new ExcepcionServicio("No se ha encontrado el comercio solicitado.");
         }
