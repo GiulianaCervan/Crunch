@@ -95,7 +95,7 @@ public class ControladorComercio {
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cuponDeCanje")
     public String cuponDeCanje() {
-       
+
         return "cuponPuntos.html";
     }
 
@@ -172,7 +172,6 @@ public class ControladorComercio {
             return "error.html";
         }
 
-
         modelo.put("nombre", comercio.getNombre());
         modelo.put("apellido", comercio.getApellido());
         modelo.put("nombreComercio", comercio.getNombreComercio());
@@ -186,7 +185,7 @@ public class ControladorComercio {
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/modificarPerfil")
     public String modificarComercio(HttpSession session, ModelMap modelo, @RequestParam String direccion, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String telefono,@RequestParam(required = false) String rubros, @RequestParam String nombreComercio) {
+            @RequestParam String apellido, @RequestParam String telefono, @RequestParam(required = false) String rubros, @RequestParam String nombreComercio) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -207,8 +206,14 @@ public class ControladorComercio {
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/validar")
-    public String validar(ModelMap modelo, HttpSession session, @RequestParam String idCupon){
-        
+    public String validar(ModelMap modelo, HttpSession session) {
+        return "validar.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/validar")
+    public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
@@ -217,36 +222,49 @@ public class ControladorComercio {
             servicioCupon.validarCupon(userMail, idCupon);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
-            return "//validar";
+            return "validar.html";
         }
-        
+
         modelo.put("exito", "Cupon canjeado con exito");
-        return "//validar.html";
+        return "validar.html";
     }
-//    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-//    @PostMapping("/buscarClientes")
-//    public String Clientes(@RequestParam String mailCliente, ModelMap modelo) {
-//
-//        List<Cliente> clientes = servicioCliente.buscarClientes(mailCliente);
-//
-//        modelo.put("clientes", clientes);
-//
-//        return "//TabladeClientes";
-//    }
-//    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-//    @PostMapping("/darPuntos")
-//    public String darPuntos(@RequestParam String mailCliente, ModelMap modelo) {
-//        Cliente cliente = null;
-//        try {
-//            cliente = servicioCliente.buscarPorId(mailCliente);
-//            modelo.put("cliente", cliente);
-//        } catch (ExcepcionServicio e) {
-//            modelo.put("error", e.getMessage());
-//            return "error.html";
-//        }
-//        return "//darPuntos";
-//
-//    }
-  
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/buscar")
+    public String gestion() {
+
+        return "buscar.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/buscarClientes")
+    public String Clientes(@RequestParam String mailCliente, ModelMap modelo) {
+
+        List<Cliente> clientes = servicioCliente.buscarClientes(mailCliente);
+
+        modelo.put("clientes", clientes);
+
+        return "buscar.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/darPuntos")
+    public String darPuntos(@RequestParam String mailCliente, ModelMap modelo, @RequestParam Integer cantidad, @RequestParam String idCupon) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        try {
+
+            servicioComercio.darPuntos(cantidad, mailCliente, userMail);
+
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+        return "buscar.html";
+
+    }
 
 }
