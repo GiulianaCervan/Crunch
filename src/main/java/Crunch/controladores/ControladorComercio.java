@@ -95,12 +95,8 @@ public class ControladorComercio {
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cuponDeCanje")
     public String cuponDeCanje() {
-        /**
-         * FALTARIA hacer el html de CuponDeCanje que en teoría sería igual al
-         * cupon pero con el agregado de un input llamado costo, para que me
-         * manda el costo en puntos de ese cupon.
-         */
-        return "cuponDeCanje.html";
+       
+        return "cuponPuntos.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
@@ -149,7 +145,9 @@ public class ControladorComercio {
         } catch (ExcepcionServicio e) {
 
             modelo.put("error", e.getMessage());
+
             return "redirect:/inicio";
+
         }
 
         modelo.put("comercio", comercio);
@@ -173,6 +171,7 @@ public class ControladorComercio {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
+
 
         modelo.put("nombre", comercio.getNombre());
         modelo.put("apellido", comercio.getApellido());

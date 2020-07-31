@@ -49,10 +49,13 @@
     <section class="page-section portfolio" id="portfolio">
         <div class="container row">
             <div class="col-xs-12 col-sm-6 col-md-8" style="padding-left: 20%">
+
                 <h2 class="masthead-heading mb-0">Modificación de perfil</h2>
                 <form action="/cliente/modificarPerfil" method="POST" style="text-align: justify;">
 
+
                     <p th:if="${error != null}" th:text="${error}" style=color:red;></p>
+
 
                     <label>Nombre</label>
                     <input type="text" class="form-control" name="nombre" th:value="${nombre}" style="width: 309px" />
@@ -71,6 +74,7 @@
                         style="width: 309px" />
 
 
+
                     <br /><button type="submit" class="btn btn-primary"> Actualizar </button>
                 </form>
             </div>
@@ -81,13 +85,12 @@
             </div>
         </div>
     </section>
-    <hr class="dashed container">
-    <section class="page-section" id="contact">
+    <section class="page-section bg-primary text-white mb-0" id="about">
         <div class="container">
             <div class="text-center">
-                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS </h2>
+                <h2 class="page-section-heading d-inline-block text-white">CONTACTANOS </h2>
             </div>
-            <div class="divider-custom">
+            <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
@@ -96,43 +99,20 @@
                 <div class="col-lg-4">
                     <div class="d-flex flex-column align-items-center">
                         <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="text-muted">Telefono</div>
+                        <div class="text-white">Telefono</div>
                         <div class="lead font-weight-bold">(555) 555-5555</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="d-flex flex-column align-items-center">
                         <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
-                        <div class="text-muted">Email</div><a class="lead font-weight-bold"
-                            href="mailto:crunch@crunch.com">crunch@crunch.com</a>
+                        <div class="text-white">Email</div>
+                        <div class="lead font-weight-bold">crunch@crunch.com</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <footer class="footer text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">MENDOZA</h4>
-                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
-                </div>
-                <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
-                        href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
-                        class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
-                            class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
-                        href="https://www.linkedin.com/in/startbootstrap"><i class="fab fa-fw fa-linkedin-in"></i></a><a
-                        class="btn btn-outline-light btn-social mx-1" href="https://www.dribble.com/startbootstrap"><i
-                            class="fab fa-fw fa-dribbble"></i></a>
-                </div>
-                <div class="col-lg-4">
-                    <h4 class="mb-4">NOSOTROS</h4>
-                    <p class="pre-wrap lead mb-0">Manso grupo </p>
-                </div>
-            </div>
-        </div>
-    </footer>
     <!-- Copyright Section-->
     <section class="copyright py-4 text-center text-white">
         <div class="container"><small class="pre-wrap">Copyright © Your Website 2020</small></div>

@@ -35,7 +35,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto" id="menu">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/">VOLVER</a>
+                            href="/inicio">VOLVER</a>
                     </li>
                    
                 </ul>
@@ -47,6 +47,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12">
 
+
                     <h1 th:text="${'Nombre Titular Comercio: '+ comercio.nombre}"></h1>
                     <h1 th:text="${'Apellido Titular Comercio: '+comercio.apellido}"></h1>
                     <h1 th:text="${'Telefono: '+comercio.telefono}"> </h1>
@@ -57,13 +58,17 @@
                     <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}"></h5>
     
                    
+
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
                 </div>
             </div>
             
+
             <a class="boton-personalizado-4" href="/comercio/modificar" >CAMBIAR  DATOS</a>
+
+
         </div>
         
     </header>

@@ -7409,7 +7409,7 @@ a.text-primary:hover
     color: #117964!important;
 }.text-secondary
 {
-    color: #2c3e50!important;
+    color: #1a252f!important;
 }a.text-secondary:focus,
 a.text-secondary:hover
 {
@@ -7586,7 +7586,7 @@ a.text-dark:hover
 }.divider-custom .divider-custom-icon
 {font-size: 2rem;
 
-    color: #2c3e50!important;
+    color: #1a252f!important;
 }.divider-custom.divider-light .divider-custom-line
 {
     background-color: #fff;
@@ -7690,7 +7690,7 @@ a.text-dark:hover
     cursor: pointer;border-radius: .5rem;
 }.portfolio .portfolio-item .portfolio-item-caption
 {
-    position: absolute;top: 0;left: 0;transition: all .2s ease-in-out;opacity: 0;background-color: rgb(236 141 32 / 85%);
+    position: absolute;top: 0;left: 0;transition: all .2s ease-in-out;opacity: 0;background-color: rgb(250 181 49);
 }.portfolio .portfolio-item .portfolio-item-caption:hover
 {
     opacity: 1;
@@ -7709,7 +7709,7 @@ a.text-dark:hover
 }.portfolio-modal .close
 {font-size: 3rem;line-height: 3rem;
 
-    position: absolute;z-index: 1;top: 1rem;right: 1.5rem;opacity: 1;color: #bc911a;
+    position: absolute;z-index: 1;top: 1rem;right: 1.5rem;opacity: 1;color: #f68a34;
 }.floating-label-form-group
 {
     position: relative;border-bottom: 1px solid #e9ecef;
@@ -7805,14 +7805,16 @@ hr.dashed {
     cursor: pointer;
 }
 .button1 {
-    background-color: #db4a10; 
+    background-color: #f68a34; 
     color: black; 
-    border: 2px solid #e4800f;
+    border: 2px solid #f68a34;
+    border-radius: 10px
 }
 
 .button1:hover {
-    background-color: #e4800f;
-    color: #db4a10;
+    background-color: #f68a34;
+    color: #110f0e;
+    border-radius: 10px
 }
 
 .button2 {
@@ -7944,4 +7946,17 @@ background: linear-gradient(to right, #F37335, #FDC830); /* W3C, IE 10+/ Edge, F
 
     ul{
         list-style: none;
+    }
+    #unicoRegistro>a{
+        text-decoration: none;
+        color: #ffffff!important;
+        background-color: transparent;
+    }
+    #unicoRegistro>a:hover {
+        text-decoration: none;
+        color: #fffbf6!important;
+    }
+    div#imagen {
+        background-image: url("/assets/img/1551.jpg");
+
     }
