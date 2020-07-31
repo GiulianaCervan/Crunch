@@ -1,440 +1,71 @@
+
 <!DOCTYPE html>
-<html lang="en">
-    
+<html lang="es" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
-    
-    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <class>
-        
-       
-    
-    </class>
-    
-    <title>Perfil Comercio</title>
+    <title>Perfil Cliente</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <!-- Font Awesome icons (free version)-->
-   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-   
+  
+<style>
+    h1{
+        text-align:left;font-size:150%;font-family:sans-serif;color:#0c0c0b
+    }
+
+</style>
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/index"><img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 80px" ;></a>
-            <img class="rounded-circle" src="assets/img/LogoComercios.jpg" id="derecha" alt="" style="width: 80px" ;></a>
-            
-            
-                
-
-                  
-                    
-
-                    </div>
+        <img class="rounded-circle" src="/assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
+            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
+                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto" id="menu">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/">VOLVER</a>
                     </li>
                    
                 </ul>
             </div>
-        
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
-        <input="input"type=text" placeholder="&#x1F464;
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-8">
-            <div>
-                
-        <stile>
-            <img width="0px">
-            
-        </stile>
-                    
-                </div>
-            </div>
-            <form action="/editarPerfilUsuario.html">
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Nombre Comercio :</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Nombre Titular Comercio :</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Apellido Titular Comercio :</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Teléfono :</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Dirección del Comercio :</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">E- mail:</h1>
-                <h1 style="text-align:left;font-size:100%;font-family:sans-serif;color:#0c0c0b;">Rubro del Comercio:</h1>
-                <button class="button button1" data-dismiss="modal" onclick="openNav()">CAMBIAR  DATOS</button><a class="navbar-brand js-scroll-trigger" href="/editarPerfilComercio"></a>
-
-
-                </form>
-        <div>
-
-        </div>
-
-            
-
-               
-<div class="container"><small class="pre-wrap"></small></div>
-         
-        
-   
-</body>
-                <!-- Masthead Subheading-->
-            </div>
-    </header>
-    <section class="page-section portfolio" id="portfolio">
         <div class="container">
-            <!-- Portfolio Section Heading-->
-            <div class="text-center">
-                <h2 class="page-section-heading text-secondary mb-0 d-inline-block">COMERCIOS</h2>
-            </div>
-            <!-- Icon Divider-->
-            <div class="divider-custom">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                <div class="divider-custom-line"></div>
-            </div>
-            <!-- Portfolio Grid Items-->
-            <div class="row justify-content-center">
-                <!-- Portfolio Items-->
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/animal.jpg" alt="Animal"
-                            style="width: m300px; height: 300px;" />
-                    </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+
+                    <h1 th:text="${'Nombre Titular Comercio: '+comercio.nombre}"></h1>
+                    <h1 th:text="${'Apeliido Titular Comercio: '+comercio.apellido}"></h1>
+                    <h1 th:text="${'Telefono: '+comercio.telefono}"> </h1>
+                    <h1 th:text="${'Direccion del Comercio: '+comercio.direccion}"> </h1>
+                    <h1 th:text="${'E-mail: '+comercio.mail}"></h1>
+                    <h1 th:text="${'Nombre del comercio: '+comercio.nombreComercio}"></h1>
+                    <h1 >Rubros:</h1>
+                    <h5 th:each="${rubro : {comercio.rubros}" th:text="${rubro.rubro}"></h5>
+    
                 </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal1">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/alimentos.png" alt="Alimentos"
-                            style="width: m300px; height: 300px;" />
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal2">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/autos.jpg" alt="Autos"
-                            style="width: m300px; height: 300px;" />
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal3">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/belleza.png" alt="Belleza"
-                            style="width: m300px; height: 300px;" />
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal4">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/casa.jpg" alt="Casa"
-                            style="width: m300px; height: 300px;" />
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 mb-5">
-                    <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal5">
-                        <div
-                            class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i
-                                    class="fas fa-plus fa-3x"></i></div>
-                        </div><img class="img-fluid" src="assets/img/portfolio/pc.jpg" alt="Pc"
-                            style="width: m300px; height: 300px;" />
-                    </div>
+                <div class="col-md-6 col-sm-12">
+                    <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
                 </div>
             </div>
-            <div class="row justify-content-center">
-                
-            </div>
+            
+            <a class="boton-personalizado-4" href="/editarPerfilUsuario" >CAMBIAR  DATOS</a>
         </div>
-    </section>
-    <!-- Portfolio Modal-->
-    <div class="portfolio-modal modal fade" id="portfolioModal0" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal0Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Animales</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/animal.jpg" alt="Animal"
-                                    style="width: m200px; height: 200px;" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <tr>
-
-                                    <td><button class="button button1">Pet-Shop's</button></td>
-
-                                    <td><button class="button button1">Veterinarias</button></td>
-
-                                </tr>
-                                <p></p>
-                                <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal1Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Alimentos</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/alimentos.png" alt="Alimentos"
-                                    style="width: m200px; height: 200px" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <tr>
-
-                                    <td><button class="button button1">Panaderias</button></td>
-
-                                    <td><button class="button button1">Verdulerias</button></td>
-
-                                    <td><button class="button button1">Almacenes</button></td>
-
-                                    <td><button class="button button1">Carnicerias</button></td>
-
-                                </tr>
-                                <tr>
-                                    <td><button class="button button1">Roticerias</button></td>
-
-                                    <td><button class="button button1">Pollerias</button></td>
-
-                                    <td><button class="button button1">Dieteticas</button></td>
-
-                                </tr>
-                                <p></p> <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal2Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Autos</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/autos.jpg" alt="Autos"
-                                    style="width: m200px; height: 200px;" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <tr>
-
-                                    <td><button class="button button1">Gomerias</button></td>
-
-                                    <td><button class="button button1">Lubricentros</button></td>
-
-                                    <td><button class="button button1">Mecanica y electricidad</button></td>
-
-                                </tr>
-                                <p></p>
-                                <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal3Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Belleza y Salud</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/belleza.png" alt="Belleza"
-                                    style="width: m200px; height: 200px;" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <tr>
-
-                                    <td><button class="button button1">Peluquerias</button></td>
-
-                                    <td><button class="button button1">Farmacias</button></td>
-
-                                </tr>
-                                <p></p>
-                                <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal4Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Casa</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/casa.jpg" alt="Casa"
-                                    style="width: m200px; height: 200px;" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <form method="POST" action="">
-                                    <tr>
-
-                                        <td> <button class="button button1" type="submit"
-                                                value="ferreteria">Ferreterias</button></td>
-
-
-                                        <td><button class="button button1">Pinturerias</button></td>
-
-                                        <td><button class="button button1">Librerias</button></td>
-
-                                    </tr>
-                                    <tr>
-
-                                        <td><button class="button button1">Tinturerias</button></td>
-
-                                        <td><button class="button button1">Art. Limpieza</button></td>
-
-                                    </tr>
-                                </form>
-                                <p></p>
-                                <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog"
-        aria-labelledby="#portfolioModal5Label" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
-                            class="fas fa-times"></i></span></button>
-                <div class="modal-body text-center">
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-8">
-                                <!-- Portfolio Modal - Title-->
-                                <h2 class="portfolio-modal-title text-secondary mb-0">Computación</h2>
-                                <!-- Icon Divider-->
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <!-- Portfolio Modal - Image--><img class="img-fluid rounded mb-5"
-                                    src="assets/img/portfolio/pc.jpg" alt="Pc" style="width: m200px; height: 200px;" />
-                                <!-- Portfolio Modal - Text-->
-                                <p></p>
-                                <tr>
-
-                                    <td><button class="button button1">Computacion</button></td>
-
-                                    <td><button class="button button1">Electronica</button></td>
-
-                                </tr>
-                                <p></p>
-                                <button class="btn btn-primary" href="#" data-dismiss="modal"><i
-                                        class="fas fa-times fa-fw"></i>Close Window</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        
+    </header>
 
     <footer class="footer text-center">
         <div class="container">
@@ -442,11 +73,11 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">MENDOZA</h4>
-                    <p class="pre-wrap lead mb-0"></p>
+                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">SEGUINOS</h4><a class="btn btn-outline-light btn-social mx-1"
+                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
                         href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
                         class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
                             class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
@@ -457,7 +88,7 @@
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="mb-4">NOSOTROS</h4>
-                    <p class="pre-wrap lead mb-0"></p>
+                    <p class="pre-wrap lead mb-0">Manso grupo </p>
                 </div>
             </div>
         </div>
@@ -481,3 +112,5 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 </body>
+
+</html>

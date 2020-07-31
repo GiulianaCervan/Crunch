@@ -40,6 +40,7 @@ public class ControladorCliente {
     @Autowired
     private ServicioCliente servicioCliente;
 
+
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
 
@@ -74,6 +75,7 @@ public class ControladorCliente {
 
         return "cuponera.html";
     }
+
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @GetMapping("/perfil")

@@ -10,7 +10,7 @@
         <!-- Font Awesome icons (free version)-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet">
+        <link href="/css/styles.css" rel="stylesheet">
         <!-- Fonts CSS-->
         <link rel="stylesheet" href="css/heading.css">
         <link rel="stylesheet" href="css/body.css">
@@ -67,6 +67,7 @@
                             <tbody>
                             <tr th:each="cupon : ${cupones}">
                                 <td th:text="${cupon.comercio.nombreComercio}"></td>
+                                <td th:text="${cupon.tipo}"></td>
                                 <td th:text="${cupon.titulo + '-' +cupon.descripcion}"></td>
                                 <td th:text="${cupon.id}"></td>
                                 <td th:text="${cupon.vencimiento}"></td>
