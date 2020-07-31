@@ -143,7 +143,9 @@ public class ControladorCliente {
             modelo.put("apellido", apellido);
             modelo.put("telefono", telefono);
             modelo.put("domicilio", domicilio);
+
             return "editarPerfilUsuario.html";
+
         }
         modelo.put("exito", "Perfil modificado con exito");
         return "redirect:/inicio";
