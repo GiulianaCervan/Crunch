@@ -180,6 +180,7 @@ public class ControladorComercio {
         modelo.put("telefono", comercio.getTelefono());
         modelo.put("rubros", Rubro.values());
         return "//paginaModificar";
+
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
