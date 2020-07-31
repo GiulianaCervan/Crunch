@@ -140,7 +140,7 @@ public class ControladorCliente {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
-    @GetMapping("/mostarPuntos")
+    @GetMapping("/mostrarPuntos")
     public String mostrarPuntos(HttpSession session, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
