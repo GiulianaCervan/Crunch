@@ -211,7 +211,7 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/validar")
+    @GetMapping("/validarCupon")
     public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
