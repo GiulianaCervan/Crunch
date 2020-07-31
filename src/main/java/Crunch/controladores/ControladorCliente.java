@@ -146,6 +146,7 @@ public class ControladorCliente {
 
             return "editarPerfilUsuario.html";
 
+
         }
         modelo.put("exito", "Perfil modificado con exito");
         return "redirect:/inicio";

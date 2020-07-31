@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
-<html lang="es" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Perfil Cliente</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
+    <title>Crunch</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.jpg" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
@@ -17,61 +16,96 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-  
-<style>
-    h1{
-        text-align:left;font-size:150%;font-family:sans-serif;color:#0c0c0b
-    }
-
-</style>
+    <style>
+        div.divider-custom-line#division {
+            border-color: white;
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <img class="rounded-circle" src="/assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
+        <div class="container"><a class="navbar-brand js-scroll-trigger" href="#page-top">CRUNCH</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto" id="menu">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/inicio">VOLVER</a>
+                            href="#portfolio">REGISTRATE</a>
                     </li>
-                   
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="#about">INICIAR SESIÓN</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="#contact">NOSOTROS</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+
+            <h2 class="masthead-heading mb-0">Puntos </h2>
+
+            <div class="divider-custom">
+                <div class="divider-custom-line" id="division"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star" style="color: white;"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+        </div>
+    </header>
+    <!--inicio tabla -->
+    <section class="page-section portfolio" id="portfolio">
+
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-sm-12">
+
+            <label for="site-search">Ingresar mail</label>
+            <input type="search" id="site-search" name="q" aria-label="Search through site content">
+
+            <button>Buscar</button>
+
+            <div class="row justify-content-center">
+                <div class="col-12">
+
+                    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                        th:text="${mensaje}" class="alert">
+                    </div>
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Mail</th>
 
 
-                    <h1 th:text="${'Nombre Titular Comercio: '+ comercio.nombre}"></h1>
-                    <h1 th:text="${'Apellido Titular Comercio: '+comercio.apellido}"></h1>
-                    <h1 th:text="${'Telefono: '+comercio.telefono}"> </h1>
-                    <h1 th:text="${'Direccion del Comercio: '+ comercio.direccion}"> </h1>
-                    <h1 th:text="${'E-mail: '+comercio.mail}"></h1>
-                    <h1 th:text="${'Nombre del comercio: '+comercio.nombreComercio}"></h1>
-                    <h1 >Rubros:</h1>
-                    <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}"></h5>
-    
-                   
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cupon : ${cupones}">
+                                <td th:text="${cupon.titulo}"></td>
+                                <td th:text="${cupon.comercio.direccion}"></td>
 
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Recipient's username"
+                            aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Sumar puntos</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-
-            <a class="boton-personalizado-4" href="/comercio/modificar" >CAMBIAR  DATOS</a>
-
         </div>
-        
-    </header>
-
+        </div>
+    </section>
+    <!---fin tabla -->
     <footer class="footer text-center">
         <div class="container">
             <div class="row">

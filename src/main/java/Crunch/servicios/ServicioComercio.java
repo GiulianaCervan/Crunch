@@ -135,10 +135,10 @@ public class ServicioComercio {
      * @throws ExcepcionServicio
      */
     @Transactional
-    public void modificar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, 
+    public void modificar(String mail, String nombreComercio, String nombre, String apellido,
             String telefono, String direccion, String rubro) throws ExcepcionServicio {
 
-        validar(mail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubro);
+        validarModificar(mail, nombreComercio, nombre, apellido, telefono, direccion, rubro);
 
         Optional<Comercio> respuesta = comercioRepositorio.findById(mail);
 
@@ -146,18 +146,17 @@ public class ServicioComercio {
 
             Comercio comercio = respuesta.get();
 
-            String claveEncriptada = new BCryptPasswordEncoder().encode(clave);
+            comercio.setNombreComercio(nombreComercio);
+            comercio.setNombre(nombre);
+            comercio.setApellido(apellido);
+            comercio.setTelefono(telefono);
+            comercio.setDireccion(direccion);
 
-            if (claveEncriptada.equals(comercio.getClave())) {
-                comercio.setNombreComercio(nombreComercio);
-                comercio.setNombre(nombre);
-                comercio.setApellido(apellido);
-                comercio.setTelefono(telefono);
-                comercio.setDireccion(direccion);
-
+            try {
+                if (rubro != null || !rubro.isEmpty()) {
                 String[] separados = rubro.split(",");
                 List<RubroAsignado> rubros = new ArrayList<>();
-                
+
                 for (String separado : separados) {
                     Rubro rubroEnum = Rubro.valueOf(separado);
                     RubroAsignado rubroAsignado = new RubroAsignado();
@@ -165,10 +164,14 @@ public class ServicioComercio {
                     rubros.add(rubroAsignado);
                     rubroRepositorio.save(rubroAsignado);
                 }
-
                 comercio.setRubros(rubros);
+            }
+            } catch (Exception e) {
                 comercioRepositorio.save(comercio);
             }
+            
+
+            comercioRepositorio.save(comercio);
 
         } else {
             throw new ExcepcionServicio("No se ha encontrado el comercio solicitado.");
@@ -265,6 +268,31 @@ public class ServicioComercio {
 //        if (rubros == null || rubros.isEmpty()) {
 //            throw new ExcepcionServicio("El/los rubro/s no puede/n ser nulo/s");
 //        }
+    }
+
+    private void validarModificar(String mail, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
+
+        if (mail == null || mail.isEmpty()) {
+            throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
+        }
+        if (nombreComercio == null || nombreComercio.isEmpty()) {
+            throw new ExcepcionServicio("El nombre del comercio no puede ser nulo o estar vacío.");
+        }
+        if (nombre == null || nombre.isEmpty()) {
+            throw new ExcepcionServicio("El nombre del dueño no puede ser nulo o estar vacío.");
+        }
+        if (apellido == null || apellido.isEmpty()) {
+            throw new ExcepcionServicio("El apellido del dueño no puede ser nulo o estar vacío.");
+        }
+
+        if (direccion == null || direccion.isEmpty()) {
+            throw new ExcepcionServicio("La dirección no puede ser nulo o estar vacío.");
+        }
+
+        if (telefono == null || telefono.isEmpty()) {
+            throw new ExcepcionServicio("El telefono no puede ser nulo o estar vacío.");
+        }
+
     }
 
 }
