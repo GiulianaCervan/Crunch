@@ -30,7 +30,8 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></a>
+                            th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"
+                            href="#hola"></a>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="#portfolio">CUPONES</a>
@@ -41,11 +42,11 @@
         
         </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-primary text-white text-center" id="hola">
         <div class="container">
-            
+                <h2>Bienvenidos!!</h2>
                 <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
-                    th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}">Nombre</h2>
+                    th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></h2>
                 <br>
                 
                 <button class="button button1" data-dismiss="modal" onclick="openNav()">MENÚ</button>
@@ -58,7 +59,7 @@
                     <div class="overlay-content">
                         <a href="/cliente/perfil">Mi perfil</a>
                         <a href="/cliente/cupones">Mis cupones</a>
-                        <a href="/">Mis Puntos</a>
+                        <a href="/cliente/mostrarPuntos">Mis Puntos</a>
                       <a href="/logout">Cerrar Sesión</a>
 
 
@@ -69,6 +70,7 @@
                 <br><br>
             <div class="container">
             <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
+            <br><h3 style="font-size: 400%;">&#8675</h3>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">

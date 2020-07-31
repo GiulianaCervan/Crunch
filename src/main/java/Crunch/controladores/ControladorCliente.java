@@ -113,7 +113,7 @@ public class ControladorCliente {
         }
         modelo.put("cliente", cliente);
 
-        return "//paginaModificar";
+        return "editarPerfilUsuario.html";
 
     }
 
@@ -134,7 +134,7 @@ public class ControladorCliente {
             modelo.put("apellido", apellido);
             modelo.put("telefono", telefono);
             modelo.put("domicilio", domicilio);
-            return "redirect:/modificar";
+            return "error.html";
         }
         modelo.put("exito", "Perfil modificado con exito");
         return "redirect:/inicio";

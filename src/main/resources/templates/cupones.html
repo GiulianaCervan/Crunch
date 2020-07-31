@@ -17,32 +17,32 @@
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
     <style>
-        div#imagen {
-            background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        }
+       
     </style>
-   
+
 
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
+        <div class="container"><a class="navbar-brand js-scroll-trigger" >CRUNCH!</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto" id="menu">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/">REGISTRATE</a>
+                <ul class="navbar-nav ml-auto" id="menuIndex">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/">REGISTRATE</a>
                         <ul>
-                            <li><a href="/registro-comercio">COMERCIO</a></li>
-                            <li><a href="/registro">USUARIO</a></li>
-                        </ul>  
+                            <li><a class="rounded" style="border-color: transparent;"
+                                    href="/registro-comercio">COMERCIO</a></li>
+                            <li><a class="rounded" style="border-color: transparent;" href="/registro">USUARIO</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
                             href="/">VOLVER</a>
                     </li>
-                   
+
                 </ul>
             </div>
         </div>
@@ -65,25 +65,25 @@
             <div class="row">
                 <div th:each="cupon : ${cupones}" id="cuponess" class="col-md-6 col-sm-12">
                     <!-- <div class="container"> -->
-                        <div class="container" id="imagen" style="width: 100%">
-                                <br>
-                                <h2 th:text="${cupon.titulo}" ></h2>
-                                <p th:text="${cupon.descripcion}"></p>
-                                <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
-                                
-                                <form method="POST" action="/cliente/otorgar">
-                                    <input name="titulo" th:value="${cupon.titulo}" style="visibility: hidden;">
-                                    <input name="mailComercio" th:value="${cupon.comercio.mail}" style="visibility: hidden;">
-                                <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
-                                </form>
-                                <br>
-                        </div>
+                    <div class="container" id="imagen" style="width: 100%">
                         <br>
+                        <h2 th:text="${cupon.titulo}"></h2>
+                        <p th:text="${cupon.descripcion}"></p>
+                        <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
+
+                        <form method="POST" action="/cliente/otorgar">
+                            <input name="titulo" th:value="${cupon.titulo}" style="visibility: hidden;">
+                            <input name="mailComercio" th:value="${cupon.comercio.mail}" style="visibility: hidden;">
+                            <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
+                        </form>
+                        <br>
+                    </div>
+                    <br>
                     <!-- </div> -->
-                <div>
-            </div>
-        </div>
-        
+                    <div>
+                    </div>
+                </div>
+
 
     </section>
     <footer class="footer text-center">

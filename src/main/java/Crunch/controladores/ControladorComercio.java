@@ -94,12 +94,8 @@ public class ControladorComercio {
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/cuponDeCanje")
     public String cuponDeCanje() {
-        /**
-         * FALTARIA hacer el html de CuponDeCanje que en teoría sería igual al
-         * cupon pero con el agregado de un input llamado costo, para que me
-         * manda el costo en puntos de ese cupon.
-         */
-        return "cuponDeCanje.html";
+       
+        return "cuponPuntos.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
@@ -133,7 +129,7 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @PostMapping("/mostrarPerfil")
+    @GetMapping("/mostrarPerfil")
     public String mostrarPerfilComercio(HttpSession session, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -146,6 +142,7 @@ public class ControladorComercio {
             servicioComercio.buscarPorId(userMail);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
+            return "error.html";
         }
         modelo.put("comercio", comercio);
         
@@ -170,7 +167,7 @@ public class ControladorComercio {
         }
         
         modelo.put("comercio", comercio);
-        return "//paginaModificar";
+        return "editarPerfilComercio.html";
     }
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/modificar")
