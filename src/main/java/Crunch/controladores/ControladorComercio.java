@@ -93,15 +93,15 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/cuponDeCanje")
-    public String cuponDeCanje() {
+    @GetMapping("/cuponPuntos")
+    public String cuponPuntos() {
 
         return "cuponPuntos.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @PostMapping("/crearCuponDeCanje")
-    public String crearCuponDeCanje(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo, @RequestParam Integer cantidad, ModelMap modelo) {
+    @PostMapping("/crearCuponPuntos")
+    public String crearCuponPuntos(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo, @RequestParam Integer cantidad, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -118,7 +118,7 @@ public class ControladorComercio {
             modelo.put("costo", costo);
             modelo.put("cantidad", cantidad);
 
-            return "cuponDeCanje.html";
+            return "cuponPuntos.html";
         } catch (Exception e) {
             e.printStackTrace();
             modelo.put("error", e.getMessage());
