@@ -11,6 +11,7 @@ import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
 import Crunch.servicios.ServicioComercio;
 import Crunch.servicios.ServicioCupon;
+import Crunch.utilidades.Rubro;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -133,69 +134,96 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @PostMapping("/mostrarPerfil")
+    @GetMapping("/mostrarPerfil")
     public String mostrarPerfilComercio(HttpSession session, ModelMap modelo) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
-        
+
         Comercio comercio = null;
-        
+
         try {
-            servicioComercio.buscarPorId(userMail);
+
+            comercio = servicioComercio.buscarPorId(userMail);
         } catch (ExcepcionServicio e) {
+
             modelo.put("error", e.getMessage());
+            return "redirect:/inicio";
         }
+
         modelo.put("comercio", comercio);
-        
+
         return "perfilComercio.html";
     }
-    
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/modificar")
-    public String modificar(HttpSession session, ModelMap modelo){
-        
+    public String modificar(HttpSession session, ModelMap modelo) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
-        
+
         Comercio comercio = null;
-        
+
         try {
             comercio = servicioComercio.buscarPorId(userMail);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        
-        modelo.put("comercio", comercio);
+
+        modelo.put("nombre", comercio.getNombre());
+        modelo.put("apellido", comercio.getApellido());
+        modelo.put("nombreComecio", comercio.getNombreComercio());
+        modelo.put("direccion", comercio.getDireccion());
+        modelo.put("telefono", comercio.getTelefono());
+        modelo.put("rubros", Rubro.values());
         return "//paginaModificar";
     }
+
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/modificar")
-    public String modificarComercio(HttpSession session, ModelMap modelo,  @RequestParam String direccion, @RequestParam String nombre,
+    public String modificarComercio(HttpSession session, ModelMap modelo, @RequestParam String direccion, @RequestParam String nombre,
             @RequestParam String apellido, @RequestParam String telefono, @RequestParam String clave, @RequestParam String clave2,
-            @RequestParam String rubros, @RequestParam String nombreComercio){
-        
+            @RequestParam String rubros, @RequestParam String nombreComercio) {
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
-        
+
         try {
             servicioComercio.modificar(userMail, clave, clave2, nombreComercio, nombre, apellido, telefono, direccion, rubros);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             return "/paginaModificar";
         }
-        
-        modelo.put("exito", "Perfil modificado correctamente");
-        
-        return "redirect:/inicio";
-        
-    }
-    
 
+        modelo.put("exito", "Perfil modificado correctamente");
+
+        return "redirect:/inicio";
+
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/validar")
+    public String validar(ModelMap modelo, HttpSession session, @RequestParam String idCupon){
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        try {
+            servicioCupon.validarCupon(userMail, idCupon);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "//validar";
+        }
+        
+        modelo.put("exito", "Cupon canjeado con exito");
+        return "//validar.html";
+    }
 //    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
 //    @PostMapping("/buscarClientes")
 //    public String Clientes(@RequestParam String mailCliente, ModelMap modelo) {
@@ -221,4 +249,5 @@ public class ControladorComercio {
 //
 //    }
   
+
 }

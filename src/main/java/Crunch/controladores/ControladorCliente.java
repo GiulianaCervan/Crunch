@@ -92,7 +92,12 @@ public class ControladorCliente {
             modelo.put("error", e.getMessage());
         }
 
-        modelo.put("cliente", cliente);
+        
+        modelo.put("nombre", cliente.getNombre());
+        modelo.put("apellido", cliente.getApellido());
+        modelo.put("telefono", cliente.getTelefono());
+        modelo.put("domicilio", cliente.getDomicilio());
+        
         return "perfilCliente.html";
     }
 
@@ -111,30 +116,34 @@ public class ControladorCliente {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        modelo.put("cliente", cliente);
+        modelo.put("nombre", cliente.getNombre());
+        modelo.put("apellido", cliente.getApellido());
+        modelo.put("telefono", cliente.getTelefono());
+        modelo.put("domicilio", cliente.getDomicilio());
 
-        return "//paginaModificar";
+        return "editarPerfilUsuario.html";
 
     }
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/modificarPerfil")
     public String modificarPerfil(HttpSession session, ModelMap modelo, @RequestParam String domicilio, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String telefono, @RequestParam String clave, @RequestParam String clave2) {
+            @RequestParam String apellido, @RequestParam String telefono) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
 
         try {
-            servicioCliente.modificar(userMail, clave, clave2, nombre, apellido, domicilio, telefono);
+            
+           servicioCliente.modificar(userMail, nombre, apellido, domicilio, telefono);
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
             modelo.put("telefono", telefono);
             modelo.put("domicilio", domicilio);
-            return "redirect:/modificar";
+            return "editarPerfilUsuario.html";
         }
         modelo.put("exito", "Perfil modificado con exito");
         return "redirect:/inicio";
