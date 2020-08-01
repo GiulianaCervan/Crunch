@@ -31,6 +31,8 @@ public class ServicioComercio {
     private ClienteRepositorio clienteRepositorio;
     @Autowired
     private PuntosRepositorio puntosRepositorio;
+    @Autowired
+    private ServicioCliente servicioCliente;
 
     @Autowired
     private RubroRepositorio rubroRepositorio;
@@ -154,22 +156,21 @@ public class ServicioComercio {
 
             try {
                 if (rubro != null || !rubro.isEmpty()) {
-                String[] separados = rubro.split(",");
-                List<RubroAsignado> rubros = new ArrayList<>();
+                    String[] separados = rubro.split(",");
+                    List<RubroAsignado> rubros = new ArrayList<>();
 
-                for (String separado : separados) {
-                    Rubro rubroEnum = Rubro.valueOf(separado);
-                    RubroAsignado rubroAsignado = new RubroAsignado();
-                    rubroAsignado.setRubro(rubroEnum);
-                    rubros.add(rubroAsignado);
-                    rubroRepositorio.save(rubroAsignado);
+                    for (String separado : separados) {
+                        Rubro rubroEnum = Rubro.valueOf(separado);
+                        RubroAsignado rubroAsignado = new RubroAsignado();
+                        rubroAsignado.setRubro(rubroEnum);
+                        rubros.add(rubroAsignado);
+                        rubroRepositorio.save(rubroAsignado);
+                    }
+                    comercio.setRubros(rubros);
                 }
-                comercio.setRubros(rubros);
-            }
             } catch (Exception e) {
                 comercioRepositorio.save(comercio);
             }
-            
 
             comercioRepositorio.save(comercio);
 
@@ -185,55 +186,61 @@ public class ServicioComercio {
             throw new ExcepcionServicio("La cantiad de puntos debe ser mayor a 0");
         }
         Boolean encontrado = false;
-        Optional<Cliente> respuesta = clienteRepositorio.findById(mailCliente);
-        Cliente cliente = null;
-        if (respuesta.isPresent()) {
 
-            cliente = respuesta.get();
+        Cliente cliente = servicioCliente.buscarPorId(mailCliente);
+        Comercio comercio = buscarPorId(mailComercio);
 
-            for (Puntos punto : cliente.getPuntos()) {
+        for (Puntos punto : cliente.getPuntos()) {
 
-                if (punto.getComercio().getMail().equals(mailComercio)) {
+            if (punto.getComercio().getMail().equals(mailComercio)) {
 
-                    punto.setCantidad(punto.getCantidad() + cantidad);
-                    encontrado = true;
-                    puntosRepositorio.save(punto);
-                    break;
-                }
-            }
-            if (encontrado == false) {
+                Integer cantidadFinal = punto.getCantidad() + cantidad;
+                
+                punto.setCantidad(cantidadFinal);
+                encontrado = true;
 
-                Puntos punto = new Puntos();
-                punto.setCantidad(cantidad);
-                cliente.getPuntos().add(punto);
                 puntosRepositorio.save(punto);
                 clienteRepositorio.save(cliente);
 
+                break;
             }
-
-        } else {
-            throw new ExcepcionServicio("Ocurrio un error y no se puedo encontrar el cliente");
         }
+        if (encontrado == false) {
+
+            Puntos punto = new Puntos();
+
+            punto.setCantidad(cantidad);
+            punto.setComercio(comercio);
+
+            cliente.getPuntos().add(punto);
+
+            puntosRepositorio.save(punto);
+            clienteRepositorio.save(cliente);
+
+        }
+        
     }
 
-    /**
-     * Este método lo utilizo para poder validar el comercio que quiero
-     * registrar. Todavía está incompleto, quizá podemos agregarle más adelante
-     * una segunda clave a los métodos cuando se llene el formulario de front y
-     * confirmar que la clave se repitió
-     *
-     * @param mail
-     * @param clave
-     * @param clave2
-     * @param nombreComercio
-     * @param nombre
-     * @param apellido
-     * @param telefono
-     * @param direccion
-     * @param rubros
-     * @throws ExcepcionServicio
-     */
-    private void validar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
+
+
+/**
+ * Este método lo utilizo para poder validar el comercio que quiero registrar.
+ * Todavía está incompleto, quizá podemos agregarle más adelante una segunda
+ * clave a los métodos cuando se llene el formulario de front y confirmar que la
+ * clave se repitió
+ *
+ * @param mail
+ * @param clave
+ * @param clave2
+ * @param nombreComercio
+ * @param nombre
+ * @param apellido
+ * @param telefono
+ * @param direccion
+ * @param rubros
+ * @throws ExcepcionServicio
+ */
+private void validar(String mail, String clave, String clave2, String nombreComercio, String nombre, String apellido, String telefono, String direccion, String rubros) throws ExcepcionServicio {
 
         if (mail == null || mail.isEmpty()) {
             throw new ExcepcionServicio("El mail no puede ser nulo o estar vacío.");
