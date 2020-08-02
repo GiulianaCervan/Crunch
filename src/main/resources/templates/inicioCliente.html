@@ -13,64 +13,67 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-   
+
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-            <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
-                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            th:if="${session.usuariosession != null}"
-                            th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"
-                            href="#hola"></a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">CUPONES</a>
-                    </li>
-                   
-                </ul>
-            </div>
-        
+        <img class="rounded-circle" src="assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
+        <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
+            data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+            aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                        th:if="${session.usuariosession != null}"
+                        th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"
+                        href="#hola"></a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                        href="#portfolio">CUPONES</a>
+                </li>
+
+            </ul>
+        </div>
+
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center" id="hola">
         <div class="container">
-                <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
-                    th:text="${'Hola '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}"></h2>
-                <br>
-                
-                <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>
-                <div id="myNav" class="overlay">
+            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+            <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
+                th:text="${'Hola '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}"></h2>
 
-                    <!-- Button to close the overlay navigation -->
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <br>
 
-                    <!-- Overlay content -->
-                    <div class="overlay-content">
-                        <a href="/cliente/perfil">Mi perfil</a>
-                        <a href="/cliente/cupones">Mis cupones</a>
-                        <a href="/cliente/mostrarPuntos">Mis Puntos</a>
-                      <a href="/logout">Cerrar Sesión</a>
+            <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>
+            <div id="myNav" class="overlay">
 
+                <!-- Button to close the overlay navigation -->
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-                    </div>
+                <!-- Overlay content -->
+                <div class="overlay-content">
+                    <a href="/cliente/perfil">Mi perfil</a>
+                    <a href="/cliente/cupones">Mis cupones</a>
+                    <a href="/cliente/mostrarPuntos">Mis Puntos</a>
+                    <a href="/logout">Cerrar Sesión</a>
+
 
                 </div>
 
-                <br><br>
+            </div>
+
+            <br><br>
             <div class="container">
-            <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
-            <br><h3 style="font-size: 400%;">&#8675</h3>
-        </div>
+                <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
+                <br>
+                <h3 style="font-size: 400%;">&#8675</h3>
+            </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
         <div class="container">
@@ -273,7 +276,8 @@
 
                                     <td><a class="button button1" href="/cupones/LUBRICENTRO">Lubricentros</a></td>
 
-                                    <td><a class="button button1" href="/cupones/MECANICA">Mecanica y electricidad</a></td>
+                                    <td><a class="button button1" href="/cupones/MECANICA">Mecanica y electricidad</a>
+                                    </td>
 
                                 </tr>
                                 <p></p>
@@ -352,8 +356,9 @@
                                 <form method="POST" action="">
                                     <tr>
 
-                                      
-                                        <td> <a class="button button1" type="submit" th:value="ferreteria">Ferreterias</a></td>
+
+                                        <td> <a class="button button1" type="submit"
+                                                th:value="ferreteria">Ferreterias</a></td>
 
                                         <td><a class="button button1" href="/cupones/PINTURERIA">Pinturerias</a></td>
 

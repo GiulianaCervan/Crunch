@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
         crossorigin="anonymous"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
@@ -35,6 +35,8 @@
                     th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></h2>
                 <br><br>
                 <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>
+                <h2 th:if="@{exito != null}" th:text="${exito}"></h2>
+                
                 <div id="myNav" class="overlay">
 
                     <!-- Button to close the overlay navigation -->
@@ -45,7 +47,7 @@
                         <a href="/comercio/mostrarPerfil">Mi perfil</a>
                         <a href="/comercio/cupon">Crear cupón de promoción</a>
 
-                        <a href="/comercio/cuponDeCanje">Crear cupón de puntos</a>
+                        <a href="/comercio/cuponPuntos">Crear cupón de puntos</a>
                         <a href="/comercio/validar">Validar cupones</a>
                         <a href="comercio/buscar">Buscar Clientes para puntos</a>
 
