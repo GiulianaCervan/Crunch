@@ -8,6 +8,7 @@ package Crunch.entidades;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -22,7 +23,7 @@ public class Puntos {
     
     private Integer cantidad = 0;
     
-    @OneToOne
+    @ManyToOne
     private Comercio comercio;
 
     public Puntos() {
