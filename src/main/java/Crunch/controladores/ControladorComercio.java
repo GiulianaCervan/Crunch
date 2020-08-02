@@ -231,8 +231,10 @@ public class ControladorComercio {
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/buscar")
-    public String gestion() {
-
+    public String gestion(ModelMap modelo, @RequestParam(required = false) String mensaje) {
+        if (mensaje != null) {
+            modelo.put("mensaje", mensaje);
+        }
         return "buscar.html";
     }
 
@@ -243,28 +245,30 @@ public class ControladorComercio {
         List<Cliente> clientes = servicioCliente.buscarClientes(mailCliente);
 
         modelo.put("clientes", clientes);
-        
 
         return "buscar.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/darPuntos")
-    public String darPuntos(@RequestParam(required = false) String mail, ModelMap modelo, @RequestParam Integer cantidad) {
+    public String darPuntos(ModelMap modelo,@RequestParam String mail,@RequestParam Integer cantidad) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
         String userMail = userDetails.getUsername();
 
         try {
-            System.out.println("++++++mailcliente antes de dar puntos"+mail);
+            System.out.println("++++++mailcliente antes de dar puntos: " + mail + " + mailComercio: " +userMail+ " + cantidad: " + cantidad);
             servicioComercio.darPuntos(cantidad, mail, userMail);
+            System.out.println("----------------------- superé el método.");
+            modelo.put("mensaje", "Se ha podido cargar los puntos correctamente.");
+            return "buscar.html";
 
         } catch (ExcepcionServicio e) {
-            modelo.put("error", e.getMessage());
-            return "error.html";
+            modelo.put("mensaje", e.getMessage());
+
+            return "buscar.html";
         }
-        return "buscar.html";
 
     }
 

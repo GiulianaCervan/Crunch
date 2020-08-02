@@ -61,7 +61,7 @@ public class ControladorCliente {
             
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
-            return "redirect:/inicio";
+            return "inicioCliente.html";
         }
 
         return "exitoCuponAdq.html";
