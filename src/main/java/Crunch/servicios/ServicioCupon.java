@@ -445,19 +445,15 @@ public class ServicioCupon {
 
             for (Cupon banner : banners) {
 
-                if ((cupon.getTitulo().equals(banner.getTitulo())) && cupon.getComercio().equals(banner.getComercio())) {
-                    encontrado = false;
-                    break;
-                } else {
-
+                if (cupon.isDisponible() && !cupon.getTitulo().equals(banner.getTitulo()) && !cupon.getComercio().equals(banner.getComercio())) {
                     encontrado = true;
-
+                    break;
                 }
             }
             if (encontrado == true) {
                 banners.add(cupon);
-
             }
+            
             encontrado = false;
 
         }
