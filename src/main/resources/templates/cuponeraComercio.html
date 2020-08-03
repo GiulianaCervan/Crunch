@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th="https://www.thymeleaf.org/">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Crunch - Error</title>
+    <title>Crunch</title>
     <link rel="icon" type="image/x-icon" href="assets/img/icono.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"
@@ -16,58 +16,81 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
+
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
-        <div class="container"><a class="navbar-brand js-scroll-trigger" href="/">CRUNCH!</a>
+        <div class="container"><a class="navbar-brand js-scroll-trigger">CRUNCH</a>
             <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
                 type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/inicio">VOLVER</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                            href="/logout">CERRAR SESIÓN</a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
-            <h1  class="masthead-heading mb-0" th:text="${codigo}"></h1>
-            <h2 class="masthead-subheading mb-0" th:if="@{error != null}"th:text="${error}"></h2>
-            <h2 class="masthead-subheading mb-0" th:text="${mensaje == null ? 'Intenta nuevamente' : mensaje}"></h2>
-            <br><br>
-            
-        </div>
-        <div class="container" style="text-align: center;">
-            <button class="button button1" href="/inicio" data-dismiss="modal">Volver</button>
-        </div>
-    </header>
-    <section class="page-section" id="contact">
-        <div class="container">
-            <!-- Contact Section Heading-->
-            <div class="text-center">
-                <h2 class="page-section-heading text-secondary d-inline-block mb-0">CONTACTANOS</h2>
-            </div>
-            <!-- Icon Divider-->
-            <div class="divider-custom">
+
+            <h2 class="masthead-heading mb-0">Tus cupones</h2>
+            <div class="divider-custom divider-light">
                 <div class="divider-custom-line"></div>
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <!-- Contact Section Content-->
+        </div>
+    </header>
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+
             <div class="row justify-content-center">
-                <div class="col-lg-4">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="icon-contact mb-3"><i class="fas fa-mobile-alt"></i></div>
-                        <div class="text-muted">Telefono</div>
-                        <div class="lead font-weight-bold">(555) 555-5555</div>
+                <div class="col-12">
+                    <h2>Mis cupones</h2>
+                    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                        th:text="${mensaje}" class="alert">
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="d-flex flex-column align-items-center">
-                        <div class="icon-contact mb-3"><i class="far fa-envelope"></i></div>
-                        <div class="text-muted">Email</div><a class="lead font-weight-bold"
-                            href="mailto:name@example.com">crunchapp7@gmail.com</a>
-                    </div>
+                    <p>Tenga en cuanta que al decidir borrar cupones solo se borraran lo que todavia no hayan sido
+                        otorgados</p>
+                        <p th:if="@{exito != null}" th:text="${exito}" style="color: green;"></p>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Comercio</th>
+                                <th>Tipo</th>
+                                <th>Descripción</th>
+                                <th>Código</th>
+                                <th>Vencimiento</th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="cupon : ${cupones}">
+                                <form action="/comercio/borrar" method="POST">
+                                    <input type="hidden" name="titulo" th:value="${cupon.titulo}" />
+                                    <td th:text="${cupon.comercio.nombreComercio}"></td>
+                                    <td th:text="${cupon.tipo}"></td>
+                                    <td th:text="${cupon.titulo + '-' +cupon.descripcion}"></td>
+                                    <td th:text="${cupon.id}"></td>
+                                    <td th:text="${cupon.vencimiento}"></td>
+                                    
+                                    <td><button class="boton-personalizado-4" type="submit">Borrar</button></td>
+                                </form>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
         </div>
     </section>
     <footer class="footer text-center">
@@ -76,11 +99,11 @@
                 <!-- Footer Location-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
                     <h4 class="mb-4">MENDOZA</h4>
-                    <p class="pre-wrap lead mb-0"></p>
+                    <p class="pre-wrap lead mb-0">Avenida Siempre Viva </p>
                 </div>
                 <!-- Footer Social Icons-->
                 <div class="col-lg-4 mb-5 mb-lg-0">
-                    <h4 class="mb-4">SEGUINOS</h4><a class="btn btn-outline-light btn-social mx-1"
+                    <h4 class="mb-4">SEGUINOS!</h4><a class="btn btn-outline-light btn-social mx-1"
                         href="https://www.facebook.com/StartBootstrap"><i class="fab fa-fw fa-facebook-f"></i></a><a
                         class="btn btn-outline-light btn-social mx-1" href="https://www.twitter.com/sbootstrap"><i
                             class="fab fa-fw fa-twitter"></i></a><a class="btn btn-outline-light btn-social mx-1"
@@ -91,7 +114,7 @@
                 <!-- Footer About Text-->
                 <div class="col-lg-4">
                     <h4 class="mb-4">NOSOTROS</h4>
-                    <p class="pre-wrap lead mb-0"></p>
+                    <p class="pre-wrap lead mb-0">Manso grupo </p>
                 </div>
             </div>
         </div>

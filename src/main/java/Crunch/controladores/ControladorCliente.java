@@ -78,6 +78,10 @@ public class ControladorCliente {
         String userMail = userDetails.getUsername();
 
         List<Cupon> cupones = servicioCupon.mostrarCuponesCliente(userMail);
+        for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+        }
+        
         modelo.put("cupones", cupones);
 
         return "cuponera.html";
@@ -172,6 +176,23 @@ public class ControladorCliente {
         
         return "misPuntos.html";
       
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @PostMapping("/mostrarComercio")
+    public String mostarCuponesComercio(ModelMap modelo, @RequestParam String mailComercio){
+        
+        List<Cupon> cupones = servicioCupon.mostrarPorComercio(mailComercio);
+        
+        for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+            System.out.println(cupon.getTitulo());
+        }
+        
+        modelo.put("cupones", cupones);
+        
+        return "cupones.html";
+        
     }
 
 }
