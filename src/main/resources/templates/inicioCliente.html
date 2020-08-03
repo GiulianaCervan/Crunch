@@ -17,6 +17,7 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
+    <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
 </head>
 
@@ -44,9 +45,9 @@
     </nav>
     <header class="masthead bg-primary text-white text-center" id="hola">
         <div class="container">
-            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
             <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
-                th:text="${'Hola '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}"></h2>
+                th:text="${'Bienvenid@ '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido+'!!'}">
+            </h2>
 
             <br>
 
@@ -67,8 +68,17 @@
                 </div>
 
             </div>
-
             <br><br>
+            <div class="container" style="padding-left: 30%">
+                <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                    th:text="${mensaje}" class="alert" style="width: 60%;">
+                </div>
+                <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${error != null}"
+                    th:text="${error}" class="alert" style="width: 60%;">
+                </div>
+            </div>
+
+            <br>
             <div class="container">
                 <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
                 <br>
@@ -89,6 +99,7 @@
             </div>
             <!-- Portfolio Grid Items-->
             <div class="row justify-content-center">
+
                 <!-- Portfolio Items-->
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal0">
@@ -152,7 +163,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <button class="boton-personalizado-4">Ver todos</button>
+                <a class="button button1" href="/cupones">Ver todos</a>
             </div>
         </div>
     </section>

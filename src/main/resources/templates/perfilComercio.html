@@ -46,7 +46,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-
+                    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${exito != null}"
+                        th:text="${exito}" class="alert">
+                    </div>
 
                     <h1 th:text="${'Nombre Titular Comercio: '+ comercio.nombre}"></h1>
                     <h1 th:text="${'Apellido Titular Comercio: '+comercio.apellido}"></h1>
@@ -55,10 +57,10 @@
                     <h1 th:text="${'E-mail: '+comercio.mail}"></h1>
                     <h1 th:text="${'Nombre del comercio: '+comercio.nombreComercio}"></h1>
                     <h1 >Rubros:</h1>
-                    <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}"></h5>
+                    <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}" style="text-align: left"></h5>
     
                    
-
+ 
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
@@ -66,7 +68,7 @@
             </div>
             
 
-            <a class="boton-personalizado-4" href="/comercio/modificar" >CAMBIAR  DATOS</a>
+            <a class="boton-personalizado-4" href="/comercio/modificarPerfil" >CAMBIAR  DATOS</a>
 
         </div>
         

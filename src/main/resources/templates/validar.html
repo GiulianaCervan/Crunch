@@ -16,11 +16,7 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-    <style>
-        div.divider-custom-line#division {
-            border-color: white;
-        }
-    </style>
+
 </head>
 
 <body id="page-top">
@@ -32,13 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">REGISTRATE</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#about">INICIAR SESIÓN</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#contact">NOSOTROS</a>
+                            href="/inicio">VOLVER</a>
                     </li>
                 </ul>
             </div>
@@ -47,28 +37,36 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
 
-            <h2 class="masthead-heading mb-0">Puntos </h2>
-
-            <div class="divider-custom">
-                <div class="divider-custom-line" id="division"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star" style="color: white;"></i></div>
+            <h2 class="masthead-heading mb-0">Validá los puntos</h2>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-        </div>
+            <br>
+            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${exito != null}"
+                th:text="${exito}" class="alert">
+            </div>
     </header>
     <!--inicio tabla -->
     <section class="page-section portfolio" id="portfolio">
-        <div>
+        <div class="container">
 
             <form method="POST" action="/comercio/validarCupon">
-                <label for="fname">Ingresar código</label>
-                <input type="text" id="fname" name="fname"><br><br>
-                <button type="button">Validar</button>
-                
+                <div style="width: 30%;">
+                    <label for="fname">Ingrese el código</label><br>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="idCupon" name="idCupon">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"
+                                style="border: .125rem solid #ced4da;">Validar</button>
+                        </span>
+                    </div>
+                </div>
             </form>
         </div>
-      
-       
+
+
     </section>
     <!---fin tabla -->
     <footer class="footer text-center">
