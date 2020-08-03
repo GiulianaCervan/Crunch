@@ -64,11 +64,12 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Comercio</th>
+                                
                                 <th>Tipo</th>
                                 <th>Descripción</th>
                                 <th>Código</th>
                                 <th>Vencimiento</th>
+                                <th></th>
                                 <th></th>
 
                             </tr>
@@ -76,15 +77,20 @@
                         <tbody>
                             <tr th:each="cupon : ${cupones}">
                                 <form action="/comercio/borrar" method="POST">
-                                    <input type="hidden" name="titulo" th:value="${cupon.titulo}" />
-                                    <td th:text="${cupon.comercio.nombreComercio}"></td>
+                                    <input type="hidden" name="titulo" th:value="${cupon.titulo}" /> 
                                     <td th:text="${cupon.tipo}"></td>
                                     <td th:text="${cupon.titulo + '-' +cupon.descripcion}"></td>
                                     <td th:text="${cupon.id}"></td>
                                     <td th:text="${cupon.vencimiento}"></td>
                                     
+                                    
                                     <td><button class="boton-personalizado-4" type="submit">Borrar</button></td>
+                                    
                                 </form>
+                                <form action="/comercio/detalleCupones" method="POST">
+                                    <input type="hidden" name="titulo" th:value="${cupon.titulo}">
+                                    <td><button class="boton-personalizado-4" type="submit">VER CUPONES</button></td>
+                                    </form>
                             </tr>
                         </tbody>
                     </table>

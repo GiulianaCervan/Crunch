@@ -55,8 +55,7 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Masthead Subheading-->
-            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu
-                zona </p>
+            <p class="pre-wrap masthead-subheading font-weight-light mb-0">Cupones de descuentos en los comercios de tu zona </p>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
@@ -97,11 +96,14 @@
                             <label>E-Mail</label>
                             <input type="mail" class="form-control" name="mail" th:value="${mail}" required />
                             <label>Rubro</label>
-                            <br>
-                            <select class="form-control" name="rubros" multiple="multiple">
+                            <div class="state">
+                                <span class="state-full" style="color: red;">Para multiples rubros presione ctrl + click</span>    
+                                <span><select class="form-control" name="rubros" multiple="multiple">
                                 <option th:each="rubro : ${rubros}" th:text="${rubro}">
                                 </option>
-                            </select>
+                            </select></span>
+                                
+                            </div>
 
                             <label>Clave</label>
                             <input type="password" class="form-control" name="clave" th:value="${clave}" required />
@@ -166,6 +168,7 @@
     <script src="assets/mail/contact_me.js"></script>
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
+
 </body>
 
 </html>

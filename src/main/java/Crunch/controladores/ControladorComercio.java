@@ -15,6 +15,7 @@ import Crunch.servicios.ServicioComercio;
 import Crunch.servicios.ServicioCupon;
 import Crunch.servicios.ServicioFoto;
 import Crunch.utilidades.Rubro;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -273,7 +274,6 @@ public class ControladorComercio {
 
         try {
             servicioComercio.darPuntos(cantidad, mail, userMail);
-            System.out.println("----------------------- superé el método.");
             modelo.put("mensaje", "Se ha podido cargar los puntos correctamente.");
             return "buscar.html";
 
@@ -294,9 +294,12 @@ public class ControladorComercio {
         String userMail = userDetails.getUsername();
 
         List<Cupon> cupones = servicioCupon.mostrarPorComercio(userMail);
-
+        List<Integer> dados = new ArrayList();
+        List<Integer> noDados = new ArrayList();
         for (Cupon cupon : cupones) {
             cupon.setId(cupon.getId().substring(24));
+            
+           
         }
         modelo.put("cupones", cupones);
 
@@ -320,6 +323,20 @@ public class ControladorComercio {
         
         redirect.addFlashAttribute("exito", "Los cupones han sido borrados con exito");
         return "redirect:/comercio/cupones";
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/detalleCupones")
+    public String mostarDetalleCupones(ModelMap modelo, HttpSession session, @RequestParam String titulo){
+        
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        
+        List<Cupon> cupones = servicioCupon.buscarPorTituloyComercio(titulo, userMail);
+        
+        modelo.put("cupones", cupones);
+        return "detalleCuponesComercio.html";
     }
 
     @GetMapping("/cargar/{id}")

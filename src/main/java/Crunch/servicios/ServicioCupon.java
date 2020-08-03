@@ -208,13 +208,18 @@ public class ServicioCupon {
 
         Comercio comercio = repositorioComercio.getOne(mailComercio);
 
-        for (Cupon cupon : comercio.getCupones()) {
+        Iterator<Cupon> iterador = comercio.getCupones().iterator();
+        for (int i = 0; i < comercio.getCupones().size(); i++) {
+            for (Cupon cupon : comercio.getCupones()) {
             if (cupon.getTitulo().equals(titulo) && cupon.isDisponible()) {
                 comercio.getCupones().remove(cupon);
                 repositorioCupon.delete(cupon);
                 break;
             }
         }
+            
+        }
+        
         repositorioComercio.save(comercio);
     }
 
@@ -481,6 +486,13 @@ public class ServicioCupon {
             }
         }
         throw new ExcepcionServicio("Lo lamentamos, ya no quedan cupones disponibles");
+    }
+    
+    public List<Cupon> buscarPorTituloyComercio (String titulo, String mailComercio){
+        
+       List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, mailComercio);
+     
+       return cupones;
     }
 
     public List<Cupon> mostrarCuponesCliente(String mailCliente) {

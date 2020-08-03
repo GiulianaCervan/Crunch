@@ -74,4 +74,6 @@
   function closeNav() {
     document.getElementById("myNav").style.width = "0%";
   }
-  
+  $('.state').hover(function() {
+    $('.state-full', $(this)).slideToggle(100, 'linear').display(100, 'linear');
+});
