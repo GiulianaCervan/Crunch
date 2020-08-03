@@ -46,12 +46,15 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-
-                    <h1 th:text="${'Nombre: '+session.usuariosession.nombre}"></h1>
-                    <h1 th:text="${'Apeliido: '+session.usuariosession.apellido}"></h1>
-                    <h1 th:text="${'Telefono: '+session.usuariosession.telefono}"> </h1>
-                    <h1 th:text="${'Direccion: '+session.usuariosession.domicilio}"> </h1>
-                    <h1 th:text="${'E-mail: '+session.usuariosession.mail}"></h1>
+                    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${exito != null}"
+                    th:text="${exito}" class="alert">
+                    </div>
+                    
+                    <h1 th:text="${'Nombre: '+cliente.nombre}"></h1>
+                    <h1 th:text="${'Apeliido: '+cliente.apellido}"></h1>
+                    <h1 th:text="${'Telefono: '+cliente.telefono}"> </h1>
+                    <h1 th:text="${'Direccion: '+cliente.domicilio}"> </h1>
+                    <h1 th:text="${'E-mail: '+cliente.mail}"></h1>
     
                 </div>
                 <div class="col-md-6 col-sm-12">
@@ -60,7 +63,7 @@
             </div>
             
 
-            <a class="boton-personalizado-4" href="/cliente/modificar" >CAMBIAR  DATOS</a>
+            <a class="boton-personalizado-4" href="/cliente/modificar" >CAMBIAR DATOS</a>
 
         </div>
 

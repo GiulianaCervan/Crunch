@@ -16,7 +16,7 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-
+    <link href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -29,14 +29,16 @@
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-8">
-                <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
-                    th:text="${session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></h2>
+        <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
                 <br><br>
+                <h2 class="masthead-subheading mb-0" th:if="${session.usuariosession != null}"
+                    th:text="${'Bienvenid@ '+session.usuariosession.nombre+ ' ' + session.usuariosession.apellido}"></h2>
+                <br>
                 <button class="boton-personalizado-4" data-dismiss="modal" onclick="openNav()">MENÚ</button>
-                <h2 th:if="@{exito != null}" th:text="${exito}"></h2>
-                
+
+
                 <div id="myNav" class="overlay">
 
                     <!-- Button to close the overlay navigation -->
@@ -56,13 +58,20 @@
                     </div>
 
                 </div>
-
             </div>
-            <div class=".col-xs-4 .col-md-4">
+            <div class="col-4">
                 <div class="foto">
-                    <img class="rounded-circle" th:src="@{/cargar/__${comercio.foto.id}__}" width="200px" height="200px">
+                    <img class="rounded-circle" th:src="@{/cargar/__${comercio.foto.id}__}" width="200px"
+                        height="200px">
                 </div>
             </div>
+            
+        </div> 
+        <div class="container" style="margin-left: 25%;">
+            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${exito != null}"
+            th:text="${exito}" class="alert" style="width: 35%;">
+        </div>
+        </div>
     </header>
 
     <!-- Portfolio Modal-->

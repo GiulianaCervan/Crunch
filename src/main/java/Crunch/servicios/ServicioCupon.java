@@ -41,6 +41,8 @@ public class ServicioCupon {
     @Autowired
     private ServicioCliente servicioCliente;
 
+    @Autowired
+    private ServicioComercio servicioComercio;
     /**
      * Este método encuentra un cupon cuando se le dá el id.
      *
@@ -302,7 +304,7 @@ public class ServicioCupon {
     @Transactional
     public void validarCupon(String mailComercio, String idCupon) throws ExcepcionServicio {
 
-        Comercio comercio = repositorioComercio.getOne(idCupon);
+        Comercio comercio = servicioComercio.buscarPorId(mailComercio);
 
         for (Cupon cupon : comercio.getCupones()) {
 

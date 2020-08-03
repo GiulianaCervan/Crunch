@@ -99,7 +99,7 @@ public class ControladorComercio {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        redirect.addFlashAttribute("exito", "Cupon de promocion creado correctamente");
+        redirect.addFlashAttribute("exito", "Cupón de promoción creado correctamente");
  
         return "redirect:/inicio";
     }
@@ -137,7 +137,7 @@ public class ControladorComercio {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        redirect.addFlashAttribute("exito","Cupon por puntos creado correctamente");
+        redirect.addFlashAttribute("exito","Cupón por puntos creado correctamente");
      
 
         return "redirect:/inicio";
@@ -212,10 +212,10 @@ public class ControladorComercio {
             return "editarPerfilComercio.html";
         }
 
-        redirect.addFlashAttribute("exito", "Perfil modificado correctamente");
+        redirect.addFlashAttribute("exito", "Perfil modificado correctamente!!");
 
 
-        return "redirect:/inicio";
+        return "redirect:/comercio/mostrarPerfil";
 
     }
 
@@ -226,8 +226,8 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/validarCupon")
-    public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon) {
+    @PostMapping("/validarCupon")
+    public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon, RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -240,8 +240,8 @@ public class ControladorComercio {
             return "validar.html";
         }
 
-        modelo.put("exito", "Cupon canjeado con exito");
-        return "validar.html";
+        redirect.addFlashAttribute("exito", "Cupón canjeado con exito");
+        return "redirect:/comercio/validar";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
