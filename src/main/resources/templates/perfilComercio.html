@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" xmlns:th="https://www.thymeleaf.org/">
 
@@ -17,29 +16,31 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-  
-<style>
-    h1{
-        text-align:left;font-size:150%;font-family:sans-serif;color:#0c0c0b
-    }
 
-</style>
+    <style>
+        h1 {
+            text-align: left;
+            font-size: 150%;
+            font-family: sans-serif;
+            color: #0c0c0b
+        }
+    </style>
 </head>
 
 <body id="page-top">
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top" id="mainNav">
         <img class="rounded-circle" src="/assets/img/logo.jpg" id="derecha" alt="" style="width: 5%" ;>
-            <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded"
-                type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto" id="menu">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="/inicio">VOLVER</a>
-                    </li>
-                   
-                </ul>
-            </div>
+        <button class="navbar-toggler navbar-toggler-right font-weight-bold bg-primary text-white rounded" type="button"
+            data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+            aria-expanded="false" aria-label="Toggle navigation">Menu <i class="fas fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto" id="menu">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
+                        href="/inicio">VOLVER</a>
+                </li>
+
+            </ul>
+        </div>
         </div>
     </nav>
     <header class="masthead bg-primary text-white text-center">
@@ -56,22 +57,19 @@
                     <h1 th:text="${'Direccion del Comercio: '+ comercio.direccion}"> </h1>
                     <h1 th:text="${'E-mail: '+comercio.mail}"></h1>
                     <h1 th:text="${'Nombre del comercio: '+comercio.nombreComercio}"></h1>
-                    <h1 >Rubros:</h1>
+                    <h1>Rubros:</h1>
                     <h5 th:each=" rubro: ${comercio.rubros}" th:text="${rubro.rubro}" style="text-align: left"></h5>
-    
-                   
- 
                 </div>
+                <br><br>
                 <div class="col-md-6 col-sm-12">
-                    <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt="" style="width: 30%" ;>
+                    <img class="rounded-circle" src="/assets/img/LogoUsuario.jpeg" id="derecha" alt=""
+                        style="width: 30%" ;>
                 </div>
             </div>
-            
-
-            <a class="boton-personalizado-4" href="/comercio/modificarPerfil" >CAMBIAR  DATOS</a>
-
+            <a class="boton-personalizado-4" href="/comercio/modificarPerfil">CAMBIAR DATOS</a>
+            <br>
         </div>
-        
+
     </header>
 
     <footer class="footer text-center">

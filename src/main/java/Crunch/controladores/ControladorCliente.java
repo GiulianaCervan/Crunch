@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -194,5 +195,33 @@ public class ControladorCliente {
         return "cupones.html";
         
     }
+ @GetMapping("/cupones/{rubro}")
+    public String mostrarCuponesCliente(@PathVariable String rubro, ModelMap modelo) {
 
+        List<Cupon> cupones = new ArrayList();
+        try {
+            cupones = servicioCupon.mostrarBanners(rubro);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+
+        modelo.put("cupones", cupones);
+
+        return "cuponesCliente.html";
+    }
+
+    @GetMapping("/cuponesCliente")
+    public String mostrarTodosLosCuponesCliente(ModelMap modelo) {
+        List<Cupon> cupones = new ArrayList();
+        try {
+            cupones = servicioCupon.mostrarBanners(null);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+
+        modelo.put("cupones", cupones);
+        return "cuponesCliente.html";
+    }
 }
