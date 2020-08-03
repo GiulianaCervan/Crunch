@@ -7660,7 +7660,6 @@ a.text-dark:hover
     }
 }.masthead
 {
-    padding-top: calc(6rem + 74px);padding-bottom: 6rem;
     background: -webkit-linear-gradient(to right, #fdc830, #f37335);
     background: linear-gradient(to right, #fdc830, #f37335)!important;
 }.masthead .masthead-heading
@@ -7970,3 +7969,8 @@ hr.dashed {
     .state span { float: left; }
     div { overflow: hidden; }
     
+    .containerPerfil,
+    .rowPerfil{
+        flex-wrap: wrap-reverse;
+        overflow: inherit;
+    }

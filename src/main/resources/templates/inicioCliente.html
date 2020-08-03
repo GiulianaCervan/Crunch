@@ -42,7 +42,7 @@
 
         </div>
     </nav>
-    <header class="masthead bg-primary text-white text-center" id="hola">
+    <header class="masthead bg-primary text-white text-center">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-5">
@@ -65,29 +65,21 @@
                             <a href="/cliente/cupones">Mis cupones</a>
                             <a href="/cliente/mostrarPuntos">Mis Puntos</a>
                             <a href="/logout">Cerrar Sesión</a>
-
-
                         </div>
-
                     </div>
                     <br><br>
-                    <div class="container" style="padding-left: 25%">
-                        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                            th:text="${mensaje}" class="alert" style="width: 60%;">
-                        </div>
-                        <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${error != null}"
-                            th:text="${error}" class="alert" style="width: 60%;">
-                        </div>
-                    </div>
-
-                    <br>
-                    <div class="container">
-                        <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
-                        <br>
-                        <h3 style="font-size: 400%;">&#8675</h3>
-                    </div>
                 </div>
             </div>
+            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+                th:text="${mensaje}" class="alert" style="width: 60%;">
+            </div>
+            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${error != null}"
+                th:text="${error}" class="alert" style="width: 60%;">
+            </div>
+            <br>
+            <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
+            <br>
+            <h3 style="font-size: 400%;">&#8675</h3>
         </div>
     </header>
     <section class="page-section portfolio" id="portfolio">
