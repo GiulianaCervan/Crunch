@@ -43,6 +43,7 @@ public class ServicioCupon {
 
     @Autowired
     private ServicioComercio servicioComercio;
+
     /**
      * Este método encuentra un cupon cuando se le dá el id.
      *
@@ -211,15 +212,15 @@ public class ServicioCupon {
         Iterator<Cupon> iterador = comercio.getCupones().iterator();
         for (int i = 0; i < comercio.getCupones().size(); i++) {
             for (Cupon cupon : comercio.getCupones()) {
-            if (cupon.getTitulo().equals(titulo) && cupon.isDisponible()) {
-                comercio.getCupones().remove(cupon);
-                repositorioCupon.delete(cupon);
-                break;
+                if (cupon.getTitulo().equals(titulo) && cupon.isDisponible()) {
+                    comercio.getCupones().remove(cupon);
+                    repositorioCupon.delete(cupon);
+                    break;
+                }
             }
+
         }
-            
-        }
-        
+
         repositorioComercio.save(comercio);
     }
 
@@ -316,16 +317,21 @@ public class ServicioCupon {
             if (cupon.getId().substring(24).equals(idCupon)) {
                 encontrado = true;
                 if (!cupon.isVencido()) {
-                    Cliente cliente = cupon.getCliente();
+                    if (!cupon.isDisponible()) {
 
-                    cliente.getCupones().remove(cupon);
-                    comercio.getCupones().remove(cupon);
+                        Cliente cliente = cupon.getCliente();
 
-                    repositorioCupon.delete(cupon);
-                    repositorioCliente.save(cliente);
-                    repositorioComercio.save(comercio);
-                    
-                    break;
+                        cliente.getCupones().remove(cupon);
+                        comercio.getCupones().remove(cupon);
+
+                        repositorioCupon.delete(cupon);
+                        repositorioCliente.save(cliente);
+                        repositorioComercio.save(comercio);
+
+                        break;
+                    } else {
+                        throw new ExcepcionServicio("El cupon no ha sido otorgado a nadie");
+                    }
                 } else {
                     throw new ExcepcionServicio("El cupon no se puede canjear, esta vencido");
                 }
@@ -433,33 +439,45 @@ public class ServicioCupon {
 
         List<Cupon> cupones = mostrarPorRubros(rubro);
         List<Cupon> banners = new ArrayList<>();
+        Integer cant = 0;
         try {
-            banners.add(cupones.get(0));
+            do {                
+                 if (cupones.get(cant).isDisponible()) {
+                banners.add(cupones.get(cant));
+            }else{
+                cant++;
+            }
+            } while (banners.isEmpty());
+           
+                
+            
         } catch (Exception e) {
             throw new ExcepcionServicio("Lo lamentos por el momento no quedan disponibles cupones para este rubro");
         }
-        
+
         Boolean encontrado = false;
 
         for (Cupon cupon : cupones) {
 
             for (Cupon banner : banners) {
 
-                if ((cupon.getTitulo().equals(banner.getTitulo())) && cupon.getComercio().equals(banner.getComercio())) {
-                    encontrado = false;
-                    break;
-                } else {
+                if (cupon.isDisponible()) {
 
-                    encontrado = true;
+                    if ((cupon.getTitulo().equals(banner.getTitulo())) && cupon.getComercio().equals(banner.getComercio())) {
+                        encontrado = false;
+                        break;
+                    } else {
 
+                        encontrado = true;
+
+                    }
                 }
             }
+
             if (encontrado == true) {
                 banners.add(cupon);
-
             }
             encontrado = false;
-
         }
 
         return banners;
@@ -487,12 +505,12 @@ public class ServicioCupon {
         }
         throw new ExcepcionServicio("Lo lamentamos, ya no quedan cupones disponibles");
     }
-    
-    public List<Cupon> buscarPorTituloyComercio (String titulo, String mailComercio){
-        
-       List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, mailComercio);
-     
-       return cupones;
+
+    public List<Cupon> buscarPorTituloyComercio(String titulo, String mailComercio) {
+
+        List<Cupon> cupones = repositorioCupon.buscarPorTituloyComercio(titulo, mailComercio);
+
+        return cupones;
     }
 
     public List<Cupon> mostrarCuponesCliente(String mailCliente) {
@@ -501,11 +519,11 @@ public class ServicioCupon {
 
         return cliente.getCupones();
     }
-    
-    public List<Cupon> mostrarPorComercio(String mailComercio){
-        
+
+    public List<Cupon> mostrarPorComercio(String mailComercio) {
+
         return repositorioCupon.buscarPorComercioBanner(mailComercio);
-        
+
     }
 
     /**
@@ -552,8 +570,6 @@ public class ServicioCupon {
             throw new ExcepcionServicio("La descripcion no puede ser nulo o estar vacio");
         }
     }
-    
-    
 
     /**
      * Validador para los cupones que tienen un costo en puntos.

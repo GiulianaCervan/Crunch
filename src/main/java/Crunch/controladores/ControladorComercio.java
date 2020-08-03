@@ -169,32 +169,32 @@ public class ControladorComercio {
         return "perfilComercio.html";
     }
 
-//    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-//    @GetMapping("/modificarPerfil")
-//    public String modificar(HttpSession session, ModelMap modelo) {
-//
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        UserDetails userDetails = (UserDetails) principal;
-//        String userMail = userDetails.getUsername();
-//
-//        Comercio comercio = null;
-//
-//        try {
-//            comercio = servicioComercio.buscarPorId(userMail);
-//        } catch (ExcepcionServicio e) {
-//            modelo.put("error", e.getMessage());
-//            return "error.html";
-//        }
-//
-//        modelo.put("nombre", comercio.getNombre());
-//        modelo.put("apellido", comercio.getApellido());
-//        modelo.put("nombreComercio", comercio.getNombreComercio());
-//        modelo.put("direccion", comercio.getDireccion());
-//        modelo.put("telefono", comercio.getTelefono());
-//        modelo.put("rubros", Rubro.values());
-//        return "editarPerfilComercio.html";
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/modificarPerfil")
+    public String modificar(HttpSession session, ModelMap modelo) {
 
-    //}
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        Comercio comercio = null;
+
+        try {
+            comercio = servicioComercio.buscarPorId(userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+
+        modelo.put("nombre", comercio.getNombre());
+        modelo.put("apellido", comercio.getApellido());
+        modelo.put("nombreComercio", comercio.getNombreComercio());
+        modelo.put("direccion", comercio.getDireccion());
+        modelo.put("telefono", comercio.getTelefono());
+        modelo.put("rubros", Rubro.values());
+        return "editarPerfilComercio.html";
+
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/modificarPerfil")
@@ -334,6 +334,11 @@ public class ControladorComercio {
         String userMail = userDetails.getUsername();
         
         List<Cupon> cupones = servicioCupon.buscarPorTituloyComercio(titulo, userMail);
+        
+         for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+            System.out.println(cupon.getTitulo());
+        }
         
         modelo.put("cupones", cupones);
         return "detalleCuponesComercio.html";
