@@ -43,6 +43,7 @@ public class Cupon {
     private Integer costo;
     
     public Cupon() {
+        
     }
 
     public Cupon(String id, String titulo, String descripcion, Date vencimiento, TipoCupon tipo, Comercio comercio, Cliente cliente) {
