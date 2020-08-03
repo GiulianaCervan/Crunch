@@ -51,34 +51,30 @@
     <section class="page-section portfolio" id="portfolio">
 
         <div class="container">
-            <!-- Portfolio Section Heading-->
 
-            <div class="text-left">
-                <div class="container">
-                    <div class="col-lg-6 order-lg-1">
-                        
+            <div class="col-lg-6 order-lg-1">
 
-                            <form action="/comercio/crearCupon" method="POST">
 
-                                <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                                <label class="masthead-heading mb-0">Titulo</label>
-                                <h1><input type="text" class="form-control" name="titulo" style="width: 477.98438px;">
-                                </h1>
-                                <label>Descripción</label>
-                                <textarea rows="10" cols="60" placeholder="Escribe aquí la descripción de tu cupón"
-                                    name="descripcion" style="width:475px;"></textarea>
-                                <label>Fecha de vencimiento</label>
-                                <input type="date" class="form-control" name="vencimiento" style="width: 477.98438px;">
-                                <label>Cantidad de cupones</label>
-                                <input type="number" class="form-control" name="cantidad" style="width: 477.98438px;">
-                                <br></br>
-                                <button type="submit" class="btn btn-primary">Crear</button>
+                <form action="/comercio/crearCupon" method="POST">
 
-                            </form>
-                        </div>
-                   
-                </div>
+                    <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                    <label class="masthead-heading mb-0">Titulo</label>
+                    <h1><input type="text" class="form-control" name="titulo" style="width: 477.98438px;">
+                    </h1>
+                    <label>Descripción</label>
+                    <textarea rows="10" cols="60" placeholder="Escribe aquí la descripción de tu cupón"
+                        name="descripcion" style="width:475px;"></textarea>
+                    <label>Fecha de vencimiento</label>
+                    <input type="date" class="form-control" name="vencimiento" style="width: 477.98438px;">
+                    <label>Cantidad de cupones</label>
+                    <input type="number" class="form-control" name="cantidad" style="width: 477.98438px;">
+                    <br></br>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+
+                </form>
             </div>
+
+        </div>
     </section>
     <!-- Portfolio Modal-->
     <footer class="footer text-center">
