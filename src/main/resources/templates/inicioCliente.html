@@ -70,12 +70,15 @@
                     <br><br>
                 </div>
             </div>
-            <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+            <div class="row justify-content-center" >
+                <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
                 th:text="${mensaje}" class="alert" style="width: 60%;">
             </div>
             <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${error != null}"
                 th:text="${error}" class="alert" style="width: 60%;">
             </div>
+            </div>
+            
             <br>
             <h5>Deslizá hacia abajo para adquirir cupones!!</h5>
             <br>
