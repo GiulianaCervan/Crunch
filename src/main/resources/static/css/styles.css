@@ -6,7 +6,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */:root
 {
-    --blue: #007bff;--indigo: #6610f2;--purple: #6f42c1;--pink: #e83e8c;--red: #dc3545;--orange: #fd7e14;--yellow: #ffc107;--green: #a76128;--teal: #bc761a;--cyan: #b87817;--white: #fff;--gray: #6c757d;--gray-dark: #343a40;--primary: #bc701a;--secondary: #2c3e50;--success: #a76528;--info: #b87817;--warning: #ffc107;--danger: #dc3545;--light: #f8f9fa;--dark: #343a40;--breakpoint-xs: 0;--breakpoint-sm: 576px;--breakpoint-md: 768px;--breakpoint-lg: 992px;--breakpoint-xl: 1200px;--font-family-sans-serif: 'SB Body',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';--font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
+    --blue: #007bff;--indigo: #6610f2;--purple: #6f42c1;--pink: #e83e8c;--red: #dc3545;--orange: #fd7e14;--yellow: #ffc107;--green: #a76128;--teal: #bc761a;--cyan: #b87817;--white: #fff;--gray: #6c757d;--gray-dark: #343a40;--primary: #bc701a;--secondary: #2c3e50;--success: #f9a332;--info: #b87817;--warning: #ffc107;--danger: #dc3545;--light: #f8f9fa;--dark: #343a40;--breakpoint-xs: 0;--breakpoint-sm: 576px;--breakpoint-md: 768px;--breakpoint-lg: 992px;--breakpoint-xl: 1200px;--font-family-sans-serif: 'SB Body',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';--font-family-monospace: SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
 }*,
 :after,
 :before
@@ -2155,10 +2155,10 @@ fieldset:disabled a.btn
     box-shadow: 0 0 0 .2rem rgba(44,62,80,.5);
 }.btn-outline-success
 {
-    color: #a76528;border-color: #a76528;
+    color: #f9a332;border-color: #f9a332;
 }.btn-outline-success:hover
 {
-    color: #fff;border-color: #a76528;background-color: #a76528;
+    color: #fff;border-color: #f9a332;background-color: #f9a332;
 }.btn-outline-success.focus,
 .btn-outline-success:focus
 {
@@ -2166,12 +2166,12 @@ fieldset:disabled a.btn
 }.btn-outline-success.disabled,
 .btn-outline-success:disabled
 {
-    color: #a76528;background-color: transparent;
+    color: #f9a332;background-color: transparent;
 }.btn-outline-success:not(:disabled):not(.disabled).active,
 .btn-outline-success:not(:disabled):not(.disabled):active,
 .show > .btn-outline-success.dropdown-toggle
 {
-    color: #fff;border-color: #a76528;background-color: #a76528;
+    color: #fff;border-color: #f9a332;background-color: #f9a332;
 }.btn-outline-success:not(:disabled):not(.disabled).active:focus,
 .btn-outline-success:not(:disabled):not(.disabled):active:focus,
 .show > .btn-outline-success.dropdown-toggle:focus
@@ -7849,7 +7849,8 @@ hr.dashed {
     width: 100%; /* 100% width */
     text-align: center; /* Centered text/links */
     margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
-  }
+    text-decoration: none;
+}
   
   /* The navigation links inside the overlay */
   .overlay a {

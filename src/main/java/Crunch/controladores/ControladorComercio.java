@@ -7,6 +7,7 @@ package Crunch.controladores;
 
 import Crunch.entidades.Cliente;
 import Crunch.entidades.Comercio;
+import Crunch.entidades.Cupon;
 import Crunch.entidades.Foto;
 import Crunch.excepciones.ExcepcionServicio;
 import Crunch.servicios.ServicioCliente;
@@ -76,8 +77,8 @@ public class ControladorComercio {
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/crearCupon")
-    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer cantidad, ModelMap modelo
-                                ,RedirectAttributes redirect) {
+    public String crearCupon(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer cantidad, ModelMap modelo,
+             RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -99,8 +100,8 @@ public class ControladorComercio {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        redirect.addFlashAttribute("exito", "Cupon de promocion creado correctamente");
- 
+        redirect.addFlashAttribute("exito", "Cupón de promoción creado correctamente");
+
         return "redirect:/inicio";
     }
 
@@ -113,7 +114,7 @@ public class ControladorComercio {
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/crearCuponPuntos")
-    public String crearCuponPuntos(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo, 
+    public String crearCuponPuntos(@RequestParam String titulo, @RequestParam String descripcion, @RequestParam String vencimiento, @RequestParam Integer costo,
             @RequestParam Integer cantidad, ModelMap modelo, RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -137,15 +138,14 @@ public class ControladorComercio {
             modelo.put("error", e.getMessage());
             return "error.html";
         }
-        redirect.addFlashAttribute("exito","Cupon por puntos creado correctamente");
-     
+        redirect.addFlashAttribute("exito", "Cupón por puntos creado correctamente");
 
         return "redirect:/inicio";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @GetMapping("/mostrarPerfil")
-    public String mostrarPerfilComercio(HttpSession session, ModelMap modelo,RedirectAttributes redirect) {
+    public String mostrarPerfilComercio(HttpSession session, ModelMap modelo, RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -198,8 +198,8 @@ public class ControladorComercio {
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/modificarPerfil")
     public String modificarComercio(HttpSession session, ModelMap modelo, @RequestParam String direccion, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String telefono, @RequestParam(required = false) String rubros, @RequestParam String nombreComercio
-            ,RedirectAttributes redirect) {
+            @RequestParam String apellido, @RequestParam String telefono, @RequestParam(required = false) String rubros, @RequestParam String nombreComercio,
+             RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -212,10 +212,9 @@ public class ControladorComercio {
             return "editarPerfilComercio.html";
         }
 
-        redirect.addFlashAttribute("exito", "Perfil modificado correctamente");
+        redirect.addFlashAttribute("exito", "Perfil modificado correctamente!!");
 
-
-        return "redirect:/inicio";
+        return "redirect:/comercio/mostrarPerfil";
 
     }
 
@@ -226,8 +225,8 @@ public class ControladorComercio {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
-    @GetMapping("/validarCupon")
-    public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon) {
+    @PostMapping("/validarCupon")
+    public String validarCupon(ModelMap modelo, HttpSession session, @RequestParam String idCupon, RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -240,8 +239,8 @@ public class ControladorComercio {
             return "validar.html";
         }
 
-        modelo.put("exito", "Cupon canjeado con exito");
-        return "validar.html";
+        redirect.addFlashAttribute("exito", "Cupón canjeado con exito");
+        return "redirect:/comercio/validar";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
@@ -266,7 +265,7 @@ public class ControladorComercio {
 
     @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
     @PostMapping("/darPuntos")
-    public String darPuntos(ModelMap modelo,@RequestParam String mail,@RequestParam Integer cantidad) {
+    public String darPuntos(ModelMap modelo, @RequestParam String mail, @RequestParam Integer cantidad) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -284,6 +283,43 @@ public class ControladorComercio {
             return "buscar.html";
         }
 
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @GetMapping("/cupones")
+    public String verCupones(ModelMap modelo, HttpSession session) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+
+        List<Cupon> cupones = servicioCupon.mostrarPorComercio(userMail);
+
+        for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+        }
+        modelo.put("cupones", cupones);
+
+        return "cuponeraComercio.html";
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_COMERCIO')")
+    @PostMapping("/borrar")
+    public String borrarCupones(ModelMap modelo, HttpSession session, @RequestParam String titulo, RedirectAttributes redirect) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails) principal;
+        String userMail = userDetails.getUsername();
+        
+        try {
+            servicioCupon.borrar(titulo, userMail);
+        } catch (ExcepcionServicio e) {
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+        
+        redirect.addFlashAttribute("exito", "Los cupones han sido borrados con exito");
+        return "redirect:/comercio/cupones";
     }
 
     @GetMapping("/cargar/{id}")

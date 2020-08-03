@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ControladorCliente {
 
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/otorgar")
-    public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo) {
+    public String otorgarCupon(@RequestParam String titulo, @RequestParam String mailComercio, ModelMap modelo, RedirectAttributes redirect) {
 
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -60,8 +61,8 @@ public class ControladorCliente {
             }
             
         } catch (ExcepcionServicio e) {
-            modelo.put("error", e.getMessage());
-            return "inicioCliente.html";
+            redirect.addFlashAttribute("error", e.getMessage());
+            return "redirect:/inicio";
         }
 
         return "exitoCuponAdq.html";
@@ -77,6 +78,10 @@ public class ControladorCliente {
         String userMail = userDetails.getUsername();
 
         List<Cupon> cupones = servicioCupon.mostrarCuponesCliente(userMail);
+        for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+        }
+        
         modelo.put("cupones", cupones);
 
         return "cuponera.html";
@@ -97,13 +102,7 @@ public class ControladorCliente {
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
         }
-
-        
-        modelo.put("nombre", cliente.getNombre());
-        modelo.put("apellido", cliente.getApellido());
-        modelo.put("telefono", cliente.getTelefono());
-        modelo.put("domicilio", cliente.getDomicilio());
-        
+        modelo.put("cliente", cliente);
         return "perfilCliente.html";
     }
 
@@ -134,7 +133,7 @@ public class ControladorCliente {
     @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
     @PostMapping("/modificarPerfil")
     public String modificarPerfil(HttpSession session, ModelMap modelo, @RequestParam String domicilio, @RequestParam String nombre,
-            @RequestParam String apellido, @RequestParam String telefono) {
+            @RequestParam String apellido, @RequestParam String telefono,RedirectAttributes redirect) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails) principal;
@@ -143,6 +142,7 @@ public class ControladorCliente {
         try {
             
            servicioCliente.modificar(userMail, nombre, apellido, domicilio, telefono);
+        
         } catch (ExcepcionServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("nombre", nombre);
@@ -152,10 +152,9 @@ public class ControladorCliente {
 
             return "editarPerfilUsuario.html";
 
-
         }
-        modelo.put("exito", "Perfil modificado con exito");
-        return "redirect:/inicio";
+        redirect.addFlashAttribute("exito", "Perfil modificado con exito");
+        return "redirect:/cliente/perfil";
 
     }
 
@@ -175,8 +174,25 @@ public class ControladorCliente {
         
         modelo.put("puntos", puntos);
         
-        return "//mostarPuntos";
+        return "misPuntos.html";
       
+    }
+    
+    @PreAuthorize("hasAnyRole('ROLE_CLIENTE')")
+    @PostMapping("/mostrarComercio")
+    public String mostarCuponesComercio(ModelMap modelo, @RequestParam String mailComercio){
+        
+        List<Cupon> cupones = servicioCupon.mostrarPorComercio(mailComercio);
+        
+        for (Cupon cupon : cupones) {
+            cupon.setId(cupon.getId().substring(24));
+            System.out.println(cupon.getTitulo());
+        }
+        
+        modelo.put("cupones", cupones);
+        
+        return "cupones.html";
+        
     }
 
 }

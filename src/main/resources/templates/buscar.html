@@ -16,11 +16,7 @@
     <!-- Fonts CSS-->
     <link rel="stylesheet" href="css/heading.css">
     <link rel="stylesheet" href="css/body.css">
-    <style>
-        div.divider-custom-line#division {
-            border-color: white;
-        }
-    </style>
+ 
 </head>
 
 <body id="page-top">
@@ -32,13 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#portfolio">REGISTRATE</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#about">INICIAR SESIÓN</a>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"
-                            href="#contact">NOSOTROS</a>
+                            href="/inicio">VOLVER</a>
                     </li>
                 </ul>
             </div>
@@ -47,13 +37,16 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
 
-            <h2 class="masthead-heading mb-0">Puntos </h2>
+            <h2 class="masthead-heading mb-0">Carga de puntos</h2>
 
-            <div class="divider-custom">
-                <div class="divider-custom-line" id="division"></div>
-                <div class="divider-custom-icon"><i class="fas fa-star" style="color: white;"></i></div>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
+            <br><div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
+            th:text="${mensaje}" class="alert">
+        </div>
         </div>
     </header>
     <!--inicio tabla -->
@@ -61,51 +54,44 @@
 
         <div class="container">
             <form action="/comercio/buscarClientes" method="POST">
-                <label for="site-search">Ingresar mail</label>
-                <input type="text" id="site-search" name="mailCliente">
-
-                <button type="submit">Buscar</button>
-            </form>
-            <div class="row justify-content-center">
-                <div class="col-12">
-
-                    <div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}"
-                        th:text="${mensaje}" class="alert">
+                <label for="site-search">Ingresar usuario</label><br>
+                <div style="width: 30%;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="site-search" name="mailCliente">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"
+                                style="border: .125rem solid #ced4da;">Buscar</button>
+                        </span>
                     </div>
-
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Mail</th>
-                                <th>Cantidad</th>
-                                <th>Funcion</th>
-
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                                <tr th:each="cliente : ${clientes}">
-                                    <form action="/comercio/darPuntos" method="POST">
-                                        
-                                        <td th:text="${cliente.nombre + ' ' + cliente.apellido}"></td>
-                                        <td th:text="${cliente.mail}"></td>
-                                    
-                                        <input type="hidden" name="mail" th:value="${cliente.mail}"/>
-
-                                        <td><input type="number" name="cantidad"></td>
-                                        <td><button type="submit" class="boton-personalizado-4">AGREGAR</button></td>
-                                    </form>
-                                </tr>
-                           
-
-                        </tbody>
-                    </table>
-                
                 </div>
-            </div>
-        </div>
+            </form>
+            <br>
+            <table class="table table-bordered">
+                <thead style="text-align: center;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Mail</th>
+                        <th>Cantidad</th>
+                        <th>Función</th>
+                    </tr>
+                </thead>
+                <tbody style="text-align: center;">
+
+                    <tr th:each="cliente : ${clientes}">
+                        <form action="/comercio/darPuntos" method="POST">
+
+                            <td th:text="${cliente.nombre + ' ' + cliente.apellido}"></td>
+                            <td th:text="${cliente.mail}"></td>
+
+                            <input type="hidden" name="mail" th:value="${cliente.mail}" />
+
+                            <td><input type="number" name="cantidad"></td>
+                            <td><button type="submit" class="btn btn-outline-success btn-sm">AGREGAR</button>
+                            </td>
+                        </form>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
     <!---fin tabla -->

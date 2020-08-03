@@ -71,11 +71,13 @@
                         <p th:text="${cupon.descripcion}"></p>
                         <p th:text="${'Fecha de vencimiento: '+cupon.vencimiento}"></p>
                         <p th:if="${cupon.costo != null}" th:text="${'Costo: '+cupon.costo}+' Puntos'"></p>
-
+                        <p th:text="${'Comercio: '+ cupon.comercio.nombreComercio}" style="text-align: end;"></p>
+                        <p th:text="${'Dirección: '+ cupon.comercio.direccion}" style="text-align: end;"></p>
+                        
                         <form method="POST" action="/cliente/otorgar">
                             <input name="titulo" th:value="${cupon.titulo}" style="visibility: hidden;">
                             <input name="mailComercio" th:value="${cupon.comercio.mail}" style="visibility: hidden;">
-                            <button class="btn btn-primary" type="submit">Adquirir cupón!</button>
+                            <button class="btn btn-primary" type="submit" style="text-align: center;margin-left: 25%;">Adquirir cupón!</button>
                         </form>
                         <br>
                     </div>
