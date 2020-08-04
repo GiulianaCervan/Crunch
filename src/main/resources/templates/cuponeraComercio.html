@@ -84,12 +84,12 @@
                                     <td th:text="${cupon.vencimiento}"></td>
                                     
                                     
-                                    <td><button class="boton-personalizado-4" type="submit">Borrar</button></td>
+                                    <td><button class="btn btn-default" type="submit" style="border: .125rem solid red; font-size: revert;">Borrar</button></td>
                                     
                                 </form>
                                 <form action="/comercio/detalleCupones" method="POST">
                                     <input type="hidden" name="titulo" th:value="${cupon.titulo}">
-                                    <td><button class="boton-personalizado-4" type="submit">VER CUPONES</button></td>
+                                    <td><button class="btn btn-default" type="submit" style="border: .125rem solid green; font-size: small;">VER CUPONES</button></td>
                                     </form>
                             </tr>
                         </tbody>
